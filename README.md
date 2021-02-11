@@ -1,21 +1,67 @@
-# volto-addon-template
-[![Releases](https://img.shields.io/github/v/release/rohberg/volto-addon-template)](https://github.com/rohberg/volto-addon-template/releases)
+# volto-bookmarks
+
+
+<img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
 [Volto](https://github.com/plone/volto) add-on
 
 ## Features
 
-###
+Add and manage bookmarks: pages and pages with params like faceted navigation links to filtered content.
 
-Demo GIF
+Bookmarks are grouped by the value of a selectable content type field.
+
 
 ## Getting started
 
-See the [Mastering Plone 6 Development Training](https://training.plone.org/6/mastering-plone/index.html) for instructions.
+> This add-on requires Volto 12 or higher version.
+
+Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) ( by now branch ksuess-2021)
+
+
+Include bookmarking of this package in your Volto projects config.js by
+
+```js
+import { ToggleBookmarkComponent, ShowBookmarksComponent } from '@collective/volto-bookmarks/components';
+
+defaultToolbar.activities.view.top.push({
+  match: {
+    path: '/',
+  },
+  component: ToggleBookmarkComponent,
+});
+
+defaultToolbar.activities.view.bottom.push({
+  match: {
+    path: '/',
+  },
+  component: (props) => <ShowBookmarksMenu {...props} />,
+});
+
+export { defaultToolbar as toolbar };
+```
+
+It adds two buttons in toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
+
+Add a mapping for bookmark groups labels and the name of the field for grouping bookmarks list.
+
+````js
+// @collective/volto-bookmarks
+export const BOOKMARKGROUPMAPPING = {
+  Anleitung: 'Anleitungen',
+  Übersichtsseite: 'Übersichtsseiten',
+  ReleaseNote: 'Release Notes',
+  default: 'Suchfilter',
+};
+
+export const BOOKMARKGROUPFIELD = 'informationtype';
+````
 
 ## Copyright and license
 
-The Initial Owner of the Original Code is the Plone Foundation.
-All Rights Reserved.
+Author Katja Süss, Rohberg, 
+https://www.rohberg.ch
 
-See [LICENSE.md](https://github.com/rohberg/volto-addon-template/blob/master/LICENSE.md) for details.
+Copyright (c) 2021 Plone Foundation
+
+See [LICENSE.md](https://github.com/collective/volto-bookmarks/blob/master/LICENSE.md) for details.
