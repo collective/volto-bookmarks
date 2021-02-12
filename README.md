@@ -18,6 +18,8 @@ Bookmarks are grouped by the value of a selectable content type field.
 
 Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) ( by now branch ksuess-2021)
 
+Remember to install souper in control panel.
+
 
 Include bookmarking of this package in your Volto projects config.js by
 
