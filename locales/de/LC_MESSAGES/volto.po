@@ -38,5 +38,9 @@ msgid "label_showbookmarksmenu"
 msgstr "Lesezeichenmenü zeigen"
 
 #: components/BookmarksEditorComponent
+msgid "no_bookmark_groupname"
+msgstr "Kein Gruppenname gefunden. Ergänzen Sie bitte einen Namen im BOOKMARKGROUPMAPPING."
+
+#: components/BookmarksEditorComponent
 msgid "title_bookmarks"
 msgstr "Lesezeichen"

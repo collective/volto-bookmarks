@@ -53,7 +53,8 @@ export const BOOKMARKGROUPMAPPING = {
   Anleitung: 'Anleitungen',
   Übersichtsseite: 'Übersichtsseiten',
   ReleaseNote: 'Release Notes',
-  default: 'Suchfilter',
+  default_search: 'Search',
+  default_nogroup: 'Miscellaneous',
 };
 
 export const BOOKMARKGROUPFIELD = 'informationtype';

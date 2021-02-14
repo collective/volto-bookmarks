@@ -53,15 +53,15 @@ const ToggleBookmarkComponent = ({ token, pathname, intl }) => {
 
   React.useEffect(() => {
     if (content?.UID && token) {
-      console.log(
-        "ToggleBookmarkComponent get(content, BMGF, [{ token: 'default' }])",
-        get(content, BMGF, [{ token: 'default' }]),
-      );
-      let grp = get(BMGM, get(content, BMGF, [{ token: 'default' }])[0].token);
-      setGroup(grp);
-      dispatch(getBookmark(content.UID, grp, location.search));
+      const url = new URL(document.location);
+      let default_token = [
+        { token: url.search ? 'default_search' : 'default_nogroup' },
+      ];
+      let grp_token = get(content, BMGF, default_token);
+      setGroup(grp_token[0].token);
+      dispatch(getBookmark(content.UID, grp_token[0].token, url.search));
     }
-  }, [dispatch, pathname, token, location.search, content]);
+  }, [dispatch, pathname, token, location, content]);
 
   // TODO Make event listeners configurable
   React.useEffect(function mount() {
@@ -81,7 +81,8 @@ const ToggleBookmarkComponent = ({ token, pathname, intl }) => {
   function searchOnUrlQueryStringChanged(event) {
     // event handler for searchkitQueryChanged event of searchkit
     const url = new URL(document.location);
-    dispatch(getBookmark(content.UID, group, url.search));
+    setGroup('default_search');
+    dispatch(getBookmark(content.UID, 'default_search', url.search));
   }
 
   function getValuesFromSearchquery(sq, key) {

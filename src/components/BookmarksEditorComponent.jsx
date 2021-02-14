@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { groupBy, sortBy } from 'lodash';
+import { get, groupBy, sortBy } from 'lodash';
 
 import { Button, Container } from 'semantic-ui-react';
 
@@ -16,6 +16,21 @@ import { deStringifySearchquery } from '../helpers';
 
 import { deleteBookmark } from '../actions';
 
+import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
+let BMGM = BOOKMARKGROUPMAPPING;
+let BMGF = BOOKMARKGROUPFIELD;
+import('~/config.js')
+  .then((config) => {
+    BMGM = config.BOOKMARKGROUPMAPPING;
+    BMGF = config.BOOKMARKGROUPFIELD;
+  })
+  .catch((error) => {
+    console.info(
+      error,
+      'Think about configuring BOOKMARKGROUPMAPPING and BOOKMARKGROUPFIELD in your project',
+    );
+  });
+
 const messages = defineMessages({
   title_bookmarks: {
     id: 'title_bookmarks',
@@ -24,6 +39,11 @@ const messages = defineMessages({
   bookmark_searchquery: {
     id: 'bookmark_searchquery',
     defaultMessage: 'Search for ',
+  },
+  no_bookmark_groupname: {
+    id: 'no_bookmark_groupname',
+    defaultMessage:
+      'No group name found. Add a name to your BOOKMARKGROUPMAPPING.',
   },
 });
 
@@ -95,7 +115,13 @@ const BookmarksEditorComponent = ({ intl }) => {
             .map((grp, index) => {
               return (
                 <li basic className="bookmarkgroup" key={index}>
-                  <h3>{grp}</h3>
+                  <h3>
+                    {get(
+                      BMGM,
+                      grp,
+                      intl.formatMessage(messages.no_bookmark_groupname),
+                    )}
+                  </h3>
                   <ul>
                     {groupedItems[grp].map((item, index) => {
                       return (
