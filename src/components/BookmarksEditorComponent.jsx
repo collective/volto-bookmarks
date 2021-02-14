@@ -139,24 +139,6 @@ const BookmarksEditorComponent = ({ intl }) => {
             })}
         </ul>
       </div>
-
-      {/* {__CLIENT__ && (
-        <Portal node={document.getElementById('toolbar')}>
-          <Toolbar
-            pathname={this.props.pathname}
-            inner={
-              <Link to={`${getBaseUrl(this.props.pathname)}`} className="item">
-                <Icon
-                  name="arrow left"
-                  size="big"
-                  color="blue"
-                  title="zurück"
-                />
-              </Link>
-            }
-          />
-        </Portal>
-      )} */}
     </Container>
   );
 };

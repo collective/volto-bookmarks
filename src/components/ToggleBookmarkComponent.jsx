@@ -13,24 +13,6 @@ import bookmarkFilledSVG from '../icons/bookmark_filled.svg';
 
 import { getBookmark, addBookmark, deleteBookmark } from '../actions';
 
-// try {
-//   import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '~/config';
-// } catch (error) {
-//   import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
-// }
-
-// class ImportError extends Error {}
-
-// const loadModule = async (modulePath) => {
-//   let module;
-//   try {
-//     module = await import(modulePath)
-//   } catch (e) {
-//     throw new ImportError(`Unable to import module ${modulePath}`)
-//   }
-//   return module;
-// }
-
 import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
 let BMGM = BOOKMARKGROUPMAPPING;
 let BMGF = BOOKMARKGROUPFIELD;
