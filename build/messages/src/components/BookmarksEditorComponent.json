@@ -1,0 +1,22 @@
+[
+  {
+    "id": "title_bookmarks",
+    "defaultMessage": "Bookmarks"
+  },
+  {
+    "id": "bookmark_searchquery",
+    "defaultMessage": "Search for "
+  },
+  {
+    "id": "heading_bookmarks",
+    "defaultMessage": "Bookmarks"
+  },
+  {
+    "id": "help_bookmarks_anonymous",
+    "defaultMessage": "Please login to see your bookmarks"
+  },
+  {
+    "id": "help_bookmarks_emptylist",
+    "defaultMessage": "You do not have bookmarks. On the left of a page you find a button to save a bookmark."
+  }
+]

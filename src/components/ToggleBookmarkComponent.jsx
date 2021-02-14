@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { defineMessages, injectIntl } from 'react-intl';
 import { get, trimStart } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { Portal } from 'react-portal';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
-import cx from 'classnames';
 import { Icon } from '@plone/volto/components';
 
 // import bookmarkSVG from '@plone/volto/icons/bookmark.svg';
@@ -46,7 +46,14 @@ import('~/config.js')
     );
   });
 
-const ToggleBookmarkComponent = ({ token, pathname }) => {
+const messages = defineMessages({
+  label_addbookmark: {
+    id: 'label_addbookmark',
+    defaultMessage: 'add or delete bookmark',
+  },
+});
+
+const ToggleBookmarkComponent = ({ token, pathname, intl }) => {
   /**
    * Add a bookmark to owners bookmark list
    */
@@ -63,7 +70,11 @@ const ToggleBookmarkComponent = ({ token, pathname }) => {
   const [group, setGroup] = useState('');
 
   React.useEffect(() => {
-    if (content.UID && token) {
+    if (content?.UID && token) {
+      console.log(
+        "ToggleBookmarkComponent get(content, BMGF, [{ token: 'default' }])",
+        get(content, BMGF, [{ token: 'default' }]),
+      );
       let grp = get(BMGM, get(content, BMGF, [{ token: 'default' }])[0].token);
       setGroup(grp);
       dispatch(getBookmark(content.UID, grp, location.search));
@@ -136,34 +147,20 @@ const ToggleBookmarkComponent = ({ token, pathname }) => {
         <Button
           id="toolbar-addbookmark"
           className="addbookmark"
-          aria-label="Bookmark speichern/löschen"
+          aria-label={intl.formatMessage(messages.label_addbookmark)}
           onClick={() => toggleBookmarkHandler()}
         >
           <Icon
             name={currentbookmark ? bookmarkFilledSVG : bookmarkSVG}
-            // className="circled"
             size="30px"
-            title="Bookmark speichern/löschen"
+            title={intl.formatMessage(messages.label_addbookmark)}
           />
         </Button>
       </Portal>
-      {/* <Portal
-        node={__CLIENT__ && document.querySelector('.navigation-dropdownmenu')}
-      >
-        <div>{currentbookmark?.title || 'not bookmarked'}</div>
-        <div>{content.UID}</div>
-        <div>group: {group}</div>
-        <div>location.search: {location.search}</div>
-        <div>
-          document?.location?.toString(): {document?.location?.toString()}
-        </div>
-      </Portal> */}
     </>
   ) : (
     <></>
   );
-
-  
 };
 
-export default ToggleBookmarkComponent;
+export default injectIntl(ToggleBookmarkComponent);

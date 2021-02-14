@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { defineMessages, useIntl } from 'react-intl';
-import { Image } from 'semantic-ui-react';
-import { useSelector } from 'react-redux';
 import { Portal } from 'react-portal';
-import { Button } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
-import { getBaseUrl } from '@plone/volto/helpers';
 import bookSVG from '@plone/volto/icons/book.svg';
 
-const ShowBookmarksComponent = ({ token }) => {
+const messages = defineMessages({
+  label_showbookmarksmenu: {
+    id: 'label_showbookmarksmenu',
+    defaultMessage: 'show bookmarks menu',
+  },
+});
+
+const ShowBookmarksComponent = ({ token, intl }) => {
   return __CLIENT__ && token ? (
     <Portal
       node={__CLIENT__ && document.querySelector('#toolbar .toolbar-bottom')}
@@ -17,19 +20,19 @@ const ShowBookmarksComponent = ({ token }) => {
       <Link
         id="toolbar-bookmarkmenu"
         className="bookmarkmenu"
-        title="Bookmarks-Menu zeigen"
-        aria-label="Bookmarks-Menu zeigen"
+        title={intl.formatMessage(messages.label_showbookmarksmenu)}
+        aria-label={intl.formatMessage(messages.label_showbookmarksmenu)}
         to="/collectivebookmarks"
       >
         <Icon
           name={bookSVG}
           // className="circled"
           size="30px"
-          title="Bookmarks-Menu zeigen"
+          title={intl.formatMessage(messages.label_showbookmarksmenu)}
         />
       </Link>
     </Portal>
   ) : null;
 };
 
-export default ShowBookmarksComponent;
+export default injectIntl(ShowBookmarksComponent);

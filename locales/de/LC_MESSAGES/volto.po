@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: de\n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
+
+#: components/BookmarksEditorComponent
+msgid "bookmark_searchquery"
+msgstr "Suche nach "
+
+#: components/BookmarksEditorComponent
+msgid "heading_bookmarks"
+msgstr "Lesezeichen"
+
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_anonymous"
+msgstr "Bitte loggen Sie sich ein um Ihre Lesezeichen zu sehen."
+
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_emptylist"
+msgstr "Sie haben noch keine Lesezeichen. Links neben einer Seite finden Sie einen Button um ein Lesezeichen für die jeweilige Seite zu speichern."
+
+#: components/ToggleBookmarkComponent
+msgid "label_addbookmark"
+msgstr "Lesezeichen speichern/löschen"
+
+#: components/ShowBookmarksComponent
+msgid "label_showbookmarksmenu"
+msgstr "Lesezeichenmenü zeigen"
+
+#: components/BookmarksEditorComponent
+msgid "title_bookmarks"
+msgstr "Lesezeichen"

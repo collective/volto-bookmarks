@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { groupBy, sortBy } from 'lodash';
@@ -15,7 +16,18 @@ import { deStringifySearchquery } from '../helpers';
 
 import { deleteBookmark } from '../actions';
 
-const BookmarksEditorComponent = () => {
+const messages = defineMessages({
+  title_bookmarks: {
+    id: 'title_bookmarks',
+    defaultMessage: 'Bookmarks',
+  },
+  bookmark_searchquery: {
+    id: 'bookmark_searchquery',
+    defaultMessage: 'Search for ',
+  },
+});
+
+const BookmarksEditorComponent = ({ intl }) => {
   const token = useSelector((state) => state.userSession.token);
   const items = useSelector((state) => state.collectivebookmarks.items);
   const dispatch = useDispatch();
@@ -28,12 +40,12 @@ const BookmarksEditorComponent = () => {
 
   useEffect(() => {
     // group items, set title, sort by title
-    // TODO translation
     let grtms = groupBy(items, (item) => item['group']);
     Object.keys(grtms).forEach((kk) => {
       let foo = grtms[kk].map((item) => {
         item.title = item.payload?.querystringvalues
-          ? 'Suche nach ' + item.payload?.querystringvalues
+          ? intl.formatMessage(messages.bookmark_searchquery) +
+            item.payload?.querystringvalues
           : item.title;
         return item;
       });
@@ -53,20 +65,26 @@ const BookmarksEditorComponent = () => {
 
   return (
     <Container id="page-collectivebookmarks">
-      <Helmet title="Bookmarks" />
-      <h1 className="documentFirstHeading">Bookmarks</h1>
+      <Helmet title={intl.formatMessage(messages.title_bookmarks)} />
+      <h1 className="documentFirstHeading">
+        <FormattedMessage id="heading_bookmarks" defaultMessage="Bookmarks" />
+      </h1>
       <div className="bookmarks-listing">
-        {/* <div>
-          {items.length} Bookmark{items.length === 1 ? '' : 's'} gefunden
-        </div> */}
-        {/* TODO translation */}
-        {items.length === 0 && (
+        {!token && (
           <div>
-            <p>Sie haben noch keine Bookmarks</p>
-            <p>
-              Links neben jeder Seite der Dokumentation finden Sie einen Button
-              um die jeweilige Seite zu bookmarken.
-            </p>
+            <FormattedMessage
+              id="help_bookmarks_anonymous"
+              defaultMessage="Please login to see your bookmarks"
+            />
+          </div>
+        )}
+        {token && items?.length === 0 && (
+          <div>
+
+            <FormattedMessage
+              id="help_bookmarks_emptylist"
+              defaultMessage="You do not have bookmarks. On the left of a page you find a button to save a bookmark."
+            />
           </div>
         )}
         <ul>
@@ -141,4 +159,4 @@ const BookmarksEditorComponent = () => {
   );
 };
 
-export default BookmarksEditorComponent;
+export default injectIntl(BookmarksEditorComponent);
