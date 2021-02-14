@@ -35,8 +35,10 @@ const BookmarksEditorComponent = ({ intl }) => {
   let [groupedItems, setGroupedItems] = useState({});
 
   useEffect(() => {
-    dispatch(getBookmarks());
-  });
+    if (token) {
+      dispatch(getBookmarks());
+    }
+  }, [dispatch, token]);
 
   useEffect(() => {
     // group items, set title, sort by title
