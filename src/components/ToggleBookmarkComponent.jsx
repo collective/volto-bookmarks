@@ -58,8 +58,12 @@ const ToggleBookmarkComponent = ({ token, pathname, intl }) => {
         { token: url.search ? 'default_search' : 'default_nogroup' },
       ];
       let grp_token = get(content, BMGF, default_token);
-      setGroup(grp_token[0].token);
-      dispatch(getBookmark(content.UID, grp_token[0].token, url.search));
+      let grp =
+        grp_token && grp_token.length > 0
+          ? grp_token[0].token
+          : 'default_search';
+      setGroup(grp);
+      dispatch(getBookmark(content.UID, grp, url.search));
     }
   }, [dispatch, pathname, token, location, content]);
 
