@@ -3,13 +3,6 @@ import { BookmarksEditorComponent } from './components';
 import { collectivebookmarks } from './reducers';
 
 const applyConfig = (config) => {
-  // routes
-  config.addonRoutes.push({
-    path: '/collectivebookmarks',
-    component: BookmarksEditorComponent,
-  });
-  config.settings.nonContentRoutes.push('/collectivebookmarks');
-
   // button and menu are added in Volto project. See README.txt
 
   // reducers
@@ -21,5 +14,3 @@ const applyConfig = (config) => {
 };
 
 export default applyConfig;
-
-// nonContentRoutes.push('/collectivebookmarks')

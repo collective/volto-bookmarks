@@ -15,6 +15,7 @@ import { getBookmarks } from '../actions';
 import { deStringifySearchquery } from '../helpers';
 
 import { deleteBookmark } from '../actions';
+import './volto-bookmarks.css';
 
 import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
 let BMGM = BOOKMARKGROUPMAPPING;
@@ -85,87 +86,76 @@ const BookmarksEditorComponent = ({ intl }) => {
     dispatch(deleteBookmark(uid, group, searchquery));
   }
 
-  return (
-    <Container id="page-collectivebookmarks">
-      <Helmet title={intl.formatMessage(messages.title_bookmarks)} />
-      <h1 className="documentFirstHeading">
-        <FormattedMessage id="heading_bookmarks" defaultMessage="Bookmarks" />
-      </h1>
-      <div className="bookmarks-listing">
-        {!token && (
-          <div>
-            <FormattedMessage
-              id="help_bookmarks_anonymous"
-              defaultMessage="Please login to see your bookmarks"
-            />
-          </div>
-        )}
-        {token && items?.length === 0 && (
-          <div>
-
-            <FormattedMessage
-              id="help_bookmarks_emptylist"
-              defaultMessage="You do not have bookmarks. On the left of a page you find a button to save a bookmark."
-            />
-          </div>
-        )}
-        <ul>
-          {Object.keys(groupedItems)
-            .sort()
-            .map((grp, index) => {
-              return (
-                <li basic className="bookmarkgroup" key={index}>
-                  <h3>
-                    {get(
-                      BMGM,
-                      grp,
-                      intl.formatMessage(messages.no_bookmark_groupname),
-                    )}
-                  </h3>
-                  <ul>
-                    {groupedItems[grp].map((item, index) => {
-                      return (
-                        <li basic className="bookmarkitem" key={index}>
-                          {/* TODO replace hack to transform api url to app url */}
-                          <Link
-                            title={item.uid}
-                            to={`${
-                              flattenToAppURL(item['@id']) +
-                              deStringifySearchquery(item.queryparams)
-                            }`}
-                          >
-                            {item.title}
-                          </Link>
-                          <Button
-                            icon
-                            basic
-                            className="addbookmark"
-                            aria-label="Bookmark speichern/löschen"
-                            onClick={() =>
-                              deleteBookmarkHandler(
-                                item.uid,
-                                item.group,
-                                item.queryparams || '',
-                              )
-                            }
-                          >
-                            <Icon
-                              name={deleteSVG}
-                              // className="circled"
-                              size="30px"
-                              title="Bookmark löschen"
-                            />
-                          </Button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-    </Container>
+  return !token ? (
+    <div className="volto-bookmarks-info">
+      <FormattedMessage
+        id="help_bookmarks_anonymous"
+        defaultMessage="Please login to see your bookmarks"
+      />
+    </div>
+  ) : items?.length === 0 ? (
+    <div className="volto-bookmarks-info">
+      <FormattedMessage
+        id="help_bookmarks_emptylist"
+        defaultMessage="You do not have bookmarks. On the left of a page you find a button to save a bookmark."
+      />
+    </div>
+  ) : (
+    <ul className="volto-bookmarks-list">
+      {Object.keys(groupedItems)
+        .sort()
+        .map((grp, index) => {
+          return (
+            <li basic className="bookmarkgroup" key={index}>
+              <h3>
+                {get(
+                  BMGM,
+                  grp,
+                  intl.formatMessage(messages.no_bookmark_groupname),
+                )}
+              </h3>
+              <ul>
+                {groupedItems[grp].map((item, index) => {
+                  return (
+                    <li basic className="bookmarkitem" key={index}>
+                      {/* TODO replace hack to transform api url to app url */}
+                      <Link
+                        title={item.description || 'thank god it"s friday'}
+                        to={`${
+                          flattenToAppURL(item['@id']) +
+                          deStringifySearchquery(item.queryparams)
+                        }`}
+                      >
+                        {item.title}
+                      </Link>
+                      <Button
+                        icon
+                        basic
+                        className="addbookmark"
+                        aria-label="Bookmark speichern/löschen"
+                        onClick={() =>
+                          deleteBookmarkHandler(
+                            item.uid,
+                            item.group,
+                            item.queryparams || '',
+                          )
+                        }
+                      >
+                        <Icon
+                          name={deleteSVG}
+                          // className="circled"
+                          size="30px"
+                          title="Bookmark löschen"
+                        />
+                      </Button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </li>
+          );
+        })}
+    </ul>
   );
 };
 

@@ -3,6 +3,7 @@
 
 <img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
+
 [Volto](https://github.com/plone/volto) add-on
 
 ## Features
@@ -12,42 +13,68 @@ Add and manage bookmarks: pages and pages with params like faceted navigation li
 Bookmarks are grouped by the value of a selectable content type field.
 
 
+<img align="right" width="100%" alt="volto-bookmarks" src="./src/readmeillustration/bookmarks_somewhereelse.png" />
+
 ## Getting started
 
-> This add-on requires Volto 12 or higher version.
+There are two options:
+
+- Buttons in toolbar
+- Buttons somewhere else
+
+> This add-on requires Volto 12.xy or higher version with a pluggable toolbar if you want to place the buttons in toolbar.
 
 Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) ( by now branch ksuess-2021)
 
 Remember to install souper in control panel.
 
 
+### Option 1 - buttons in toolbar
+
 Include bookmarking of this package in your Volto projects config.js by
 
 ```js
-import { ToggleBookmarkComponent, ShowBookmarksComponent } from '@collective/volto-bookmarks/components';
+import { ToggleBookmarkButton, ShowBookmarksToolbarButton } from '@collective/volto-bookmarks/components';
 
-defaultToolbar.activities.view.top.push({
-  match: {
-    path: '/',
-  },
-  component: ToggleBookmarkComponent,
-});
+export default function applyConfig(config) {
+  config.toolbar.activities.view.top.push({
+    match: {
+      path: '/pathtosectionofbookmarkablepages/',
+    },
+    component: ToggleBookmarkButton,
+  });
+  config.toolbar.activities.view.bottom.push({
+    match: {
+      path: '/',
+    },
+    component: (props) => <ShowBookmarksToolbarButton {...props} />,
+  });
 
-defaultToolbar.activities.view.bottom.push({
-  match: {
-    path: '/',
-  },
-  component: (props) => <ShowBookmarksMenu {...props} />,
-});
-
-export { defaultToolbar as toolbar };
+  return config;
+}
 ```
 
 It adds two buttons in toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
 
+### Option 2 - buttons not in toolbar but sowhere else
+
+> TODO description how to place buttons
+
+```jsx
+import {
+  ShowBookmarksContentButton,
+  ToggleBookmarkButton,
+} from '@collective/volto-bookmarks/components';
+
+    <ShowBookmarksContentButton token={this.props.token} />
+
+```
+
+### Further configuration for both options
+
 Add a mapping for bookmark groups labels and the name of the field for grouping bookmarks list.
 
-````js
+```js
 // @collective/volto-bookmarks
 export const BOOKMARKGROUPMAPPING = {
   Anleitung: 'Anleitungen',

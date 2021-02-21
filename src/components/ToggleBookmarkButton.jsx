@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { get, trimStart } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { Portal } from 'react-portal';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
@@ -35,7 +34,7 @@ const messages = defineMessages({
   },
 });
 
-const ToggleBookmarkComponent = ({ token, pathname, intl }) => {
+const ToggleBookmarkButton = ({ token, pathname, intl }) => {
   /**
    * Add a bookmark to owners bookmark list
    */
@@ -127,27 +126,19 @@ const ToggleBookmarkComponent = ({ token, pathname, intl }) => {
   }
 
   return __CLIENT__ && token ? (
-    <>
-      <Portal
-        node={__CLIENT__ && document.querySelector('#toolbar .toolbar-actions')}
-      >
-        <Button
-          id="toolbar-addbookmark"
-          className="addbookmark"
-          aria-label={intl.formatMessage(messages.label_addbookmark)}
-          onClick={() => toggleBookmarkHandler()}
-        >
-          <Icon
-            name={currentbookmark ? bookmarkFilledSVG : bookmarkSVG}
-            size="30px"
-            title={intl.formatMessage(messages.label_addbookmark)}
-          />
-        </Button>
-      </Portal>
-    </>
-  ) : (
-    <></>
-  );
+    <Button
+      id="toolbar-addbookmark"
+      className="addbookmark"
+      aria-label={intl.formatMessage(messages.label_addbookmark)}
+      onClick={() => toggleBookmarkHandler()}
+    >
+      <Icon
+        name={currentbookmark ? bookmarkFilledSVG : bookmarkSVG}
+        size="30px"
+        title={intl.formatMessage(messages.label_addbookmark)}
+      />
+    </Button>
+  ) : null;
 };
 
-export default injectIntl(ToggleBookmarkComponent);
+export default injectIntl(ToggleBookmarkButton);

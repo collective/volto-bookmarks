@@ -1,0 +1,25 @@
+.dropdown.bookmarkmenu .header {
+    padding: .7rem 1rem !important;
+    font-size: 1rem !important;
+    color: unset;
+}
+ul.volto-bookmarks-list {
+    padding-left: 1rem;
+}
+ul.volto-bookmarks-list li {
+    list-style: none;
+}
+ul.volto-bookmarks-list ul {
+    padding: 0;
+}
+ul.volto-bookmarks-list .bookmarkgroup {
+    margin-bottom: .4rem;
+}
+
+.volto-bookmarks-info {
+    min-width: unset;
+    max-width: 300px;
+    padding: .7rem 1rem;
+    white-space: normal !important;
+    line-height: 1.3;
+}
