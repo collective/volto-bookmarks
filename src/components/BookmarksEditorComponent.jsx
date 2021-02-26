@@ -120,7 +120,7 @@ const BookmarksEditorComponent = ({ intl }) => {
                     <li basic className="bookmarkitem" key={index}>
                       {/* TODO replace hack to transform api url to app url */}
                       <Link
-                        title={item.description || 'thank god it"s friday'}
+                        title={item.description || ''}
                         to={`${
                           flattenToAppURL(item['@id']) +
                           deStringifySearchquery(item.queryparams)
