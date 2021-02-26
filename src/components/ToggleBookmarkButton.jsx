@@ -127,6 +127,8 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
 
   return __CLIENT__ && token ? (
     <Button
+      icon
+      basic
       id="toolbar-addbookmark"
       className="addbookmark"
       aria-label={intl.formatMessage(messages.label_addbookmark)}
