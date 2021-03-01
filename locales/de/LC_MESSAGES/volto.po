@@ -17,7 +17,7 @@ msgstr ""
 msgid "bookmark_searchquery"
 msgstr "Suche nach "
 
-#: components/BookmarksEditorComponent
+#: components/ShowBookmarksContentButton
 msgid "heading_bookmarks"
 msgstr "Lesezeichen"
 
@@ -29,11 +29,14 @@ msgstr "Bitte loggen Sie sich ein um Ihre Lesezeichen zu sehen."
 msgid "help_bookmarks_emptylist"
 msgstr "Sie haben noch keine Lesezeichen. Links neben einer Seite finden Sie einen Button um ein Lesezeichen für die jeweilige Seite zu speichern."
 
+#: components/ToggleBookmarkButton
 #: components/ToggleBookmarkComponent
 msgid "label_addbookmark"
 msgstr "Lesezeichen speichern/löschen"
 
 #: components/ShowBookmarksComponent
+#: components/ShowBookmarksContentButton
+#: components/ShowBookmarksToolbarButton
 msgid "label_showbookmarksmenu"
 msgstr "Lesezeichenmenü zeigen"
 

@@ -12,10 +12,6 @@
     "defaultMessage": "No group name found. Add a name to your BOOKMARKGROUPMAPPING."
   },
   {
-    "id": "heading_bookmarks",
-    "defaultMessage": "Bookmarks"
-  },
-  {
     "id": "help_bookmarks_anonymous",
     "defaultMessage": "Please login to see your bookmarks"
   },
