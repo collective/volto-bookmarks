@@ -18,6 +18,9 @@
   },
   "dependencies": {
   },
+  "peerDependencies": {
+    "@plone/volto": ">=12.0.0"
+  },
   "scripts": {
     "release": "release-it",
     "bootstrap": "node bootstrap",
