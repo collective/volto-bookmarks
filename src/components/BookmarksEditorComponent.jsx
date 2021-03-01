@@ -50,7 +50,7 @@ const messages = defineMessages({
 
 const BookmarksEditorComponent = ({ intl }) => {
   const token = useSelector((state) => state.userSession.token);
-  const items = useSelector((state) => state.collectivebookmarks.items);
+  const items = useSelector((state) => state.collectivebookmarks?.items || []);
   const dispatch = useDispatch();
 
   let [groupedItems, setGroupedItems] = useState({});
@@ -144,7 +144,7 @@ const BookmarksEditorComponent = ({ intl }) => {
                         <Icon
                           name={deleteSVG}
                           // className="circled"
-                          size="30px"
+                          size="25px"
                           title="Bookmark löschen"
                         />
                       </Button>

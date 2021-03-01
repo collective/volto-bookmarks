@@ -1,5 +1,3 @@
-// import { DatabaseInformation } from '@plone/volto/components';
-import { BookmarksEditorComponent } from './components';
 import { collectivebookmarks } from './reducers';
 
 const applyConfig = (config) => {

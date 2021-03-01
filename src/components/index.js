@@ -6,6 +6,6 @@ import BookmarksEditorComponent from './BookmarksEditorComponent';
 export {
   ToggleBookmarkButton,
   ShowBookmarksContentButton,
-//   ShowBookmarksToolbarButton,
+  //   ShowBookmarksToolbarButton,
   BookmarksEditorComponent,
 };

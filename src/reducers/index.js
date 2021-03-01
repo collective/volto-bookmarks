@@ -3,9 +3,6 @@
  * @module reducers/faq/faq
  */
 
-import { map } from 'lodash';
-import { settings } from '~/config';
-
 import {
   GET_BOOKMARK,
   ADD_BOOKMARK,

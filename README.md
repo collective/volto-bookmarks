@@ -1,9 +1,4 @@
-> Work in progress
-> TODO buttons in toolbar (with Volto 12)
- 
-
 # volto-bookmarks
-
 
 <img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
@@ -26,7 +21,9 @@ There are two options:
 - Buttons in toolbar
 - Buttons somewhere else
 
-> This add-on requires Volto 12.xy or higher version with a pluggable toolbar if you want to place the buttons in toolbar.
+> This add-on requires Volto 12.
+
+> And this add-on requires upcoming Volto 12.xy or higher version with a pluggable toolbar if you want to place the buttons in toolbar.
 
 Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) ( by now branch ksuess-2021)
 
@@ -62,15 +59,18 @@ It adds two buttons in toolbar: one for toggling the bookmark of the current pag
 
 ### Option 2 - buttons not in toolbar but sowhere else
 
-> TODO description how to place buttons
 
 ```jsx
-import {
-  ShowBookmarksContentButton,
-  ToggleBookmarkButton,
-} from '@collective/volto-bookmarks/components';
+import { ShowBookmarksContentButton } from '@collective/volto-bookmarks/components';
 
     <ShowBookmarksContentButton token={this.props.token} />
+
+```
+
+```jsx
+import { ToggleBookmarkButton } from '@collective/volto-bookmarks/components';
+
+    <ToggleBookmarkButton token={token} />
 
 ```
 
