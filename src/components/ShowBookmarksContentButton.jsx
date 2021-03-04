@@ -33,12 +33,7 @@ const ShowBookmarksContentButton = ({ token, intl }) => {
       }
     >
       <Dropdown.Menu className="left">
-        <Dropdown.Header>
-          <FormattedMessage id="heading_bookmarks" defaultMessage="Bookmarks" />
-        </Dropdown.Header>
-        <Dropdown.Menu scrolling>
-          <BookmarksEditorComponent />
-        </Dropdown.Menu>
+        <BookmarksEditorComponent />
       </Dropdown.Menu>
     </Dropdown>
   ) : null;
