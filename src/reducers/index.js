@@ -17,6 +17,8 @@ const initialState = {
   bookmark: null,
   loaded: false,
   loading: false,
+  delete: 'loaded', // needed to trigger fetching bookmarks,
+  // as delete does not get updated bookmarks from backend.
 };
 
 export function collectivebookmarks(state = initialState, action = {}) {
@@ -100,6 +102,7 @@ export function collectivebookmarks(state = initialState, action = {}) {
         error: null,
         loading: true,
         loaded: false,
+        delete: 'loading',
       };
     case `${DEL_BOOKMARK}_SUCCESS`:
       return {
@@ -108,6 +111,7 @@ export function collectivebookmarks(state = initialState, action = {}) {
         bookmark: null,
         loaded: true,
         loading: false,
+        delete: 'loaded',
       };
     case `${DEL_BOOKMARK}_FAIL`:
       return {
@@ -115,6 +119,7 @@ export function collectivebookmarks(state = initialState, action = {}) {
         error: action.error,
         loading: false,
         loaded: false,
+        delete: 'failed',
       };
 
     // list of bookmarks

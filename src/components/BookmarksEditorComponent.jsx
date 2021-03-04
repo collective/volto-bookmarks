@@ -51,17 +51,41 @@ const messages = defineMessages({
 const BookmarksEditorComponent = ({ intl }) => {
   const token = useSelector((state) => state.userSession.token);
   const items = useSelector((state) => state.collectivebookmarks?.items || []);
+  const bookmarkdelete = useSelector(
+    (state) => state.collectivebookmarks?.delete || {},
+  );
   const dispatch = useDispatch();
 
   let [groupedItems, setGroupedItems] = useState({});
 
+  // TODO getBookmorks on
+  // - mount
+  // - after deletion of bookmark
+  // - after login
+
+  // on mount
+  // on login
   useEffect(() => {
+    // console.log(
+    //   '** BookmarksEditorComponent useEffect. dispatch getBookmarks on token change',
+    // );
     if (token) {
       dispatch(getBookmarks());
     }
   }, [dispatch, token]);
 
+  // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
   useEffect(() => {
+    // console.log(
+    //   '** BookmarksEditorComponent useEffect. dispatch getBookmarks on bookmarkdelete',
+    // );
+    if (token && bookmarkdelete === 'loaded') {
+      dispatch(getBookmarks());
+    }
+  }, [dispatch, bookmarkdelete]);
+
+  useEffect(() => {
+    // console.log('BookmarksEditorComponent useEffect. group items');
     // group items, set title, sort by title
     let grtms = groupBy(items, (item) => item['group']);
     Object.keys(grtms).forEach((kk) => {
@@ -80,7 +104,7 @@ const BookmarksEditorComponent = ({ intl }) => {
       grtms[kk] = bar;
     });
     setGroupedItems(grtms);
-  }, [dispatch, items]);
+  }, [dispatch, items, intl]);
 
   function deleteBookmarkHandler(uid, group, searchquery) {
     dispatch(deleteBookmark(uid, group, searchquery));
