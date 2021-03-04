@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: en\n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+
+#: components/BookmarksEditorComponent
+msgid "bookmark_searchquery"
+msgstr "Search for "
+
+#: components/ShowBookmarksContentButton
+msgid "heading_bookmarks"
+msgstr "Bookmarks"
+
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_anonymous"
+msgstr "Please log in to see your bookmarks."
+
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_emptylist"
+msgstr "You don't have any bookmarks. You find a button on every page to bookmark it."
+
+#: components/ToggleBookmarkButton
+#: components/ToggleBookmarkComponent
+msgid "label_addbookmark"
+msgstr "Save or delete bookmark"
+
+#: components/ShowBookmarksComponent
+#: components/ShowBookmarksContentButton
+#: components/ShowBookmarksToolbarButton
+msgid "label_showbookmarksmenu"
+msgstr "Show bookmark menu"
+
+#: components/BookmarksEditorComponent
+msgid "no_bookmark_groupname"
+msgstr "No group names found. Please define name in BOOKMARKGROUPMAPPING."
+
+#: components/BookmarksEditorComponent
+msgid "title_bookmarks"
+msgstr "Bookmarks"
