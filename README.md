@@ -3,11 +3,11 @@
 <img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
 
-[Volto](https://github.com/plone/volto) add-on
+[Plone (Volto)](https://github.com/plone/volto) add-on
 
 ## Features
 
-Add and manage bookmarks: pages and pages with params like faceted navigation links to filtered content.
+Add and manage bookmarks for pages and search results.
 
 Bookmarks are grouped by the value of a selectable content type field.
 
@@ -25,12 +25,42 @@ There are two options:
 
 > And this add-on requires upcoming Volto 12.xy or higher version with a pluggable toolbar if you want to place the buttons in toolbar.
 
-Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) ( by now branch ksuess-2021)
+## Installation
 
-Remember to install souper in control panel.
+Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) 
 
+Remember to install souper in Plone backend control panel.
+
+Usual installation of a Plone (Volto) add-on:
+
+```bash
+yarn add @collective/volto-bookmarks
+```
+
+*src/package.json*
+
+```json
+  "addons": [
+    "@collective/volto-bookmarks"
+  ],
+
+  "dependencies": {
+    "@collective/volto-bookmarks": "^1.0.0"
+  },
+```
+
+Install new add-on and get translations of add-ons:
+
+```bash
+yarn
+yarn i18n
+```
+
+## Integration of the two bookmark buttons
 
 ### Option 1 - buttons in toolbar
+
+> This requires **upcoming** Volto 12.xy or higher version with a pluggable toolbar.
 
 Include bookmarking of this package in your Volto projects config.js by
 
@@ -59,6 +89,7 @@ It adds two buttons in toolbar: one for toggling the bookmark of the current pag
 
 ### Option 2 - buttons not in toolbar but sowhere else
 
+Add the both buttons to components of your choice:
 
 ```jsx
 import { ShowBookmarksContentButton } from '@collective/volto-bookmarks/components';
@@ -89,11 +120,22 @@ export const BOOKMARKGROUPMAPPING = {
 };
 
 export const BOOKMARKGROUPFIELD = 'informationtype';
-````
+```
 
-## Copyright and license
+Start Volto:
 
-Author Katja Süss, Rohberg, 
+```bash
+yarn start
+```
+
+**You are ready to collect bookmarks!** 
+<img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
+
+
+
+## Copyright and License
+
+Author @ksuess, Katja Süss, Rohberg, 
 https://www.rohberg.ch
 
 Copyright (c) 2021 Plone Foundation
