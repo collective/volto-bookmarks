@@ -13,7 +13,6 @@ import {
 import { doStringifySearchquery } from '../helpers';
 
 export function getBookmark(uid, group, querystring = '') {
-  console.log('getBookmark', uid, group, querystring);
   return {
     type: GET_BOOKMARK,
     request: {
@@ -26,7 +25,6 @@ export function getBookmark(uid, group, querystring = '') {
 }
 
 export function addBookmark(uid, group, querystring = '', payload = {}) {
-  console.log('addBookmark', uid, group, querystring, payload);
   return {
     type: ADD_BOOKMARK,
     request: {
@@ -43,7 +41,6 @@ export function addBookmark(uid, group, querystring = '', payload = {}) {
 }
 
 export function modifyBookmark(uid, group, querystring = '', payload = {}) {
-  console.log('modifyBookmark', uid, group, querystring, payload);
   return {
     type: PUT_BOOKMARK,
     request: {
@@ -60,7 +57,6 @@ export function modifyBookmark(uid, group, querystring = '', payload = {}) {
 }
 
 export function deleteBookmark(uid, group, querystring = '') {
-  console.log('deleteBookmark', uid, group, querystring);
   return {
     type: DEL_BOOKMARK,
     request: {
@@ -80,7 +76,6 @@ export function deleteBookmark(uid, group, querystring = '') {
  * @param {string} group
  */
 export function getBookmarks(group) {
-  console.log('getBookmarks', group);
   return {
     type: GET_BOOKMARKS,
     request: {

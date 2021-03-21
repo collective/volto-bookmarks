@@ -7,7 +7,7 @@
 
 ## Features
 
-Add and manage bookmarks for pages and search results.
+Add and manage bookmarks for pages and searchkit results.
 
 Bookmarks are grouped by the value of a selectable content type field.
 
@@ -24,6 +24,8 @@ There are two options:
 > This add-on requires Volto 12.
 
 > And this add-on requires upcoming Volto 12.xy or higher version with a pluggable toolbar if you want to place the buttons in toolbar.
+
+
 
 ## Installation
 
@@ -101,7 +103,7 @@ import { ShowBookmarksContentButton } from '@collective/volto-bookmarks/componen
 ```jsx
 import { ToggleBookmarkButton } from '@collective/volto-bookmarks/components';
 
-    <ToggleBookmarkButton token={hereisatoken.token} />
+    <ToggleBookmarkButton token={hereisatoken.token} pathname={this.props.pathname} />
 
 ```
 
@@ -134,6 +136,9 @@ yarn start
 <img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
 
+## Forecast
+
+Plone default search queries can be bookmarked with the upcoming Plone root being a dexterity content object. By now search queries of searchkit implementations are bookmarkable.
 
 ## Copyright and License
 
