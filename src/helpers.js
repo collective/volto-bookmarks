@@ -5,7 +5,6 @@
  * @return {string} joined values of querystring key
  */
 function _getValuesFromSearchquery(querystring, key) {
-  console.log('_getValuesFromSearchquery', key);
   const params = new URLSearchParams(querystring);
   let filter = params.getAll(key);
   let result = filter.map((flt) => flt.split(':').pop());

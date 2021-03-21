@@ -40,9 +40,6 @@ const messages = defineMessages({
  * Add a bookmark to owners bookmark list
  */
 const ToggleBookmarkButton = ({ token, pathname, intl }) => {
-  // TODO location.search lacks order und sort:
-  // ?q=&f=kompasscomponent_agg.kompasscomponent_token%3ABEW&l=list&p=1&s=10
-  let location = useLocation(); //TODO that's not up to date for history.push.
   const content = useSelector((state) => state.content.data);
   const dispatch = useDispatch();
   const currentbookmark = useSelector(
@@ -51,22 +48,26 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
   const [group, setGroup] = useState('');
 
   React.useEffect(() => {
-    if (content?.UID && token) {
+    if (token) {
       const url = new URL(document.location);
-      let default_token = [
-        { token: url.search ? 'default_search' : 'default_nogroup' },
-      ];
-      let grp_token = get(content, BMGF, default_token);
-      let grp =
-        grp_token && grp_token.length > 0
-          ? grp_token[0].token || grp_token
-          : 'default_search';
+      let uid = content?.UID;
+      let grp = 'default_nogroup';
+      if (uid) {
+        let default_token = [
+          { token: url.search ? 'default_search' : 'default_nogroup' },
+        ];
+        let grp_token = get(content, BMGF, default_token);
+        grp =
+          grp_token && grp_token.length > 0
+            ? grp_token[0].token || grp_token
+            : 'default_search';
+      }
       setGroup(grp);
-      dispatch(getBookmark(content.UID, grp, url.search));
+      dispatch(getBookmark(uid, grp, url.search));
     }
-  }, [dispatch, pathname, token, location, content]);
+  }, [dispatch, pathname, token, content]);
 
-  // TODO Make event listeners configurable for other implementations of searchkit / faceted searches
+  // TODO Make event listeners configurable for other implementations of searchkit / faceted searche
   React.useEffect(function mount() {
     window.addEventListener(
       'searchkitQueryChanged',
@@ -90,20 +91,23 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
 
   function toggleBookmarkHandler() {
     const url = new URL(document.location);
-    // TODO remove hack for location.search. see above useLocation.
     let [uid, querystring] = [content.UID, url.search];
+
+    let grp = group;
+    // TODO remove the following hack for Plone default search if Plone site root is dexterity and has an uid
+    // if (url.pathname === '/search') {
+    //   uid = DEFAULT_SEARCH_NONPAGE_UID; // arbitrary but not changing uid
+    //   grp = 'default_search';
+    //   setGroup(grp);
+    // }
+
     if (currentbookmark) {
-      dispatch(deleteBookmark(uid, group, querystring));
+      dispatch(deleteBookmark(uid, grp, querystring));
     } else {
-      // TODO remove this hack for Plone default search if Plone site root is dexterity and has a uid
-      if (url.pathname === '/search') {
-        uid = '886313e1-3b8a-5372-9b90-0c9aee199e5d'; // arbitrary but not changing uid
-        setGroup('default_search');
-      }
       let payload = {
         querystringvalues: querystringToTitle(querystring),
       };
-      dispatch(addBookmark(uid, group, querystring, payload));
+      dispatch(addBookmark(uid, grp, querystring, payload));
     }
   }
 
