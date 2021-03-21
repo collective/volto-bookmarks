@@ -94,16 +94,18 @@ Add the both buttons to components of your choice:
 ```jsx
 import { ShowBookmarksContentButton } from '@collective/volto-bookmarks/components';
 
-    <ShowBookmarksContentButton token={this.props.token} />
+    <ShowBookmarksContentButton token={hereisatoken.token} />
 
 ```
 
 ```jsx
 import { ToggleBookmarkButton } from '@collective/volto-bookmarks/components';
 
-    <ToggleBookmarkButton token={token} />
+    <ToggleBookmarkButton token={hereisatoken.token} />
 
 ```
+
+*hereisatoken.token*: *this.props.token* for class components or just *token* for funky components.
 
 ### Further configuration for both options
 
