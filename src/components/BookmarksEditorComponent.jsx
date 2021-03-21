@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { get, groupBy, sortBy } from 'lodash';
 
-import { Button, Container } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
-import { Helmet, flattenToAppURL } from '@plone/volto/helpers';
+import { flattenToAppURL } from '@plone/volto/helpers';
 import { Icon } from '@plone/volto/components';
 
 import deleteSVG from '@plone/volto/icons/clear.svg';
@@ -18,19 +18,6 @@ import { deleteBookmark } from '../actions';
 import './volto-bookmarks.css';
 
 import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
-let BMGM = BOOKMARKGROUPMAPPING;
-let BMGF = BOOKMARKGROUPFIELD;
-import('~/config.js')
-  .then((config) => {
-    BMGM = config.BOOKMARKGROUPMAPPING;
-    BMGF = config.BOOKMARKGROUPFIELD;
-  })
-  .catch((error) => {
-    console.info(
-      error,
-      'Think about configuring BOOKMARKGROUPMAPPING and BOOKMARKGROUPFIELD in your project',
-    );
-  });
 
 const messages = defineMessages({
   title_bookmarks: {
@@ -41,10 +28,9 @@ const messages = defineMessages({
     id: 'bookmark_searchquery',
     defaultMessage: 'Search for ',
   },
-  no_bookmark_groupname: {
-    id: 'no_bookmark_groupname',
-    defaultMessage:
-      'No group name found. Add a name to your BOOKMARKGROUPMAPPING.',
+  label_deletebookmark: {
+    id: 'label_deletebookmark',
+    defaultMessage: 'delete bookmark',
   },
 });
 
@@ -58,17 +44,33 @@ const BookmarksEditorComponent = ({ intl }) => {
 
   let [groupedItems, setGroupedItems] = useState({});
 
-  // TODO getBookmorks on
-  // - mount
-  // - after deletion of bookmark
-  // - after login
+  let [BMGM, setBMGM] = useState(BOOKMARKGROUPMAPPING);
+  let [BMGF, setBMGF] = useState(BOOKMARKGROUPFIELD);
+  import('~/config.js')
+    .then((config) => {
+      //console.log('imported config', config, config.BOOKMARKGROUPMAPPING);
+      if (config.BOOKMARKGROUPMAPPING && config.BOOKMARKGROUPFIELD) {
+        setBMGM(config.BOOKMARKGROUPMAPPING);
+        setBMGF(config.BOOKMARKGROUPFIELD);
+      }
+    })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.info(
+        error,
+        'Think about configuring BOOKMARKGROUPMAPPING and BOOKMARKGROUPFIELD in your project',
+      );
+    });
+
+  /* getBookmorks on
+   * - mount
+   * - after deletion of bookmark
+   * - after login
+   */
 
   // on mount
   // on login
   useEffect(() => {
-    // console.log(
-    //   '** BookmarksEditorComponent useEffect. dispatch getBookmarks on token change',
-    // );
     if (token) {
       dispatch(getBookmarks());
     }
@@ -76,17 +78,12 @@ const BookmarksEditorComponent = ({ intl }) => {
 
   // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
   useEffect(() => {
-    // console.log(
-    //   '** BookmarksEditorComponent useEffect. dispatch getBookmarks on bookmarkdelete',
-    // );
     if (token && bookmarkdelete === 'loaded') {
       dispatch(getBookmarks());
     }
   }, [dispatch, bookmarkdelete]);
 
   useEffect(() => {
-    // console.log('BookmarksEditorComponent useEffect. group items');
-    // group items, set title, sort by title
     let grtms = groupBy(items, (item) => item['group']);
     Object.keys(grtms).forEach((kk) => {
       let foo = grtms[kk].map((item) => {
@@ -121,7 +118,7 @@ const BookmarksEditorComponent = ({ intl }) => {
     <div className="volto-bookmarks-info">
       <FormattedMessage
         id="help_bookmarks_emptylist"
-        defaultMessage="You do not have bookmarks. On the left of a page you find a button to save a bookmark."
+        defaultMessage="You don't have any bookmarks. You find a button on every page to bookmark it."
       />
     </div>
   ) : (
@@ -130,23 +127,18 @@ const BookmarksEditorComponent = ({ intl }) => {
         .sort()
         .map((grp, index) => {
           return (
-            <li basic className="bookmarkgroup" key={index}>
-              <h3>
-                {get(
-                  BMGM,
-                  grp,
-                  intl.formatMessage(messages.no_bookmark_groupname),
-                )}
-              </h3>
+            <li className="bookmarkgroup" key={index}>
+              <h3>{get(BMGM, grp, grp)}</h3>
               <ul>
                 {groupedItems[grp].map((item, index) => {
                   return (
-                    <li basic className="bookmarkitem" key={index}>
+                    <li className="bookmarkitem" key={index}>
                       {/* TODO replace hack to transform api url to app url */}
                       <Link
                         title={item.description || ''}
                         to={`${
                           flattenToAppURL(item['@id']) +
+                          '?' +
                           deStringifySearchquery(item.queryparams)
                         }`}
                       >
@@ -155,8 +147,10 @@ const BookmarksEditorComponent = ({ intl }) => {
                       <Button
                         icon
                         basic
-                        className="addbookmark"
-                        aria-label="Bookmark speichern/löschen"
+                        className="deletebookmark"
+                        aria-label={intl.formatMessage(
+                          messages.label_deletebookmark,
+                        )}
                         onClick={() =>
                           deleteBookmarkHandler(
                             item.uid,

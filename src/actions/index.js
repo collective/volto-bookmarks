@@ -1,3 +1,7 @@
+/**
+ * Bookmark actions
+ */
+
 import {
   GET_BOOKMARK,
   ADD_BOOKMARK,
@@ -8,24 +12,21 @@ import {
 
 import { doStringifySearchquery } from '../helpers';
 
-export function getBookmark(uid, group, searchquery = '') {
-  // TODO consequent use of document.location.search or remove completly.
-  const url = new URL(document.location);
-  searchquery = url.search;
+export function getBookmark(uid, group, querystring = '') {
+  console.log('getBookmark', uid, group, querystring);
   return {
     type: GET_BOOKMARK,
     request: {
       op: 'get',
       path: `/@bookmark?uid=${uid}&group=${group}&queryparams=${doStringifySearchquery(
-        searchquery,
+        querystring,
       )}`,
     },
   };
 }
 
-export function addBookmark(uid, group, searchquery = '', payload = {}) {
-  const url = new URL(document.location);
-  searchquery = url.search;
+export function addBookmark(uid, group, querystring = '', payload = {}) {
+  console.log('addBookmark', uid, group, querystring, payload);
   return {
     type: ADD_BOOKMARK,
     request: {
@@ -34,16 +35,15 @@ export function addBookmark(uid, group, searchquery = '', payload = {}) {
       data: {
         uid,
         group,
-        queryparams: doStringifySearchquery(searchquery),
+        queryparams: doStringifySearchquery(querystring),
         payload,
       },
     },
   };
 }
 
-export function modifyBookmark(uid, group, searchquery = '', payload = {}) {
-  const url = new URL(document.location);
-  searchquery = url.search;
+export function modifyBookmark(uid, group, querystring = '', payload = {}) {
+  console.log('modifyBookmark', uid, group, querystring, payload);
   return {
     type: PUT_BOOKMARK,
     request: {
@@ -52,16 +52,15 @@ export function modifyBookmark(uid, group, searchquery = '', payload = {}) {
       data: {
         uid,
         group,
-        queryparams: doStringifySearchquery(searchquery),
+        queryparams: doStringifySearchquery(querystring),
         payload,
       },
     },
   };
 }
 
-export function deleteBookmark(uid, group, searchquery = '') {
-  // const url = new URL(document.location);
-  // searchquery = url.search;
+export function deleteBookmark(uid, group, querystring = '') {
+  console.log('deleteBookmark', uid, group, querystring);
   return {
     type: DEL_BOOKMARK,
     request: {
@@ -70,14 +69,18 @@ export function deleteBookmark(uid, group, searchquery = '') {
       data: {
         uid,
         group,
-        queryparams: doStringifySearchquery(searchquery),
+        queryparams: doStringifySearchquery(querystring),
       },
     },
   };
 }
 
+/**
+ * Get list of bookmarks
+ * @param {string} group
+ */
 export function getBookmarks(group) {
-  // Get list of bookmarks.
+  console.log('getBookmarks', group);
   return {
     type: GET_BOOKMARKS,
     request: {

@@ -1,6 +1,5 @@
 /**
- * Faq reducer.
- * @module reducers/faq/faq
+ * Bookmark reducers
  */
 
 import {

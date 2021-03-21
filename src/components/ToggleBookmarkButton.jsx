@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { get, trimStart } from 'lodash';
+import { get } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
@@ -12,6 +12,8 @@ import bookmarkFilledSVG from '../icons/bookmark_filled.svg';
 
 import { getBookmark, addBookmark, deleteBookmark } from '../actions';
 
+import { querystringToTitle } from '../helpers';
+
 import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
 let BMGM = BOOKMARKGROUPMAPPING;
 let BMGF = BOOKMARKGROUPFIELD;
@@ -21,7 +23,7 @@ import('~/config.js')
     BMGF = config.BOOKMARKGROUPFIELD;
   })
   .catch((error) => {
-    console.info(
+    console.warning(
       error,
       'Think about configuring BOOKMARKGROUPMAPPING and BOOKMARKGROUPFIELD in your project',
     );
@@ -34,17 +36,15 @@ const messages = defineMessages({
   },
 });
 
+/**
+ * Add a bookmark to owners bookmark list
+ */
 const ToggleBookmarkButton = ({ token, pathname, intl }) => {
-  /**
-   * Add a bookmark to owners bookmark list
-   */
-
   // TODO location.search lacks order und sort:
   // ?q=&f=kompasscomponent_agg.kompasscomponent_token%3ABEW&l=list&p=1&s=10
   let location = useLocation(); //TODO that's not up to date for history.push.
   const content = useSelector((state) => state.content.data);
   const dispatch = useDispatch();
-  // const [bookmarked, setBookmarked] = useState(false);
   const currentbookmark = useSelector(
     (state) => state.collectivebookmarks.bookmark,
   );
@@ -59,14 +59,14 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
       let grp_token = get(content, BMGF, default_token);
       let grp =
         grp_token && grp_token.length > 0
-          ? grp_token[0].token
+          ? grp_token[0].token || grp_token
           : 'default_search';
       setGroup(grp);
       dispatch(getBookmark(content.UID, grp, url.search));
     }
   }, [dispatch, pathname, token, location, content]);
 
-  // TODO Make event listeners configurable
+  // TODO Make event listeners configurable for other implementations of searchkit / faceted searches
   React.useEffect(function mount() {
     window.addEventListener(
       'searchkitQueryChanged',
@@ -88,40 +88,22 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
     dispatch(getBookmark(content.UID, 'default_search', url.search));
   }
 
-  function getValuesFromSearchquery(sq, key) {
-    /**
-     * @collective/volto-search
-     *
-     * return dictionary
-     * querystringvalues: string with list of selected filter values or other querystring values
-     */
-    const params = new URLSearchParams(trimStart(sq, '?'));
-    let filter = params.getAll(key);
-    let result = filter.map((flt) => flt.split(':').pop());
-    // TODO do proper decoding
-    let encodedString = result.join(', ').replaceAll('=', '%');
-    let valuesString = decodeURI(encodedString);
-    return valuesString;
-  }
-
   function toggleBookmarkHandler() {
     const url = new URL(document.location);
-    // TODO remove hack for loacation.search. see above useLocation.
-    let [uid, searchquery] = [content.UID, url.search];
+    // TODO remove hack for location.search. see above useLocation.
+    let [uid, querystring] = [content.UID, url.search];
     if (currentbookmark) {
-      dispatch(deleteBookmark(uid, group, searchquery));
-    } else if (uid) {
-      // TODO make this configurable and independent of @collective/volto-search
-      let payload = {};
-      let querystringvalues = [];
-      querystringvalues.push(getValuesFromSearchquery(searchquery, 'q'));
-      querystringvalues.push(getValuesFromSearchquery(searchquery, 'f'));
-      querystringvalues = querystringvalues
-        .filter((el) => el !== '')
-        .join(' | ');
-      payload['querystringvalues'] = querystringvalues;
-      // TODO do proper encoding: Open Bookmark: should be recognized as already bookmarked
-      dispatch(addBookmark(uid, group, searchquery, payload));
+      dispatch(deleteBookmark(uid, group, querystring));
+    } else {
+      // TODO remove this hack for Plone default search if Plone site root is dexterity and has a uid
+      if (url.pathname === '/search') {
+        uid = '886313e1-3b8a-5372-9b90-0c9aee199e5d'; // arbitrary but not changing uid
+        setGroup('default_search');
+      }
+      let payload = {
+        querystringvalues: querystringToTitle(querystring),
+      };
+      dispatch(addBookmark(uid, group, querystring, payload));
     }
   }
 

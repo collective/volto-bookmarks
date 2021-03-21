@@ -4,7 +4,7 @@
  * see ShowBookmarksToolbarButton for a button to integrate in toolbar
  */
 import React from 'react';
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Dropdown } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
 import bookSVG from '@plone/volto/icons/book.svg';
@@ -40,5 +40,3 @@ const ShowBookmarksContentButton = ({ token, intl }) => {
 };
 
 export default injectIntl(ShowBookmarksContentButton);
-
-// <Dropdown.Menu scrolling>
