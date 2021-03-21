@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2021-03-01T07:13:52.634Z\n"
+"POT-Creation-Date: 2021-03-21T11:53:18.340Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,18 +18,13 @@ msgstr ""
 msgid "bookmark_searchquery"
 msgstr ""
 
-#: components/ShowBookmarksContentButton
-# defaultMessage: Bookmarks
-msgid "heading_bookmarks"
-msgstr ""
-
 #: components/BookmarksEditorComponent
 # defaultMessage: Please login to see your bookmarks
 msgid "help_bookmarks_anonymous"
 msgstr ""
 
 #: components/BookmarksEditorComponent
-# defaultMessage: You do not have bookmarks. On the left of a page you find a button to save a bookmark.
+# defaultMessage: You don't have any bookmarks. You find a button on every page to bookmark it.
 msgid "help_bookmarks_emptylist"
 msgstr ""
 
@@ -39,16 +34,16 @@ msgstr ""
 msgid "label_addbookmark"
 msgstr ""
 
+#: components/BookmarksEditorComponent
+# defaultMessage: delete bookmark
+msgid "label_deletebookmark"
+msgstr ""
+
 #: components/ShowBookmarksComponent
 #: components/ShowBookmarksContentButton
 #: components/ShowBookmarksToolbarButton
 # defaultMessage: show bookmarks menu
 msgid "label_showbookmarksmenu"
-msgstr ""
-
-#: components/BookmarksEditorComponent
-# defaultMessage: No group name found. Add a name to your BOOKMARKGROUPMAPPING.
-msgid "no_bookmark_groupname"
 msgstr ""
 
 #: components/BookmarksEditorComponent

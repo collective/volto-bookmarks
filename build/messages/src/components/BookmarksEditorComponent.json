@@ -8,8 +8,8 @@
     "defaultMessage": "Search for "
   },
   {
-    "id": "no_bookmark_groupname",
-    "defaultMessage": "No group name found. Add a name to your BOOKMARKGROUPMAPPING."
+    "id": "label_deletebookmark",
+    "defaultMessage": "delete bookmark"
   },
   {
     "id": "help_bookmarks_anonymous",
@@ -17,6 +17,6 @@
   },
   {
     "id": "help_bookmarks_emptylist",
-    "defaultMessage": "You do not have bookmarks. On the left of a page you find a button to save a bookmark."
+    "defaultMessage": "You don't have any bookmarks. You find a button on every page to bookmark it."
   }
 ]

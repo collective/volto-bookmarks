@@ -17,32 +17,28 @@ msgstr ""
 msgid "bookmark_searchquery"
 msgstr "Suche nach "
 
-#: components/ShowBookmarksContentButton
-msgid "heading_bookmarks"
-msgstr "Lesezeichen"
-
 #: components/BookmarksEditorComponent
 msgid "help_bookmarks_anonymous"
 msgstr "Bitte loggen Sie sich ein um Ihre Lesezeichen zu sehen."
 
 #: components/BookmarksEditorComponent
 msgid "help_bookmarks_emptylist"
-msgstr "Sie haben noch keine Lesezeichen. Links neben einer Seite finden Sie einen Button um ein Lesezeichen für die jeweilige Seite zu speichern."
+msgstr "Sie haben noch keine Lesezeichen. Auf jeder Seite finden Sie einen Button um ein Lesezeichen zu speichern."
 
 #: components/ToggleBookmarkButton
 #: components/ToggleBookmarkComponent
 msgid "label_addbookmark"
 msgstr "Lesezeichen speichern/löschen"
 
+#: components/BookmarksEditorComponent
+msgid "label_deletebookmark"
+msgstr "Lesezeichen löschen"
+
 #: components/ShowBookmarksComponent
 #: components/ShowBookmarksContentButton
 #: components/ShowBookmarksToolbarButton
 msgid "label_showbookmarksmenu"
 msgstr "Lesezeichenmenü zeigen"
-
-#: components/BookmarksEditorComponent
-msgid "no_bookmark_groupname"
-msgstr "Kein Gruppenname gefunden. Ergänzen Sie bitte einen Namen im BOOKMARKGROUPMAPPING."
 
 #: components/BookmarksEditorComponent
 msgid "title_bookmarks"
