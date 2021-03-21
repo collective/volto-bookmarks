@@ -17,6 +17,8 @@
     "url": "git@github.com:collective/volto-bookmarks.git"
   },
   "dependencies": {
+    "react-overridable": "^0.0.3",
+    "react-searchkit": "1.0.0-alpha.14"
   },
   "peerDependencies": {
     "@plone/volto": ">=12.0.0"
@@ -31,6 +33,10 @@
     "prettier:fix": "../../../node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx,json,css,less,md}'",
     "lint": "../../../node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx}'",
     "lint:fix": "../../../node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'",
-    "i18n": "NODE_ENV=production node src/i18n.js"
+    "i18n": "NODE_ENV=production node src/i18n.js",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
+  },
+  "devDependencies": {
+    "auto-changelog": "^2.2.1"
   }
 }
