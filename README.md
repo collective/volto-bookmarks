@@ -33,25 +33,9 @@ Provide the necessary REST API endpoints for your Plone backend by installing [c
 
 Remember to install souper in Plone backend control panel.
 
-Usual installation of a Plone (Volto) add-on:
+Install this Plone (Volto) add-on. See [Volto docs](https://docs.voltocms.com/addons/#configuring-a-volto-project-to-use-an-addon) for instructions.
 
-```bash
-yarn add @collective/volto-bookmarks
-```
-
-*src/package.json*
-
-```json
-  "addons": [
-    "@collective/volto-bookmarks"
-  ],
-
-  "dependencies": {
-    "@collective/volto-bookmarks": "^1.0.0"
-  },
-```
-
-Install new add-on and get translations of add-ons:
+Get translations of add-on:
 
 ```bash
 yarn
