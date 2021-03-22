@@ -48,7 +48,6 @@ const BookmarksEditorComponent = ({ intl }) => {
   let [BMGF, setBMGF] = useState(BOOKMARKGROUPFIELD);
   import('~/config.js')
     .then((config) => {
-      //console.log('imported config', config, config.BOOKMARKGROUPMAPPING);
       if (config.BOOKMARKGROUPMAPPING && config.BOOKMARKGROUPFIELD) {
         setBMGM(config.BOOKMARKGROUPMAPPING);
         setBMGF(config.BOOKMARKGROUPFIELD);
