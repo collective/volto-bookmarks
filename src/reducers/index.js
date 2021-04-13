@@ -107,7 +107,7 @@ export function collectivebookmarks(state = initialState, action = {}) {
       return {
         ...state,
         error: null,
-        bookmark: null,
+        // bookmark: null, // fails for deleting in bookmarks list. See ToggleBookmarkButton after deletion of bookmark
         loaded: true,
         loading: false,
         delete: 'loaded',

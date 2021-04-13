@@ -65,7 +65,7 @@ export function deleteBookmark(uid, group, querystring = '') {
       data: {
         uid,
         group,
-        queryparams: doStringifySearchquery(querystring),
+        queryparams: querystring,
       },
     },
   };

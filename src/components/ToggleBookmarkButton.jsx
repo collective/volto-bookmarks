@@ -12,7 +12,7 @@ import bookmarkFilledSVG from '../icons/bookmark_filled.svg';
 
 import { getBookmark, addBookmark, deleteBookmark } from '../actions';
 
-import { querystringToTitle } from '../helpers';
+import { doStringifySearchquery, querystringToTitle } from '../helpers';
 
 import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
 let BMGM = BOOKMARKGROUPMAPPING;
@@ -45,6 +45,9 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
   const currentbookmark = useSelector(
     (state) => state.collectivebookmarks.bookmark,
   );
+  const bookmarkdelete = useSelector(
+    (state) => state.collectivebookmarks?.delete || {},
+  );
   const [group, setGroup] = useState('');
 
   React.useEffect(() => {
@@ -67,7 +70,28 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
     }
   }, [dispatch, pathname, token, content]);
 
-  // TODO Make event listeners configurable for other implementations of searchkit / faceted searche
+  // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
+  React.useEffect(() => {
+    if (token && bookmarkdelete === 'loaded') {
+      const url = new URL(document.location);
+      let uid = content?.UID;
+      let grp = 'default_nogroup';
+      if (uid) {
+        let default_token = [
+          { token: url.search ? 'default_search' : 'default_nogroup' },
+        ];
+        let grp_token = get(content, BMGF, default_token);
+        grp =
+          grp_token && grp_token.length > 0
+            ? grp_token[0].token || grp_token
+            : 'default_search';
+      }
+      setGroup(grp);
+      dispatch(getBookmark(uid, grp, url.search));
+    }
+  }, [dispatch, bookmarkdelete]);
+
+  // TODO Make event listeners configurable for other implementations of searchkit / faceted search
   React.useEffect(function mount() {
     window.addEventListener(
       'searchkitQueryChanged',
@@ -102,7 +126,7 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
     // }
 
     if (currentbookmark) {
-      dispatch(deleteBookmark(uid, grp, querystring));
+      dispatch(deleteBookmark(uid, grp, doStringifySearchquery(querystring)));
     } else {
       let payload = {
         querystringvalues: querystringToTitle(querystring),
