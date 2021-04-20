@@ -11,7 +11,7 @@ import { Icon } from '@plone/volto/components';
 
 import deleteSVG from '@plone/volto/icons/clear.svg';
 
-import { getBookmarks } from '../actions';
+import { getAllBookmarks } from '../actions';
 import { deStringifySearchquery } from '../helpers';
 
 import { deleteBookmark } from '../actions';
@@ -71,14 +71,14 @@ const BookmarksEditorComponent = ({ intl }) => {
   // on login
   useEffect(() => {
     if (token) {
-      dispatch(getBookmarks());
+      dispatch(getAllBookmarks());
     }
   }, [dispatch, token]);
 
   // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
   useEffect(() => {
     if (token && bookmarkdelete === 'loaded') {
-      dispatch(getBookmarks());
+      dispatch(getAllBookmarks());
     }
   }, [dispatch, bookmarkdelete]);
 

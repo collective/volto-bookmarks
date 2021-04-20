@@ -75,7 +75,7 @@ export function deleteBookmark(uid, group, querystring = '') {
  * Get list of bookmarks
  * @param {string} group
  */
-export function getBookmarks(group) {
+export function getAllBookmarks(group) {
   return {
     type: GET_BOOKMARKS,
     request: {
