@@ -39,7 +39,7 @@ const messages = defineMessages({
 /**
  * Add a bookmark to owners bookmark list
  */
-const ToggleBookmarkButton = ({ token, pathname, intl }) => {
+const ToggleBookmarkButton = ({ token, intl }) => {
   const content = useSelector((state) => state.content.data);
   const dispatch = useDispatch();
   const currentbookmark = useSelector(
@@ -64,11 +64,12 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
           grp_token && grp_token.length > 0
             ? grp_token[0].token || grp_token
             : 'default_search';
+        setGroup(grp);
+        console.log('getBookmark1', token, content, bookmarkdelete);
+        dispatch(getBookmark(uid, grp, url.search));
       }
-      setGroup(grp);
-      dispatch(getBookmark(uid, grp, url.search));
     }
-  }, [dispatch, pathname, token, content]);
+  }, [dispatch, token, content]);
 
   // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
   React.useEffect(() => {
@@ -85,9 +86,10 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
           grp_token && grp_token.length > 0
             ? grp_token[0].token || grp_token
             : 'default_search';
+        setGroup(grp);
+        console.log('getBookmark2', token, content, bookmarkdelete);
+        dispatch(getBookmark(uid, grp, url.search));
       }
-      setGroup(grp);
-      dispatch(getBookmark(uid, grp, url.search));
     }
   }, [dispatch, bookmarkdelete]);
 
@@ -110,6 +112,7 @@ const ToggleBookmarkButton = ({ token, pathname, intl }) => {
     // event handler for searchkitQueryChanged event of searchkit
     const url = new URL(document.location);
     setGroup('default_search');
+    console.log('getBookmark3');
     dispatch(getBookmark(content.UID, 'default_search', url.search));
   }
 
