@@ -50,26 +50,48 @@ const ToggleBookmarkButton = ({ token, intl }) => {
   );
   const [group, setGroup] = useState('');
 
-  React.useEffect(() => {
-    if (token) {
-      const url = new URL(document.location);
-      let uid = content?.UID;
-      let grp = 'default_nogroup';
-      if (uid) {
-        let default_token = [
-          { token: url.search ? 'default_search' : 'default_nogroup' },
-        ];
-        let grp_token = get(content, BMGF, default_token);
-        grp =
-          grp_token && grp_token.length > 0
-            ? grp_token[0].token || grp_token
-            : 'default_search';
-        setGroup(grp);
-        console.log('getBookmark1', token, content, bookmarkdelete);
-        dispatch(getBookmark(uid, grp, url.search));
-      }
-    }
-  }, [dispatch, token, content]);
+  // React.useEffect(() => {
+  //   if (token) {
+  //     const url = new URL(document.location);
+  //     let uid = content?.UID;
+  //     let grp = 'default_nogroup';
+  //     if (uid) {
+  //       let default_token = [
+  //         { token: url.search ? 'default_search' : 'default_nogroup' },
+  //       ];
+  //       let grp_token = get(content, BMGF, default_token);
+  //       grp =
+  //         grp_token && grp_token.length > 0
+  //           ? grp_token[0].token || grp_token
+  //           : 'default_search';
+  //       setGroup(grp);
+  //       console.log('getBookmark1', token, content, bookmarkdelete);
+  //       dispatch(getBookmark(uid, grp, url.search));
+  //     }
+  //   }
+  // }, [dispatch, token, content]);
+
+  // // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
+  // React.useEffect(() => {
+  //   if (token && bookmarkdelete === 'loaded') {
+  //     const url = new URL(document.location);
+  //     let uid = content?.UID;
+  //     let grp = 'default_nogroup';
+  //     if (uid) {
+  //       let default_token = [
+  //         { token: url.search ? 'default_search' : 'default_nogroup' },
+  //       ];
+  //       let grp_token = get(content, BMGF, default_token);
+  //       grp =
+  //         grp_token && grp_token.length > 0
+  //           ? grp_token[0].token || grp_token
+  //           : 'default_search';
+  //       setGroup(grp);
+  //       console.log('getBookmark2', token, content, bookmarkdelete);
+  //       dispatch(getBookmark(uid, grp, url.search));
+  //     }
+  //   }
+  // }, [dispatch, bookmarkdelete]);
 
   // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
   React.useEffect(() => {
@@ -87,11 +109,10 @@ const ToggleBookmarkButton = ({ token, intl }) => {
             ? grp_token[0].token || grp_token
             : 'default_search';
         setGroup(grp);
-        console.log('getBookmark2', token, content, bookmarkdelete);
         dispatch(getBookmark(uid, grp, url.search));
       }
     }
-  }, [dispatch, bookmarkdelete]);
+  }, [dispatch, token, content, bookmarkdelete]);
 
   // TODO Make event listeners configurable for other implementations of searchkit / faceted search
   React.useEffect(function mount() {
@@ -112,7 +133,6 @@ const ToggleBookmarkButton = ({ token, intl }) => {
     // event handler for searchkitQueryChanged event of searchkit
     const url = new URL(document.location);
     setGroup('default_search');
-    console.log('getBookmark3');
     dispatch(getBookmark(content.UID, 'default_search', url.search));
   }
 
