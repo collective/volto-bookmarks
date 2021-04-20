@@ -19,24 +19,53 @@ const messages = defineMessages({
 });
 
 const ShowBookmarksContentButton = ({ token, intl }) => {
-  return __CLIENT__ && token ? (
-    <Dropdown
-      className="right floating bookmarkmenu"
-      title={intl.formatMessage(messages.label_showbookmarksmenu)}
-      aria-label={intl.formatMessage(messages.label_showbookmarksmenu)}
-      icon={
-        <Icon
-          name={bookSVG}
-          size="30px"
-          title={intl.formatMessage(messages.label_showbookmarksmenu)}
-        />
-      }
-    >
-      <Dropdown.Menu className="left">
-        <BookmarksEditorComponent />
-      </Dropdown.Menu>
-    </Dropdown>
-  ) : null;
+  const [isClient, setIsClient] = React.useState(null);
+
+  React.useEffect(() => setIsClient(true), []);
+
+  return isClient ? (
+    <div>
+      <Dropdown
+        className="right floating bookmarkmenu"
+        title={intl.formatMessage(messages.label_showbookmarksmenu)}
+        aria-label={intl.formatMessage(messages.label_showbookmarksmenu)}
+        icon={
+          <Icon
+            name={bookSVG}
+            size="30px"
+            title={intl.formatMessage(messages.label_showbookmarksmenu)}
+          />
+        }
+      >
+        <Dropdown.Menu className="left">
+          <Dropdown.Item>
+            <BookmarksEditorComponent />
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
+  ) : (
+    <div>server side rendered stuff</div>
+  );
 };
 
 export default injectIntl(ShowBookmarksContentButton);
+
+// <Dropdown
+// className="right floating bookmarkmenu"
+// title={intl.formatMessage(messages.label_showbookmarksmenu)}
+// aria-label={intl.formatMessage(messages.label_showbookmarksmenu)}
+// icon={
+//   <Icon
+//     name={bookSVG}
+//     size="30px"
+//     title={intl.formatMessage(messages.label_showbookmarksmenu)}
+//   />
+// }
+// >
+// <Dropdown.Menu className="left">
+//   <Dropdown.Item>
+//     <BookmarksEditorComponent />
+//   </Dropdown.Item>
+// </Dropdown.Menu>
+// </Dropdown>
