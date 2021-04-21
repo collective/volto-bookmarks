@@ -23,29 +23,27 @@ const ShowBookmarksContentButton = ({ token, intl }) => {
 
   React.useEffect(() => setIsClient(true), []);
 
-  return isClient ? (
-    <div>
-      <Dropdown
-        className="right floating bookmarkmenu"
-        title={intl.formatMessage(messages.label_showbookmarksmenu)}
-        aria-label={intl.formatMessage(messages.label_showbookmarksmenu)}
-        icon={
-          <Icon
-            name={bookSVG}
-            size="30px"
-            title={intl.formatMessage(messages.label_showbookmarksmenu)}
-          />
-        }
-      >
-        <Dropdown.Menu className="left">
-          <Dropdown.Item>
-            <BookmarksEditorComponent />
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </div>
+  return isClient && token ? (
+    <Dropdown
+      className="right floating bookmarkmenu"
+      title={intl.formatMessage(messages.label_showbookmarksmenu)}
+      aria-label={intl.formatMessage(messages.label_showbookmarksmenu)}
+      icon={
+        <Icon
+          name={bookSVG}
+          size="30px"
+          title={intl.formatMessage(messages.label_showbookmarksmenu)}
+        />
+      }
+    >
+      <Dropdown.Menu className="left">
+        <Dropdown.Item>
+          <BookmarksEditorComponent />
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   ) : (
-    <div>server side rendered stuff</div>
+    <React.Fragment></React.Fragment>
   );
 };
 
