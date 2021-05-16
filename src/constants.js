@@ -4,10 +4,3 @@ export const PUT_BOOKMARK = 'PUT_BOOKMARK';
 export const DEL_BOOKMARK = 'DEL_BOOKMARK';
 
 export const GET_BOOKMARKS = 'GET_BOOKMARKS';
-
-export const BOOKMARKGROUPMAPPING = {
-  default_search: 'Search results',
-  default_nogroup: 'Miscellaneous',
-};
-
-export const BOOKMARKGROUPFIELD = '@type';

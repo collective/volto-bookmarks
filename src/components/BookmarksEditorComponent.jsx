@@ -17,7 +17,7 @@ import { deStringifySearchquery } from '../helpers';
 import { deleteBookmark } from '../actions';
 import './volto-bookmarks.css';
 
-import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
+import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   title_bookmarks: {
@@ -43,23 +43,6 @@ const BookmarksEditorComponent = ({ intl }) => {
   const dispatch = useDispatch();
 
   let [groupedItems, setGroupedItems] = useState({});
-
-  let [BMGM, setBMGM] = useState(BOOKMARKGROUPMAPPING);
-  let [BMGF, setBMGF] = useState(BOOKMARKGROUPFIELD);
-  import('~/config.js')
-    .then((config) => {
-      if (config.BOOKMARKGROUPMAPPING && config.BOOKMARKGROUPFIELD) {
-        setBMGM(config.BOOKMARKGROUPMAPPING);
-        setBMGF(config.BOOKMARKGROUPFIELD);
-      }
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.info(
-        error,
-        'Think about configuring BOOKMARKGROUPMAPPING and BOOKMARKGROUPFIELD in your project',
-      );
-    });
 
   /* getBookmorks on
    * - mount
@@ -127,7 +110,13 @@ const BookmarksEditorComponent = ({ intl }) => {
         .map((grp, index) => {
           return (
             <li className="bookmarkgroup" key={index}>
-              <h3>{get(BMGM, grp, grp)}</h3>
+              <h3>
+                {get(
+                  config.settings?.bookmarks?.bookmarkgroupmapping,
+                  grp,
+                  grp,
+                )}
+              </h3>
               <ul>
                 {groupedItems[grp].map((item, index) => {
                   return (

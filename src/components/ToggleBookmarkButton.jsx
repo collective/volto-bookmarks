@@ -14,20 +14,7 @@ import { getBookmark, addBookmark, deleteBookmark } from '../actions';
 
 import { doStringifySearchquery, querystringToTitle } from '../helpers';
 
-import { BOOKMARKGROUPMAPPING, BOOKMARKGROUPFIELD } from '../constants';
-let BMGM = BOOKMARKGROUPMAPPING;
-let BMGF = BOOKMARKGROUPFIELD;
-import('~/config.js')
-  .then((config) => {
-    BMGM = config.BOOKMARKGROUPMAPPING;
-    BMGF = config.BOOKMARKGROUPFIELD;
-  })
-  .catch((error) => {
-    console.warning(
-      error,
-      'Think about configuring BOOKMARKGROUPMAPPING and BOOKMARKGROUPFIELD in your project',
-    );
-  });
+import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   label_addbookmark: {
@@ -50,49 +37,6 @@ const ToggleBookmarkButton = ({ token, intl }) => {
   );
   const [group, setGroup] = useState('');
 
-  // React.useEffect(() => {
-  //   if (token) {
-  //     const url = new URL(document.location);
-  //     let uid = content?.UID;
-  //     let grp = 'default_nogroup';
-  //     if (uid) {
-  //       let default_token = [
-  //         { token: url.search ? 'default_search' : 'default_nogroup' },
-  //       ];
-  //       let grp_token = get(content, BMGF, default_token);
-  //       grp =
-  //         grp_token && grp_token.length > 0
-  //           ? grp_token[0].token || grp_token
-  //           : 'default_search';
-  //       setGroup(grp);
-  //       console.log('getBookmark1', token, content, bookmarkdelete);
-  //       dispatch(getBookmark(uid, grp, url.search));
-  //     }
-  //   }
-  // }, [dispatch, token, content]);
-
-  // // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
-  // React.useEffect(() => {
-  //   if (token && bookmarkdelete === 'loaded') {
-  //     const url = new URL(document.location);
-  //     let uid = content?.UID;
-  //     let grp = 'default_nogroup';
-  //     if (uid) {
-  //       let default_token = [
-  //         { token: url.search ? 'default_search' : 'default_nogroup' },
-  //       ];
-  //       let grp_token = get(content, BMGF, default_token);
-  //       grp =
-  //         grp_token && grp_token.length > 0
-  //           ? grp_token[0].token || grp_token
-  //           : 'default_search';
-  //       setGroup(grp);
-  //       console.log('getBookmark2', token, content, bookmarkdelete);
-  //       dispatch(getBookmark(uid, grp, url.search));
-  //     }
-  //   }
-  // }, [dispatch, bookmarkdelete]);
-
   // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
   React.useEffect(() => {
     if (token && bookmarkdelete === 'loaded') {
@@ -103,7 +47,11 @@ const ToggleBookmarkButton = ({ token, intl }) => {
         let default_token = [
           { token: url.search ? 'default_search' : 'default_nogroup' },
         ];
-        let grp_token = get(content, BMGF, default_token);
+        let grp_token = get(
+          content,
+          config.settings?.bookmarks?.bookmarkgroupfield,
+          default_token,
+        );
         grp =
           grp_token && grp_token.length > 0
             ? grp_token[0].token || grp_token

@@ -98,16 +98,15 @@ import { ToggleBookmarkButton } from '@collective/volto-bookmarks/components';
 Add a mapping for bookmark groups labels and the name of the field for grouping bookmarks list.
 
 ```js
-// @collective/volto-bookmarks
-export const BOOKMARKGROUPMAPPING = {
-  Anleitung: 'Anleitungen',
-  Übersichtsseite: 'Übersichtsseiten',
-  ReleaseNote: 'Release Notes',
-  default_search: 'Search',
-  default_nogroup: 'Miscellaneous',
+config.settings.bookmarks = {
+  ...(config.settings.bookmarks ?? {}),
+  bookmarkgroupmapping: {
+    Manual: 'Manuals and HowTos',
+    default_search: 'Search',
+    default_nogroup: 'Miscellaneous',
+  },
+  bookmarkgroupfield: 'informationtype',
 };
-
-export const BOOKMARKGROUPFIELD = 'informationtype';
 ```
 
 Start Volto:
