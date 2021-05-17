@@ -35,18 +35,19 @@ Remember to install souper in Plone backend control panel.
 
 Install this Plone (Volto) add-on. See [Volto docs](https://docs.voltocms.com/addons/#configuring-a-volto-project-to-use-an-addon) for instructions.
 
-Get translations of add-on:
+Merge add-on translations into your Volto app. Available translations so far: German.
 
 ```bash
 yarn
 yarn i18n
 ```
 
+
 ## Integration of the two bookmark buttons
 
 ### Option 1 - buttons in toolbar
 
-> This requires **upcoming** Volto 12.xy or higher version with a pluggable toolbar.
+> This requires **upcoming** Volto version with a pluggable toolbar.
 
 Include bookmarking of this package in your Volto projects config.js by
 
@@ -72,6 +73,7 @@ export default function applyConfig(config) {
 ```
 
 It adds two buttons in toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
+
 
 ### Option 2 - buttons not in toolbar but sowhere else
 
