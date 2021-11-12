@@ -30,9 +30,7 @@
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "dependencies": {
-    "@plone/scripts": "*",
-    "react-overridable": "^0.0.3",
-    "react-searchkit": "1.0.0-alpha.14"
+    "@plone/scripts": "*"
   },
   "peerDependencies": {
     "@plone/volto": ">=14.0.0"
