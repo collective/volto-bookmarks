@@ -14,32 +14,37 @@ msgstr ""
 "Language-Name: English\n"
 
 #: components/BookmarksEditorComponent
+# defaultMessage: Search for
 msgid "bookmark_searchquery"
 msgstr "Search for "
 
 #: components/BookmarksEditorComponent
+# defaultMessage: Please login to see your bookmarks
 msgid "help_bookmarks_anonymous"
 msgstr "Please log in to see your bookmarks."
 
 #: components/BookmarksEditorComponent
+# defaultMessage: You don't have any bookmarks. You find a button on every page to bookmark it.
 msgid "help_bookmarks_emptylist"
 msgstr "You don't have any bookmarks. You find a button on every page to bookmark it."
 
 #: components/ToggleBookmarkButton
-#: components/ToggleBookmarkComponent
+# defaultMessage: add or delete bookmark
 msgid "label_addbookmark"
 msgstr "Save or delete bookmark"
 
 #: components/BookmarksEditorComponent
+# defaultMessage: delete bookmark
 msgid "label_deletebookmark"
 msgstr "Delete bookmark"
 
-#: components/ShowBookmarksComponent
 #: components/ShowBookmarksContentButton
 #: components/ShowBookmarksToolbarButton
+# defaultMessage: show bookmarks menu
 msgid "label_showbookmarksmenu"
 msgstr "Show bookmark menu"
 
 #: components/BookmarksEditorComponent
+# defaultMessage: Bookmarks
 msgid "title_bookmarks"
 msgstr "Bookmarks"
