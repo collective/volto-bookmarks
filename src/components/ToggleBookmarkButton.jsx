@@ -106,7 +106,7 @@ const ToggleBookmarkButton = ({ token, intl }) => {
     }
   }
 
-  return __CLIENT__ && token ? (
+  return token ? (
     <Button
       icon
       basic
