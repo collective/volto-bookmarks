@@ -3,30 +3,38 @@
     font-size: 1rem !important;
     color: unset;
 }
+
 .dropdown.bookmarkmenu .menu {
     max-width: 35rem !important;
-    min-width:auto;
+    min-width: auto;
 }
+
 /* TODO restrict to .dropdown.bookmarkmenu */
-.ui.dropdown > .left.menu .menu.scrolling {
+.ui.dropdown>.left.menu .menu.scrolling {
     margin: 0 !important;
 }
+
 ul.volto-bookmarks-list {
     padding: 0 1rem;
     width: 40rem !important;
-    max-width: 100vw !important;
-    white-space: normal !important; /* wrap this damn bookmarks! */
+    max-width: 80vw !important;
+    white-space: normal !important;
+    /* wrap this damn bookmarks! */
 }
+
 ul.volto-bookmarks-list li {
     list-style: none;
 }
+
 ul.volto-bookmarks-list .bookmarkgroup {
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
+
 ul.volto-bookmarks-list .bookmarkgroup ul {
     padding: 0;
 }
+
 ul.volto-bookmarks-list li.bookmarkitem button {
     vertical-align: text-bottom;
 }
