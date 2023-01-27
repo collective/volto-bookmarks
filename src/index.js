@@ -1,3 +1,5 @@
+import StandardWrapper from '@plone/volto/components/manage/Toolbar/StandardWrapper';
+import BookmarksEditorComponent from './components/BookmarksEditorComponent';
 import { collectivebookmarks } from './reducers';
 
 const applyConfig = (config) => {
@@ -10,6 +12,13 @@ const applyConfig = (config) => {
       default_nogroup: 'Miscellaneous',
     },
     bookmarkgroupfield: '@type',
+  };
+
+  config.settings.toolbarComponents = {
+    bookmarksMenu: {
+      component: BookmarksEditorComponent,
+      wrapper: null,
+    },
   };
 
   // reducers
