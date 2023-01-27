@@ -1,12 +1,16 @@
-.dropdown.bookmarkmenu .header {
+.ui.dropdown.bookmarkmenu .header {
     padding: .7rem 1rem !important;
     font-size: 1rem !important;
     color: unset;
 }
 
-.dropdown.bookmarkmenu .menu {
+.ui.dropdown.bookmarkmenu>.menu,
+.ui.dropdown.upward.bookmarkmenu>.menu {
     max-width: 35rem !important;
     min-width: auto;
+    /* hack unwanted "upward" dropdown */
+    top: 100%;
+    bottom: auto;
 }
 
 /* TODO restrict to .dropdown.bookmarkmenu */
