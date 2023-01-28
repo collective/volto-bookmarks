@@ -21,21 +21,15 @@ There are two options:
 - Buttons in toolbar
 - Buttons somewhere else
 
-> This add-on requires Volto 12.
-
-> And this add-on requires upcoming Volto 12.xy or higher version with a pluggable toolbar if you want to place the buttons in toolbar.
-
-
-
 ## Installation
 
-Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) 
+- Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) 
 
-Remember to install souper in Plone backend control panel.
+- Remember to install souper in Plone backend control panel.
 
-Install this Plone (Volto) add-on. See [Volto docs](https://docs.voltocms.com/addons/#configuring-a-volto-project-to-use-an-addon) for instructions.
+- Install this Plone (Volto) add-on. See [Volto docs](https://6.docs.plone.org/volto/addons/index.html#configuring-a-volto-project-to-use-an-add-on) for instructions.
 
-Merge add-on translations into your Volto app. Available translations so far: German.
+- Merge add-on translations into your Volto app. Available translations so far: German.
 
 ```bash
 yarn
@@ -49,35 +43,52 @@ yarn i18n
 
 > This requires **upcoming** Volto version with a pluggable toolbar.
 
-Include bookmarking of this package in your Volto projects config.js by
+Include bookmarking in your Volto project by creating and integrating a component `Bookmarking`.
+
+`Bookmarking.jsx`:
+
+```jsx
+import { Plug } from '@plone/volto/components/manage/Pluggable';
+import {
+  ToggleBookmarkButton,
+  ShowBookmarksToolbarButton,
+} from '@collective/volto-bookmarks/components';
+const Bookmarks = () => {
+  return (
+    <>
+      <Plug pluggable="main.toolbar.top" id="toggle-bookmarks">
+        <ToggleBookmarkButton />
+      </Plug>
+      <ShowBookmarksToolbarButton />
+    </>
+  );
+};
+export default Bookmarks;
+```
+
+`config.js`:
 
 ```js
-import { ToggleBookmarkButton, ShowBookmarksToolbarButton } from '@collective/volto-bookmarks/components';
+import Bookmarking from './components/Bookmarking';
 
 export default function applyConfig(config) {
-  config.toolbar.activities.view.top.push({
-    match: {
-      path: '/pathtosectionofbookmarkablepages/',
+  config.settings.appExtras = [
+    ...config.settings.appExtras,
+    {
+      match: '/',
+      component: Bookmarking,
     },
-    component: ToggleBookmarkButton,
-  });
-  config.toolbar.activities.view.bottom.push({
-    match: {
-      path: '/',
-    },
-    component: (props) => <ShowBookmarksToolbarButton {...props} />,
-  });
-
+  ];
   return config;
 }
 ```
 
-It adds two buttons in toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
+This adds two buttons in toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
 
 
 ### Option 2 - buttons not in toolbar but sowhere else
 
-Add the both buttons to components of your choice:
+Add the two buttons to components of your choice:
 
 ```jsx
 import { ShowBookmarksContentButton } from '@collective/volto-bookmarks/components';
@@ -93,7 +104,6 @@ import { ToggleBookmarkButton } from '@collective/volto-bookmarks/components';
 
 ```
 
-*hereisatoken.token*: *this.props.token* for class components or just *token* for funky components.
 
 ### Further configuration for both options
 
@@ -101,9 +111,10 @@ Add a mapping for bookmark groups labels and the name of the field for grouping 
 
 ```js
 config.settings.bookmarks = {
-  ...(config.settings.bookmarks ?? {}),
+  ...(config.settings.bookmarks),
   bookmarkgroupmapping: {
-    Manual: 'Manuals and HowTos',
+    manual: 'Manuals and HowTos',
+    releasenote: 'Release Notes',
     default_search: 'Search',
     default_nogroup: 'Miscellaneous',
   },
@@ -111,25 +122,15 @@ config.settings.bookmarks = {
 };
 ```
 
-Start Volto:
 
-```bash
-yarn start
-```
-
-**You are ready to collect bookmarks!** 
 <img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
 
-## Forecast
-
-Plone default search queries can be bookmarked with the upcoming Plone root being a dexterity content object. By now search queries of searchkit implementations are bookmarkable.
-
 ## Copyright and License
 
-Author @ksuess, Katja Süss, Rohberg, 
+Author Katja Süss, Rohberg, @ksuess
 https://www.rohberg.ch
 
-Copyright (c) 2021 Plone Foundation
+Copyright (c) 2023 Plone Foundation
 
 See [LICENSE.md](https://github.com/collective/volto-bookmarks/blob/master/LICENSE.md) for details.
