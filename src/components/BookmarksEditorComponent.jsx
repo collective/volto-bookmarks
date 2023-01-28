@@ -37,6 +37,7 @@ const messages = defineMessages({
 const BookmarksEditorComponent = ({ intl }) => {
   const token = useSelector((state) => state.userSession.token);
   const items = useSelector((state) => state.collectivebookmarks?.items || []);
+  console.debug('items', items);
   const bookmarkdelete = useSelector(
     (state) => state.collectivebookmarks?.delete || {},
   );
@@ -82,12 +83,15 @@ const BookmarksEditorComponent = ({ intl }) => {
       ]);
       grtms[kk] = bar;
     });
+    console.debug('grtms', grtms);
     setGroupedItems(grtms);
   }, [dispatch, items, intl]);
 
   function deleteBookmarkHandler(uid, group, searchquery) {
     dispatch(deleteBookmark(uid, group, searchquery));
   }
+
+  console.debug('config.settings?.bookmarks', config.settings?.bookmarks);
 
   return !token ? (
     <div className="volto-bookmarks-info">

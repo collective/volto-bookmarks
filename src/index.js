@@ -1,10 +1,10 @@
-import StandardWrapper from '@plone/volto/components/manage/Toolbar/StandardWrapper';
 import BookmarksEditorComponent from './components/BookmarksEditorComponent';
 import { collectivebookmarks } from './reducers';
 
 const applyConfig = (config) => {
   // button and menu are added in Volto project. See README.txt
 
+  // defaults
   config.settings.bookmarks = {
     ...(config.settings.bookmarks ?? {}),
     bookmarkgroupmapping: {
@@ -14,6 +14,7 @@ const applyConfig = (config) => {
     bookmarkgroupfield: '@type',
   };
 
+  // menu body
   config.settings.toolbarComponents = {
     bookmarksMenu: {
       component: BookmarksEditorComponent,

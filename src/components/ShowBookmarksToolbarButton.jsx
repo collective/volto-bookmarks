@@ -3,7 +3,7 @@
  * integrate in toolbar
  * see ShowBookmarksContentButton for a button to integrate in in main section
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Icon } from '@plone/volto/components';
@@ -25,7 +25,6 @@ const ShowBookmarksToolbarButton = () => {
     <>
       <Plug pluggable="main.toolbar.bottom" id="bookmarks-menu">
         {({ onClickHandler }) => {
-          console.log('onClickHandler', onClickHandler);
           return (
             <button
               className="show-bookmarks"
