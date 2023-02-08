@@ -4,8 +4,9 @@
  * see ShowBookmarksToolbarButton for a button to integrate in toolbar
  */
 import React from 'react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import { Dropdown } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 import { Icon } from '@plone/volto/components';
 import bookSVG from '@plone/volto/icons/book.svg';
 
@@ -18,7 +19,9 @@ const messages = defineMessages({
   },
 });
 
-const ShowBookmarksContentButton = ({ token, intl }) => {
+const ShowBookmarksContentButton = () => {
+  const token = useSelector((state) => state.userSession?.token);
+  const intl = useIntl();
   const [isClient, setIsClient] = React.useState(null);
 
   React.useEffect(() => setIsClient(true), []);

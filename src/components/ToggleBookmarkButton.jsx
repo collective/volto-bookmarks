@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import { get } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
 
@@ -26,8 +25,10 @@ const messages = defineMessages({
 /**
  * Add a bookmark to owners bookmark list
  */
-const ToggleBookmarkButton = ({ token, intl }) => {
+const ToggleBookmarkButton = () => {
   const content = useSelector((state) => state.content.data);
+  const token = useSelector((state) => state.userSession?.token);
+  const intl = useIntl();
   const dispatch = useDispatch();
   const currentbookmark = useSelector(
     (state) => state.collectivebookmarks.bookmark,
@@ -89,12 +90,6 @@ const ToggleBookmarkButton = ({ token, intl }) => {
     let [uid, querystring] = [content.UID, url.search];
 
     let grp = group;
-    // TODO remove the following hack for Plone default search if Plone site root is dexterity and has an uid
-    // if (url.pathname === '/search') {
-    //   uid = DEFAULT_SEARCH_NONPAGE_UID; // arbitrary but not changing uid
-    //   grp = 'default_search';
-    //   setGroup(grp);
-    // }
 
     if (currentbookmark) {
       dispatch(deleteBookmark(uid, grp, doStringifySearchquery(querystring)));
