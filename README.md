@@ -29,7 +29,8 @@ There are two options:
 
 - Install this Plone (Volto) add-on. See [Volto docs](https://6.docs.plone.org/volto/addons/index.html#configuring-a-volto-project-to-use-an-add-on) for instructions.
 
-- Merge add-on translations into your Volto app. Available translations so far: German.
+- Merge add-on translations into your Volto app. Available translations so far: 
+  - german.
 
 ```bash
 yarn
@@ -41,7 +42,7 @@ yarn i18n
 
 ### Option 1 - buttons in toolbar
 
-> This requires **upcoming** Volto version with a pluggable toolbar.
+> This requires Volto >= 16.10.0 with a pluggable toolbar.
 
 Include bookmarking in your Volto project by creating and integrating a component `Bookmarking`.
 
@@ -53,6 +54,7 @@ import {
   ToggleBookmarkButton,
   ShowBookmarksToolbarButton,
 } from '@collective/volto-bookmarks/components';
+
 const Bookmarks = () => {
   return (
     <>
@@ -71,6 +73,8 @@ export default Bookmarks;
 ```js
 import Bookmarking from './components/Bookmarking';
 
+import '@plone/volto/config';
+
 export default function applyConfig(config) {
   config.settings.appExtras = [
     ...config.settings.appExtras,
@@ -86,7 +90,7 @@ export default function applyConfig(config) {
 This adds two buttons in toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
 
 
-### Option 2 - buttons not in toolbar but sowhere else
+### Option 2 - buttons not in toolbar, but somewhere else
 
 Add the two buttons to components of your choice:
 
@@ -111,7 +115,7 @@ Add a mapping for bookmark groups labels and the name of the field for grouping 
 
 ```js
 config.settings.bookmarks = {
-  ...(config.settings.bookmarks),
+  ...config.settings.bookmarks,
   bookmarkgroupmapping: {
     manual: 'Manuals and HowTos',
     releasenote: 'Release Notes',
