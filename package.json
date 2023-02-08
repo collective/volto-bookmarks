@@ -1,7 +1,7 @@
 {
   "name": "@collective/volto-bookmarks",
-  "version": "1.0.0",
-  "description": "bookmarks / favorites",
+  "version": "0.0.1",
+  "description": "Manage bookmarks / favorites in Plone Volto",
   "main": "src/index.js",
   "author": "Katja Süss, https://github.com/ksuess",
   "license": "MIT",
@@ -17,7 +17,6 @@
     "url": "git@github.com:collective/volto-bookmarks.git"
   },
   "scripts": {
-    "release": "release-it",
     "bootstrap": "node bootstrap",
     "stylelint": "../../../node_modules/stylelint/bin/stylelint.js --allow-empty-input 'src/**/*.{css,less}'",
     "stylelint:overrides": "../../../node_modules/.bin/stylelint --syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides'",
@@ -35,7 +34,28 @@
   "peerDependencies": {
     "@plone/volto": ">=14.0.0"
   },
-  "devDependencies": {
-    "auto-changelog": "^2.2.1"
+  "devDependencies": {},
+  "release-it": {
+    "hooks": {
+      "before:bump": [
+        "yarn i18n",
+        "git add locales"
+      ],
+      "after:bump": "node changelogupdater.js bump ${version}",
+      "after:release": "node changelogupdater.js back ${version} && git commit -am 'Back to development' && git push"
+    },
+    "git": {
+      "changelog": "node changelogupdater.js excerpt",
+      "requireUpstream": false,
+      "requireCleanWorkingDir": false
+    },
+    "github": {
+      "release": true,
+      "releaseName": "${version}",
+      "releaseNotes": "node changelogupdater.js excerpt"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
