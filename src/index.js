@@ -15,7 +15,7 @@ const applyConfig = (config) => {
   };
 
   // menu body
-  config.settings.toolbarComponents = {
+  config.settings.additionalToolbarComponents = {
     bookmarksMenu: {
       component: BookmarksEditorComponent,
       wrapper: null,
