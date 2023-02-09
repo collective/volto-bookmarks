@@ -1,5 +1,5 @@
 {
-  "name": "@collective/volto-bookmarks",
+  "name": "@plone-collective/volto-bookmarks",
   "version": "0.0.1",
   "description": "Manage bookmarks / favorites in Plone Volto",
   "main": "src/index.js",
