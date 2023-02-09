@@ -53,7 +53,7 @@ import { Plug } from '@plone/volto/components/manage/Pluggable';
 import {
   ToggleBookmarkButton,
   ShowBookmarksToolbarButton,
-} from '@collective/volto-bookmarks/components';
+} from '@plone-collective/volto-bookmarks/components';
 
 const Bookmarks = () => {
   return (
@@ -95,14 +95,14 @@ This adds two buttons in toolbar: one for toggling the bookmark of the current p
 Add the two buttons to components of your choice:
 
 ```jsx
-import { ShowBookmarksContentButton } from '@collective/volto-bookmarks/components';
+import { ShowBookmarksContentButton } from '@plone-collective/volto-bookmarks/components';
 
     <ShowBookmarksContentButton />
 
 ```
 
 ```jsx
-import { ToggleBookmarkButton } from '@collective/volto-bookmarks/components';
+import { ToggleBookmarkButton } from '@plone-collective/volto-bookmarks/components';
 
     <ToggleBookmarkButton />
 
