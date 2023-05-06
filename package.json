@@ -34,7 +34,6 @@
   "peerDependencies": {
     "@plone/volto": ">=14.0.0"
   },
-  "devDependencies": {},
   "release-it": {
     "hooks": {
       "before:bump": [

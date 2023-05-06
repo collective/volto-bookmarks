@@ -121,7 +121,6 @@ const BookmarksEditorComponent = ({ intl }) => {
                 {groupedItems[grp].map((item, index) => {
                   return (
                     <li className="bookmarkitem" key={index}>
-                      {/* TODO replace hack to transform api url to app url */}
                       <Link
                         title={item.description || ''}
                         to={`${
@@ -129,6 +128,31 @@ const BookmarksEditorComponent = ({ intl }) => {
                           '?' +
                           deStringifySearchquery(item.queryparams)
                         }`}
+                        onClick={() => {
+                          // Hack: Select bookmark of search, then select bookmark of search.
+                          // Search is triggered!
+                          // Criterion: search parameter 'q' ist provided
+                          // Event 'popstate' triggers a search.
+                          const url = `${
+                            flattenToAppURL(item['@id']) +
+                            '?' +
+                            deStringifySearchquery(item.queryparams)
+                          }`;
+                          const queryparams_object = item.queryparams
+                            ? JSON.parse(item.queryparams)
+                            : {};
+                          if (queryparams_object.q) {
+                            window.history.pushState(
+                              {},
+                              'search bookmark',
+                              url,
+                            );
+                            let evt = new CustomEvent('popstate', {
+                              detail: {},
+                            });
+                            dispatchEvent(evt);
+                          }
+                        }}
                       >
                         {item.title}
                       </Link>
