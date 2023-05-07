@@ -70,8 +70,7 @@ const BookmarksEditorComponent = ({ intl }) => {
     Object.keys(grtms).forEach((kk) => {
       let foo = grtms[kk].map((item) => {
         item.title = item.payload?.querystringvalues
-          ? intl.formatMessage(messages.bookmark_searchquery) +
-            item.payload?.querystringvalues
+          ? item.payload?.querystringvalues
           : item.title;
         return item;
       });

@@ -126,6 +126,31 @@ config.settings.bookmarks = {
 };
 ```
 
+Add a mapping for search filters:
+
+```js
+    filtermapping: {
+      facet_fields: {
+        '5237dc43-c573-4651-a5b8-cf24bfde13a6': 'Datendrehscheibe',
+        allgemeines: 'Allgemeines',
+        arbeitsliste: 'Arbeitsliste',
+        beb2k: 'BEB2k',
+        'release-note': 'Release-Note',
+        tutorial: 'Tutorial',
+        'superuser-innen': 'Superuser/innen',
+        ai: 'AI',
+        andere: 'Andere',
+        tg: 'TG',
+        zh: 'ZH',
+      },
+      search_sections: {
+        others: 'Website',
+        dokumentation: 'Dokumentation',
+        inside: 'IGIB-Inside',
+        geologie: 'Geologie',
+      },
+    },
+```
 
 <img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 

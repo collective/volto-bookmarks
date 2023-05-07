@@ -1,3 +1,10 @@
+import config from '@plone/volto/registry';
+
+const _translate = (el, type) => {
+  const mapping = config.settings?.bookmarks?.filtermapping;
+  return mapping ? mapping[type][el] || el : el;
+};
+
 /**
  * @function _getValuesFromSearchquery
  * @param {string} querystring querystring of url
@@ -7,9 +14,25 @@
 function _getValuesFromSearchquery(querystring, key) {
   const params = new URLSearchParams(querystring);
   let filter = params.getAll(key);
-  let result = filter.map((flt) => flt.split(':').pop());
-  let valuesString = result.join(', ');
-  return valuesString;
+  let filters = [];
+  let sections = [];
+  filter.forEach((flt) => {
+    let foo = flt.split(':');
+    foo[0] === 'section'
+      ? sections.push(foo[1])
+      : foo[0] && filters.push(
+          ['q', 'Subject', 'SearchableText'].includes(key)
+            ? `«${foo[1] || foo[0]}»`
+            : foo[1] || foo[0],
+        );
+  });
+  const result = {
+    filters: filters.map((el) => _translate(el, 'facet_fields')).join(', '),
+    sections: sections
+      .map((el) => _translate(el, 'search_sections'))
+      .join(', '),
+  };
+  return result;
 }
 
 /**
@@ -28,10 +51,17 @@ function querystringToTitle(querystring) {
     .replaceAll('%2F', '/');
   querystring = decodeURI(querystring);
   let querystringvalues = [];
+  let sections = [];
   ['q', 'f', 'Subject', 'SearchableText'].forEach((el) => {
-    querystringvalues.push(_getValuesFromSearchquery(querystring, el));
+    const vls = _getValuesFromSearchquery(querystring, el);
+    vls['filters'] && querystringvalues.push(vls['filters']);
+    vls['sections'] && sections.push(vls['sections']);
   });
-  return querystringvalues.filter((el) => el !== '').join(' | ');
+  let res = [];
+  querystringvalues.length > 0 && res.push(querystringvalues.join(', '));
+  sections.length > 0 &&
+    res.push(`in ${sections.filter((el) => el !== '').join(', ')}`);
+  return res.join(' ');
 }
 
 /**
