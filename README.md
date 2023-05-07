@@ -129,7 +129,7 @@ config.settings.bookmarks = {
 Add a mapping for search filters:
 
 ```js
-    filtermapping: {
+    config.settings.bookmarks.filtermapping = {
       facet_fields: {
         '5237dc43-c573-4651-a5b8-cf24bfde13a6': 'Datendrehscheibe',
         allgemeines: 'Allgemeines',
