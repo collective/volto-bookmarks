@@ -12,7 +12,7 @@ import { Icon } from '@plone/volto/components';
 import deleteSVG from '@plone/volto/icons/clear.svg';
 
 import { getAllBookmarks } from '../actions';
-import { deStringifySearchquery } from '../helpers';
+import { deStringifySearchquery, translateSearch } from '../helpers';
 
 import { deleteBookmark } from '../actions';
 import './volto-bookmarks.css';
@@ -34,6 +34,34 @@ const messages = defineMessages({
   },
 });
 
+function getTitle(queryparams) {
+  const searchParams = new URLSearchParams(deStringifySearchquery(queryparams));
+  const filters = searchParams.getAll('f');
+  const query = searchParams.get('q');
+
+  const title_array = [];
+  let section = '';
+  if (query) {
+    title_array.push(`«${query}»`);
+  }
+  filters.forEach((el) => {
+    let foo = el.split(':');
+    if (foo[0] !== 'section') {
+      const el = foo[1].replace('_agg', '');
+      title_array.push(translateSearch(el, 'facet_fields'));
+    } else {
+      section = translateSearch(foo[1], 'search_sections');
+    }
+  });
+
+  let search_bookmark_title = title_array.join(', ');
+  search_bookmark_title = section
+    ? `${search_bookmark_title} in ${section}`
+    : search_bookmark_title;
+
+  return search_bookmark_title;
+}
+
 const BookmarksEditorComponent = ({ intl }) => {
   const token = useSelector((state) => state.userSession.token);
   const items = useSelector((state) => state.collectivebookmarks?.items || []);
@@ -44,7 +72,7 @@ const BookmarksEditorComponent = ({ intl }) => {
 
   let [groupedItems, setGroupedItems] = useState({});
 
-  /* getBookmorks on
+  /* getBookmarks on
    * - mount
    * - after deletion of bookmark
    * - after login
@@ -63,15 +91,13 @@ const BookmarksEditorComponent = ({ intl }) => {
     if (token && bookmarkdelete === 'loaded') {
       dispatch(getAllBookmarks());
     }
-  }, [dispatch, bookmarkdelete]);
+  }, [dispatch, bookmarkdelete, token]);
 
   useEffect(() => {
     let grtms = groupBy(items, (item) => item['group']);
     Object.keys(grtms).forEach((kk) => {
       let foo = grtms[kk].map((item) => {
-        item.title = item.payload?.querystringvalues
-          ? item.payload?.querystringvalues
-          : item.title;
+        item.title = getTitle(item.queryparams) || item.title;
         return item;
       });
       let bar = sortBy(foo, [
