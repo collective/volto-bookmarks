@@ -1,6 +1,6 @@
 {
   "name": "@plone-collective/volto-bookmarks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage bookmarks / favorites in Plone Volto",
   "main": "src/index.js",
   "author": "Katja Süss, https://github.com/ksuess",
