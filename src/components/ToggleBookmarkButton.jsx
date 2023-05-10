@@ -11,7 +11,7 @@ import bookmarkFilledSVG from '../icons/bookmark_filled.svg';
 
 import { getBookmark, addBookmark, deleteBookmark } from '../actions';
 
-import { doStringifySearchquery, querystringToTitle } from '../helpers';
+import { doStringifySearchquery } from '../helpers';
 
 import config from '@plone/volto/registry';
 
@@ -94,10 +94,7 @@ const ToggleBookmarkButton = () => {
     if (currentbookmark) {
       dispatch(deleteBookmark(uid, grp, doStringifySearchquery(querystring)));
     } else {
-      let payload = {
-        querystringvalues: querystringToTitle(querystring),
-      };
-      dispatch(addBookmark(uid, grp, querystring, payload));
+      dispatch(addBookmark(uid, grp, querystring, {}));
     }
   }
 
