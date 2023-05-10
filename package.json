@@ -26,7 +26,6 @@
     "lint": "../../../node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx}'",
     "lint:fix": "../../../node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'",
     "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
-    "version": "auto-changelog -p && git add CHANGELOG.md",
     "release": "release-it"
   },
   "dependencies": {
