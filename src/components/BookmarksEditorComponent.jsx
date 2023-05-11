@@ -56,7 +56,7 @@ function getTitle(queryparams) {
 
   let search_bookmark_title = title_array.join(', ');
   search_bookmark_title = section
-    ? `${search_bookmark_title} in ${section}`
+    ? `${section}: ${search_bookmark_title}`
     : search_bookmark_title;
 
   return search_bookmark_title;
