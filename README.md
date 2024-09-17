@@ -44,34 +44,13 @@ yarn i18n
 
 > This requires Volto >= 16.10.0 with a pluggable toolbar.
 
-Include bookmarking in your Volto project by creating and integrating a component `Bookmarking`.
-
-`Bookmarking.jsx`:
-
-```jsx
-import { Plug } from '@plone/volto/components/manage/Pluggable';
-import {
-  ToggleBookmarkButton,
-  ShowBookmarksToolbarButton,
-} from '@plone-collective/volto-bookmarks/components';
-
-const Bookmarks = () => {
-  return (
-    <>
-      <Plug pluggable="main.toolbar.top" id="toggle-bookmarks">
-        <ToggleBookmarkButton />
-      </Plug>
-      <ShowBookmarksToolbarButton />
-    </>
-  );
-};
-export default Bookmarks;
-```
+Include bookmarking in your Volto project by integrating a component `Bookmarking`.
+This component adds two buttons to the toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
 
 `config.js`:
 
 ```js
-import Bookmarking from './components/Bookmarking';
+import Bookmarking from '@plone-collective/volto-bookmarks/components';
 
 import '@plone/volto/config';
 
@@ -86,8 +65,6 @@ export default function applyConfig(config) {
   return config;
 }
 ```
-
-This adds two buttons in toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
 
 
 ### Option 2 - buttons not in toolbar, but somewhere else
