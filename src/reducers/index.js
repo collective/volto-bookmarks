@@ -5,7 +5,6 @@
 import {
   GET_BOOKMARK,
   ADD_BOOKMARK,
-  PUT_BOOKMARK,
   DEL_BOOKMARK,
   GET_BOOKMARKS,
 } from '../constants';
@@ -68,29 +67,6 @@ export function collectivebookmarks(state = initialState, action = {}) {
         ...state,
         error: action.error,
         bookmark: null,
-        loading: false,
-        loaded: false,
-      };
-
-    case `${PUT_BOOKMARK}_PENDING`:
-      return {
-        ...state,
-        error: null,
-        loading: true,
-        loaded: false,
-      };
-    case `${PUT_BOOKMARK}_SUCCESS`:
-      return {
-        ...state,
-        error: null,
-        bookmark: action.result,
-        loaded: true,
-        loading: false,
-      };
-    case `${PUT_BOOKMARK}_FAIL`:
-      return {
-        ...state,
-        error: action.error,
         loading: false,
         loaded: false,
       };

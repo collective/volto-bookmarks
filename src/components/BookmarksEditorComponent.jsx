@@ -1,41 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { get, groupBy, sortBy } from 'lodash';
 
-import { Button } from 'semantic-ui-react';
+import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
+import {
+  deStringifySearchquery,
+  parseSearchBlockQuery,
+  translateSearch,
+} from '@plone-collective/volto-bookmarks/helpers';
+import MenuItem from '@plone-collective/volto-bookmarks/components/MenuItem';
 
-import { flattenToAppURL } from '@plone/volto/helpers';
-import { Icon } from '@plone/volto/components';
-
-import deleteSVG from '@plone/volto/icons/clear.svg';
-
-import { getAllBookmarks } from '../actions';
-import { deStringifySearchquery, translateSearch } from '../helpers';
-
-import { deleteBookmark } from '../actions';
 import './volto-bookmarks.css';
 
 import config from '@plone/volto/registry';
 
-const messages = defineMessages({
-  title_bookmarks: {
-    id: 'title_bookmarks',
-    defaultMessage: 'Bookmarks',
-  },
-  bookmark_searchquery: {
-    id: 'bookmark_searchquery',
-    defaultMessage: 'Search for ',
-  },
-  label_deletebookmark: {
-    id: 'label_deletebookmark',
-    defaultMessage: 'delete bookmark',
-  },
-});
-
 function getTitle(queryparams) {
   const searchParams = new URLSearchParams(deStringifySearchquery(queryparams));
+
+  const b_size = searchParams.get('b_size');
+
+  // default search block
+  if (b_size) {
+    const query = searchParams.getAll('query');
+    let parsed = parseSearchBlockQuery(query);
+
+    const title_array = [];
+    Object.keys(parsed)
+      .reverse()
+      .forEach((key) => {
+        if (key === 'path') {
+          //
+        } else if (key === 'SearchableText') {
+          title_array.push(`«${parsed[key]}»`);
+        } else {
+          parsed[key].forEach((value) => {
+            title_array.push(translateSearch(value, 'facet_fields'));
+          });
+        }
+      });
+    let search_bookmark_title = title_array.join(', ');
+    return search_bookmark_title;
+  }
+
+  // searchkit block of volto-searchkit-block
   const filters = searchParams.getAll('f');
   const query = searchParams.get('q');
 
@@ -62,36 +70,19 @@ function getTitle(queryparams) {
   return search_bookmark_title;
 }
 
-const BookmarksEditorComponent = ({ intl }) => {
+const BookmarksEditorComponent = () => {
   const token = useSelector((state) => state.userSession.token);
   const items = useSelector((state) => state.collectivebookmarks?.items || []);
-  const bookmarkdelete = useSelector(
-    (state) => state.collectivebookmarks?.delete || {},
-  );
+
   const dispatch = useDispatch();
 
   let [groupedItems, setGroupedItems] = useState({});
 
-  /* getBookmarks on
-   * - mount
-   * - after deletion of bookmark
-   * - after login
-   */
-
-  // on mount
-  // on login
   useEffect(() => {
     if (token) {
       dispatch(getAllBookmarks());
     }
   }, [dispatch, token]);
-
-  // after deletion of bookmark (state.collectivebookmarks?.delete changed to 'loaded')
-  useEffect(() => {
-    if (token && bookmarkdelete === 'loaded') {
-      dispatch(getAllBookmarks());
-    }
-  }, [dispatch, bookmarkdelete, token]);
 
   useEffect(() => {
     let grtms = groupBy(items, (item) => item['group']);
@@ -108,11 +99,7 @@ const BookmarksEditorComponent = ({ intl }) => {
       grtms[kk] = bar;
     });
     setGroupedItems(grtms);
-  }, [dispatch, items, intl]);
-
-  function deleteBookmarkHandler(uid, group, searchquery) {
-    dispatch(deleteBookmark(uid, group, searchquery));
-  }
+  }, [dispatch, items]);
 
   return !token ? (
     <div className="volto-bookmarks-info">
@@ -144,67 +131,7 @@ const BookmarksEditorComponent = ({ intl }) => {
               </h3>
               <ul>
                 {groupedItems[grp].map((item, index) => {
-                  return (
-                    <li className="bookmarkitem" key={index}>
-                      <Link
-                        title={item.description || ''}
-                        to={`${
-                          flattenToAppURL(item['@id']) +
-                          '?' +
-                          deStringifySearchquery(item.queryparams)
-                        }`}
-                        onClick={() => {
-                          // Hack: Select bookmark of search, then select bookmark of search.
-                          // Search is triggered!
-                          // Criterion: search parameter 'q' ist provided
-                          // Event 'popstate' triggers a search.
-                          const url = `${
-                            flattenToAppURL(item['@id']) +
-                            '?' +
-                            deStringifySearchquery(item.queryparams)
-                          }`;
-                          const queryparams_object = item.queryparams
-                            ? JSON.parse(item.queryparams)
-                            : {};
-                          if (queryparams_object.q) {
-                            window.history.pushState(
-                              {},
-                              'search bookmark',
-                              url,
-                            );
-                            let evt = new CustomEvent('popstate', {
-                              detail: {},
-                            });
-                            dispatchEvent(evt);
-                          }
-                        }}
-                      >
-                        {item.title}
-                      </Link>
-                      <Button
-                        icon
-                        basic
-                        className="deletebookmark"
-                        aria-label={intl.formatMessage(
-                          messages.label_deletebookmark,
-                        )}
-                        onClick={() =>
-                          deleteBookmarkHandler(
-                            item.uid,
-                            item.group,
-                            item.queryparams || '',
-                          )
-                        }
-                      >
-                        <Icon
-                          name={deleteSVG}
-                          // className="circled"
-                          size="25px"
-                          title="Bookmark löschen"
-                        />
-                      </Button>
-                    </li>
-                  );
+                  return <MenuItem item={item} key={item.created} />;
                 })}
               </ul>
             </li>
@@ -214,4 +141,4 @@ const BookmarksEditorComponent = ({ intl }) => {
   );
 };
 
-export default injectIntl(BookmarksEditorComponent);
+export default BookmarksEditorComponent;

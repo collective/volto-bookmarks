@@ -1,8 +1,13 @@
 import config from '@plone/volto/registry';
 
+/**
+ *
+ * @param {String} el facet value
+ * @param {String} type 'facet_fields' or 'search_sections'
+ * @returns
+ */
 const translateSearch = (el, type) => {
   const mapping = config.settings?.bookmarks?.filtermapping;
-  // TODO catch missing type
   return mapping ? (mapping[type] ? mapping[type][el] || el : el) : el;
 };
 
@@ -40,4 +45,18 @@ function deStringifySearchquery(searchparamstring) {
   return params.toString();
 }
 
-export { deStringifySearchquery, doStringifySearchquery, translateSearch };
+function parseSearchBlockQuery(query) {
+  const q = JSON.parse(query);
+  let obj = {};
+  q.forEach((el) => {
+    obj[el.i] = el.v;
+  });
+  return obj;
+}
+
+export {
+  deStringifySearchquery,
+  doStringifySearchquery,
+  parseSearchBlockQuery,
+  translateSearch,
+};

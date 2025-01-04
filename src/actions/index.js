@@ -5,7 +5,6 @@
 import {
   GET_BOOKMARK,
   ADD_BOOKMARK,
-  PUT_BOOKMARK,
   DEL_BOOKMARK,
   GET_BOOKMARKS,
 } from '../constants';
@@ -29,22 +28,6 @@ export function addBookmark(uid, group, querystring = '', payload = {}) {
     type: ADD_BOOKMARK,
     request: {
       op: 'post',
-      path: `/@bookmark`,
-      data: {
-        uid,
-        group,
-        queryparams: doStringifySearchquery(querystring),
-        payload,
-      },
-    },
-  };
-}
-
-export function modifyBookmark(uid, group, querystring = '', payload = {}) {
-  return {
-    type: PUT_BOOKMARK,
-    request: {
-      op: 'put',
       path: `/@bookmark`,
       data: {
         uid,
