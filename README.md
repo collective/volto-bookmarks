@@ -42,7 +42,7 @@ This component adds two buttons to the toolbar: one for toggling the bookmark of
 `config.js`:
 
 ```js
-import Bookmarking from '@plone-collective/volto-bookmarks/components';
+import { Bookmarking } from '@plone-collective/volto-bookmarks/components';
 
 import '@plone/volto/config';
 
