@@ -1,8 +1,6 @@
 import { Plug } from '@plone/volto/components/manage/Pluggable';
-import {
-  ToggleBookmarkButton,
-  ShowBookmarksToolbarButton,
-} from '@plone-collective/volto-bookmarks/components';
+import ShowBookmarksToolbarButton from '@plone-collective/volto-bookmarks/components/ShowBookmarksToolbarButton';
+import ToggleBookmarkButton from '@plone-collective/volto-bookmarks/components/ToggleBookmarkButton';
 
 const Bookmarking = () => {
   return (
