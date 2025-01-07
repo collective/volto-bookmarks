@@ -100,7 +100,7 @@ ci-test: ## Run unit tests in CI
 .PHONY: backend-docker-start
 backend-docker-start:	## Starts a Docker-based backend for development
 	@echo "$(GREEN)==> Start Docker-based Plone Backend$(RESET)"
-	docker run -it --rm --name=backend -p 8080:8080 -e SITE=Plone $(DOCKER_IMAGE)
+	docker run -it --rm --name=backend -p 8080:8080 -e SITE=Plone -e ADDONS="collective.bookmarks" $(DOCKER_IMAGE)
 
 ## Storybook
 .PHONY: storybook-start
@@ -125,11 +125,11 @@ acceptance-frontend-prod-start: ## Start acceptance frontend in production mode
 
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
-	docker run -it --rm -p 55001:55001 $(DOCKER_IMAGE_ACCEPTANCE)
+	docker run -it --rm -p 55001:55001 -e ADDONS="collective.bookmarks" $(DOCKER_IMAGE_ACCEPTANCE)
 
 .PHONY: ci-acceptance-backend-start
 ci-acceptance-backend-start: ## Start backend acceptance server in headless mode for CI
-	docker run -i --rm -p 55001:55001 $(DOCKER_IMAGE_ACCEPTANCE)
+	docker run -i --rm -p 55001:55001 -e ADDONS="collective.bookmarks" $(DOCKER_IMAGE_ACCEPTANCE)
 
 .PHONY: acceptance-test
 acceptance-test: ## Start Cypress in interactive mode
