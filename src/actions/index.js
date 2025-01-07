@@ -2,28 +2,17 @@
  * Bookmark actions
  */
 
-import {
-  GET_BOOKMARK,
-  ADD_BOOKMARK,
-  PUT_BOOKMARK,
-  DEL_BOOKMARK,
-  GET_BOOKMARKS,
-} from '../constants';
+import { ADD_BOOKMARK, DEL_BOOKMARK, GET_BOOKMARKS } from '../constants';
 
-import { doStringifySearchquery } from '../helpers';
+import { generateSearchQueryObject } from '../helpers';
 
-export function getBookmark(uid, group, querystring = '') {
-  return {
-    type: GET_BOOKMARK,
-    request: {
-      op: 'get',
-      path: `/@bookmark?uid=${uid}&group=${group}&queryparams=${doStringifySearchquery(
-        querystring,
-      )}`,
-    },
-  };
-}
-
+/**
+ * addBookmark
+ * @param {String} uid
+ * @param {String} group
+ * @param {String} querystring
+ * @param {Object} payload
+ */
 export function addBookmark(uid, group, querystring = '', payload = {}) {
   return {
     type: ADD_BOOKMARK,
@@ -33,30 +22,20 @@ export function addBookmark(uid, group, querystring = '', payload = {}) {
       data: {
         uid,
         group,
-        queryparams: doStringifySearchquery(querystring),
+        queryparams: JSON.stringify(generateSearchQueryObject(querystring)),
         payload,
       },
     },
   };
 }
 
-export function modifyBookmark(uid, group, querystring = '', payload = {}) {
-  return {
-    type: PUT_BOOKMARK,
-    request: {
-      op: 'put',
-      path: `/@bookmark`,
-      data: {
-        uid,
-        group,
-        queryparams: doStringifySearchquery(querystring),
-        payload,
-      },
-    },
-  };
-}
-
-export function deleteBookmark(uid, group, querystring = '') {
+/**
+ * deleteBookmark
+ * @param {String} uid
+ * @param {String} group
+ * @param {Object} queryObjectStringified
+ */
+export function deleteBookmark(uid, group, queryObjectStringified = '') {
   return {
     type: DEL_BOOKMARK,
     request: {
@@ -65,7 +44,7 @@ export function deleteBookmark(uid, group, querystring = '') {
       data: {
         uid,
         group,
-        queryparams: querystring,
+        queryparams: queryObjectStringified,
       },
     },
   };

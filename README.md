@@ -29,14 +29,6 @@ There are two options:
 
 - Install this Plone (Volto) add-on `@plone-collective/volto-bookmarks`. See [Volto docs](https://6.docs.plone.org/volto/addons/index.html#configuring-a-volto-project-to-use-an-add-on) for instructions.
 
-- Merge add-on translations into your Volto app. Available translations so far: 
-  - german.
-
-```bash
-yarn
-yarn i18n
-```
-
 
 ## Integration of the two bookmark buttons
 
@@ -50,7 +42,7 @@ This component adds two buttons to the toolbar: one for toggling the bookmark of
 `config.js`:
 
 ```js
-import Bookmarking from '@plone-collective/volto-bookmarks/components';
+import { Bookmarking } from '@plone-collective/volto-bookmarks/components';
 
 import '@plone/volto/config';
 
@@ -99,7 +91,7 @@ config.settings.bookmarks = {
     default_search: 'Search',
     default_nogroup: 'Miscellaneous',
   },
-  bookmarkgroupfield: 'informationtype',
+  bookmarkgroupfield: '@type',
 };
 ```
 

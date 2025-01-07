@@ -1,5 +1,7 @@
-import BookmarksEditorComponent from './components/BookmarksEditorComponent';
-import { collectivebookmarks } from './reducers';
+import BookmarksEditorComponent from '@plone-collective/volto-bookmarks/components/BookmarksEditorComponent';
+import { collectivebookmarks } from '@plone-collective/volto-bookmarks/reducers';
+import EventListenerSearchkitSearch from '@plone-collective/volto-bookmarks/components/EventListenerSearchkitSearch'
+import AppExtrasBookmarking from '@plone-collective/volto-bookmarks/components/AppExtrasBookmarking'
 
 const applyConfig = (config) => {
   // button and menu are added in Volto project. See README.txt
@@ -21,6 +23,18 @@ const applyConfig = (config) => {
       wrapper: null,
     },
   };
+
+  config.settings.appExtras = [
+    ...config.settings.appExtras,
+    {
+      match: '/',
+      component: AppExtrasBookmarking,
+    },
+    {
+      match: '/',
+      component: EventListenerSearchkitSearch,
+    },
+  ];
 
   // reducers
   config.addonReducers = {
