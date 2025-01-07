@@ -2,26 +2,9 @@
  * Bookmark actions
  */
 
-import {
-  GET_BOOKMARK,
-  ADD_BOOKMARK,
-  DEL_BOOKMARK,
-  GET_BOOKMARKS,
-} from '../constants';
+import { ADD_BOOKMARK, DEL_BOOKMARK, GET_BOOKMARKS } from '../constants';
 
-import { doStringifySearchquery } from '../helpers';
-
-export function getBookmark(uid, group, querystring = '') {
-  return {
-    type: GET_BOOKMARK,
-    request: {
-      op: 'get',
-      path: `/@bookmark?uid=${uid}&group=${group}&queryparams=${doStringifySearchquery(
-        querystring,
-      )}`,
-    },
-  };
-}
+import { generateSearchQueryObject } from '../helpers';
 
 export function addBookmark(uid, group, querystring = '', payload = {}) {
   return {
@@ -32,7 +15,7 @@ export function addBookmark(uid, group, querystring = '', payload = {}) {
       data: {
         uid,
         group,
-        queryparams: doStringifySearchquery(querystring),
+        queryparams: JSON.stringify(generateSearchQueryObject(querystring)),
         payload,
       },
     },

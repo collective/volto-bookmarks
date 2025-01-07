@@ -1,4 +1,3 @@
-export const GET_BOOKMARK = 'GET_BOOKMARK';
 export const ADD_BOOKMARK = 'ADD_BOOKMARK';
 export const DEL_BOOKMARK = 'DEL_BOOKMARK';
 
