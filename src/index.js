@@ -1,6 +1,5 @@
 import BookmarksEditorComponent from '@plone-collective/volto-bookmarks/components/BookmarksEditorComponent';
 import { collectivebookmarks } from '@plone-collective/volto-bookmarks/reducers';
-import EventListenerSearch from '@plone-collective/volto-bookmarks/components/EventListenerSearch'
 import EventListenerSearchkitSearch from '@plone-collective/volto-bookmarks/components/EventListenerSearchkitSearch'
 import AppExtrasBookmarking from '@plone-collective/volto-bookmarks/components/AppExtrasBookmarking'
 
