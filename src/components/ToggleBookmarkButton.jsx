@@ -1,11 +1,11 @@
 import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import get from 'lodash/get';
+import isEqual from 'lodash/isEqual';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
 
-// import bookmarkSVG from '@plone/volto/icons/bookmark.svg';
 import bookmarkSVG from '@plone-collective/volto-bookmarks/icons/bookmark.svg';
 import bookmarkFilledSVG from '@plone-collective/volto-bookmarks/icons/bookmark_filled.svg';
 
@@ -14,7 +14,7 @@ import {
   deleteBookmark,
 } from '@plone-collective/volto-bookmarks/actions';
 
-import { doStringifySearchquery } from '@plone-collective/volto-bookmarks/helpers';
+import { generateSearchQueryObject } from '@plone-collective/volto-bookmarks/helpers';
 
 import config from '@plone/volto/registry';
 
@@ -32,7 +32,7 @@ const ToggleBookmarkButton = ({ item = null }) => {
   const token = useSelector((state) => state.userSession?.token);
   const content = useSelector((state) => state.content?.data);
   const bookmarksArray = useSelector(
-    (state) => state.collectivebookmarks.items,
+    (state) => state.collectivebookmarks?.items,
   );
   const querystringResults = useSelector(
     (state) => state.querystringsearch.subrequests,
@@ -49,19 +49,20 @@ const ToggleBookmarkButton = ({ item = null }) => {
   React.useEffect(() => {
     // Check if page is bookmarked
     setBookmarked(false);
+    const doLoSearch = generateSearchQueryObject(document.location.search);
     bookmarksArray.forEach((element) => {
       if (
         item
           ? element.uid === item?.UID
           : element.uid === content?.UID &&
-            element.queryparams === doStringifySearchquery(routerLocationSearch)
+            isEqual(JSON.parse(element.queryparams), doLoSearch)
       ) {
         setBookmarked(true);
       }
     });
 
     // group
-    if (routerLocationSearch && !item) {
+    if (document.location.search && !item) {
       setGroup('default_search');
     } else {
       let grp_token = get(
@@ -81,12 +82,21 @@ const ToggleBookmarkButton = ({ item = null }) => {
     if (bookmarked) {
       setBookmarked(false);
       dispatch(
-        deleteBookmark(item?.UID || content.UID, group, routerLocationSearch),
+        deleteBookmark(
+          item?.UID || content.UID,
+          group,
+          document.location.search,
+        ),
       );
     } else {
       setBookmarked(true);
       dispatch(
-        addBookmark(item?.UID || content.UID, group, routerLocationSearch, {}),
+        addBookmark(
+          item?.UID || content.UID,
+          group,
+          document.location.search,
+          {},
+        ),
       );
     }
   }

@@ -5,7 +5,7 @@ import { get, groupBy, sortBy } from 'lodash';
 
 import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
 import {
-  deStringifySearchquery,
+  generateSearchQueryParamsString,
   parseSearchBlockQuery,
   translateSearch,
 } from '@plone-collective/volto-bookmarks/helpers';
@@ -16,13 +16,12 @@ import './volto-bookmarks.css';
 import config from '@plone/volto/registry';
 
 function getTitle(queryparams) {
-  const searchParams = new URLSearchParams(deStringifySearchquery(queryparams));
+  const searchParamsObject = JSON.parse(queryparams);
 
-  const b_size = searchParams.get('b_size');
+  let query = searchParamsObject['query'];
 
   // default search block
-  if (b_size) {
-    const query = searchParams.getAll('query');
+  if (query && query.length > 0) {
     let parsed = parseSearchBlockQuery(query);
 
     const title_array = [];
@@ -44,23 +43,44 @@ function getTitle(queryparams) {
   }
 
   // searchkit block of volto-searchkit-block
-  const filters = searchParams.getAll('f');
-  const query = searchParams.get('q');
-
-  const title_array = [];
+  let title_array = [];
+  query = searchParamsObject['q'];
+  let filters = searchParamsObject['f'];
   let section = '';
-  if (query) {
+
+  if (query && query[0].length) {
     title_array.push(`«${query}»`);
   }
-  filters.forEach((el) => {
-    let foo = el.split(':');
-    if (foo[0] !== 'section') {
-      const el = foo[1].replace('_agg', '');
-      title_array.push(translateSearch(el, 'facet_fields'));
-    } else {
-      section = translateSearch(foo[1], 'search_sections');
-    }
-  });
+
+  if (typeof filters === 'string') {
+    filters = [filters];
+  }
+
+  if (filters && filters.length > 0) {
+    // backward compatibility to old filter format
+    filters.forEach((el) => {
+      let foo = el.split(':');
+      if (foo[0] === 'section') {
+        section = translateSearch(foo[1], 'search_sections');
+      } else {
+        const el = foo[1].replace('_agg', '');
+        title_array.push(translateSearch(el, 'facet_fields'));
+      }
+    });
+  } else if (filters) {
+    Object.keys(filters).forEach((filterkey) => {
+      if (filterkey === 'section') {
+        section = translateSearch(filters[filterkey], 'search_sections');
+      } else {
+        title_array.push(
+          translateSearch(
+            filters[filterkey].replace('_agg', ''),
+            'facet_fields',
+          ),
+        );
+      }
+    });
+  }
 
   let search_bookmark_title = title_array.join(', ');
   search_bookmark_title = section

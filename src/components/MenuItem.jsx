@@ -12,7 +12,7 @@ import {
   deleteBookmark,
   getAllBookmarks,
 } from '@plone-collective/volto-bookmarks/actions';
-import { deStringifySearchquery } from '@plone-collective/volto-bookmarks/helpers';
+import { generateSearchQueryParamsString } from '@plone-collective/volto-bookmarks/helpers';
 
 const messages = defineMessages({
   title_bookmarks: {
@@ -47,22 +47,22 @@ const MenuItem = ({ intl, item }) => {
         to={`${
           flattenToAppURL(item['@id']) +
           '?' +
-          deStringifySearchquery(item.queryparams)
+          generateSearchQueryParamsString(item.queryparams)
         }`}
         onClick={() => {
-          // Hack: Select bookmark of search, then select bookmark of search.
+          // Hack: Select a bookmark of a search, then select another bookmark of another search.
           // Search is triggered!
-          // Criterion: search parameter 'q' ist provided
+          // Criterion: search parameters do exist
           // Event 'popstate' triggers a search.
           const url = `${
             flattenToAppURL(item['@id']) +
             '?' +
-            deStringifySearchquery(item.queryparams)
+            generateSearchQueryParamsString(item.queryparams)
           }`;
           const queryparams_object = item.queryparams
             ? JSON.parse(item.queryparams)
             : {};
-          if (queryparams_object.q) {
+          if (Object.keys(queryparams_object).length > 0) {
             window.history.pushState({}, 'search bookmark', url);
             let evt = new CustomEvent('popstate', {
               detail: {},

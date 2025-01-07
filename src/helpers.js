@@ -12,42 +12,61 @@ const translateSearch = (el, type) => {
 };
 
 /**
- * doStringifySearchquery
- * @function doStringifySearchquery
+ * generateSearchQueryObject
+ * @function generateSearchQueryObject
  * @param {string} querystring querystring of url
  * @return {string} ready for 'get' request. part of unique identifier of a bookmark
  */
-function doStringifySearchquery(querystring) {
+function generateSearchQueryObject(querystring) {
   const params = new URLSearchParams(querystring);
   let obj = {};
-  for (var key of params.keys()) {
-    obj[key] = params.getAll(key);
+  for (let key of params.keys()) {
+    const values = params.getAll(key);
+    if (values.length > 1) {
+      obj[key] = {};
+      values.forEach((el) => {
+        var [k, v] = el.split(':');
+        obj[key][k] = v;
+      });
+    } else {
+      obj[key] = values[0];
+    }
   }
-  return JSON.stringify(obj);
+  return obj;
 }
 
 /**
- * deStringifySearchquery
- * counterpart of doStringifySearchquery
- * @function deStringifySearchquery
+ * generateSearchQueryParamsString
+ * counterpart of generateSearchQueryObject
+ * @function generateSearchQueryParamsString
  * @param {string} searchparamstring Json stringified object with search params (values are lists!)
  * @return {string} querystring, ready to use in url
  */
-function deStringifySearchquery(searchparamstring) {
+function generateSearchQueryParamsString(searchparamstring) {
   const obj = JSON.parse(searchparamstring);
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(obj)) {
-    for (const el of value) {
-      // params[key] = el;
-      params.append(key, el);
+    if (typeof value == 'string') {
+      params.append(key, value);
+    } else if (value.length > 0) {
+      for (const el of value) {
+        params.append(key, el);
+      }
+    } else {
+      Object.keys(value).forEach((filterkey) => {
+        params.append(key, `${filterkey}:${value[filterkey]}`);
+      });
     }
   }
   return params.toString();
 }
 
 function parseSearchBlockQuery(query) {
-  const q = JSON.parse(query);
   let obj = {};
+  if (query.length === 0) {
+    return obj;
+  }
+  const q = JSON.parse(query);
   q.forEach((el) => {
     obj[el.i] = el.v;
   });
@@ -55,8 +74,8 @@ function parseSearchBlockQuery(query) {
 }
 
 export {
-  deStringifySearchquery,
-  doStringifySearchquery,
+  generateSearchQueryParamsString,
+  generateSearchQueryObject,
   parseSearchBlockQuery,
   translateSearch,
 };
