@@ -1,203 +1,134 @@
-# Favorites/bookmarks for Volto (volto-bookmarks)
+# volto-bookmarks
 
-Manage bookmarks / favorites in Plone Volto
+<img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
-[![npm](https://img.shields.io/npm/v/volto-bookmarks)](https://www.npmjs.com/package/volto-bookmarks)
-[![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://collective.github.io/volto-bookmarks/)
-[![Code analysis checks](https://github.com/collective/volto-bookmarks/actions/workflows/code.yml/badge.svg)](https://github.com/collective/volto-bookmarks/actions/workflows/code.yml)
-[![Unit tests](https://github.com/collective/volto-bookmarks/actions/workflows/unit.yml/badge.svg)](https://github.com/collective/volto-bookmarks/actions/workflows/unit.yml)
+
+[Plone (Volto)](https://github.com/plone/volto) add-on
 
 ## Features
 
-<!-- List your awesome features here -->
+Add and manage bookmarks of pages and searchkit queries.
+
+Bookmarks are grouped by the value of a selectable content type field.
+
+
+<img align="right" alt="volto-bookmarks" src="./src/readmeillustration/bookmarks_somewhereelse.png" />
+
+## Getting started
+
+There are two options:
+
+- Buttons in toolbar
+- Buttons somewhere else
 
 ## Installation
 
-To install your project, you must choose the method appropriate to your version of Volto.
+- Provide the necessary REST API endpoints for your Plone backend by installing [collective.bookmarks](https://github.com/collective/collective.bookmarks.git) 
+
+- Remember to install souper in Plone backend control panel.
+
+- Install this Plone (Volto) add-on `@plone-collective/volto-bookmarks`. See [Volto docs](https://6.docs.plone.org/volto/addons/index.html#configuring-a-volto-project-to-use-an-add-on) for instructions.
 
 
-### Volto 17 and earlier
+## Integration of the two bookmark buttons
 
-Create a new Volto project (you can skip this step if you already have one):
+### Option 1 - buttons in toolbar
 
-```
-npm install -g yo @plone/generator-volto
-yo @plone/volto my-volto-project --addon volto-bookmarks
-cd my-volto-project
-```
+> This requires Volto >= 16.10.0 with a pluggable toolbar.
 
-Add `volto-bookmarks` to your package.json:
+Include bookmarking in your Volto project by integrating a component `Bookmarking`.
+This component adds two buttons to the toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
 
-```JSON
-"addons": [
-    "volto-bookmarks"
-],
+`config.js`:
 
-"dependencies": {
-    "volto-bookmarks": "*"
+```js
+import { Bookmarking } from '@plone-collective/volto-bookmarks/components';
+
+import '@plone/volto/config';
+
+export default function applyConfig(config) {
+  config.settings.appExtras = [
+    ...config.settings.appExtras,
+    {
+      match: '/',
+      component: Bookmarking,
+    },
+  ];
+  return config;
 }
 ```
 
-Download and install the new add-on by running:
+
+### Option 2 - buttons not in toolbar, but somewhere else
+
+Add the two buttons to components of your choice:
+
+```jsx
+import { ShowBookmarksContentButton } from '@plone-collective/volto-bookmarks/components';
+
+    <ShowBookmarksContentButton />
 
 ```
-yarn install
+
+```jsx
+import { ToggleBookmarkButton } from '@plone-collective/volto-bookmarks/components';
+
+    <ToggleBookmarkButton />
+
 ```
 
-Start volto with:
 
-```
-yarn start
-```
+### Further configuration for both options
 
-### Volto 18 and later
+Add a mapping for bookmark groups labels and the name of the field for grouping bookmarks list.
 
-Add `volto-bookmarks` to your `package.json`:
-
-```json
-"dependencies": {
-    "volto-bookmarks": "*"
-}
-```
-
-Add `volto-bookmarks` to your `volto.config.js`:
-
-```javascript
-const addons = ['volto-bookmarks'];
+```js
+config.settings.bookmarks = {
+  ...config.settings.bookmarks,
+  bookmarkgroupmapping: {
+    manual: 'Manuals and HowTos',
+    releasenote: 'Release Notes',
+    default_search: 'Search',
+    default_nogroup: 'Miscellaneous',
+  },
+  bookmarkgroupfield: '@type',
+};
 ```
 
-If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
+Add a mapping for search filters:
 
-```javascript
-const theme = 'volto-bookmarks';
+```js
+    config.settings.bookmarks.filtermapping = {
+      facet_fields: {
+        '5237dc43-c573-4651-a5b8-cf24bfde13a6': 'Datendrehscheibe',
+        allgemeines: 'Allgemeines',
+        arbeitsliste: 'Arbeitsliste',
+        beb2k: 'BEB2k',
+        'release-note': 'Release-Note',
+        tutorial: 'Tutorial',
+        'superuser-innen': 'Superuser/innen',
+        ai: 'AI',
+        andere: 'Andere',
+        tg: 'TG',
+        zh: 'ZH',
+      },
+      search_sections: {
+        others: 'Website',
+        dokumentation: 'Dokumentation',
+        inside: 'IGIB-Inside',
+        geologie: 'Geologie',
+      },
+    },
 ```
 
-## Test installation
-
-Visit http://localhost:3000/ in a browser, login, and check the awesome new features.
+<img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
 
 
-## Development
+## Copyright and License
 
-The development of this add-on is done in isolation using a new approach using pnpm workspaces and latest `mrs-developer` and other Volto core improvements.
-For this reason, it only works with pnpm and Volto 18 (currently in alpha).
+Author Katja Süss, Rohberg, @ksuess
+https://www.rohberg.ch
 
+Copyright (c) 2023 Plone Foundation
 
-### Pre-requisites
-
--   [Node.js](https://6.docs.plone.org/install/create-project.html#node-js)
--   [Make](https://6.docs.plone.org/install/create-project.html#make)
--   [Docker](https://6.docs.plone.org/install/create-project.html#docker)
-
-
-### Make convenience commands
-
-Run `make help` to list the available commands.
-
-```text
-help                             Show this help
-install                          Installs the add-on in a development environment
-start                            Starts Volto, allowing reloading of the add-on during development
-build                            Build a production bundle for distribution of the project with the add-on
-i18n                             Sync i18n
-ci-i18n                          Check if i18n is not synced
-format                           Format codebase
-lint                             Lint, or catch and remove problems, in code base
-release                          Release the add-on on npmjs.org
-release-dry-run                  Dry-run the release of the add-on on npmjs.org
-test                             Run unit tests
-ci-test                          Run unit tests in CI
-backend-docker-start             Starts a Docker-based backend for development
-storybook-start                  Start Storybook server on port 6006
-storybook-build                  Build Storybook
-acceptance-frontend-dev-start    Start acceptance frontend in development mode
-acceptance-frontend-prod-start   Start acceptance frontend in production mode
-acceptance-backend-start         Start backend acceptance server
-ci-acceptance-backend-start      Start backend acceptance server in headless mode for CI
-acceptance-test                  Start Cypress in interactive mode
-ci-acceptance-test               Run cypress tests in headless mode for CI
-```
-
-### Development environment set up
-
-Install package requirements.
-
-```shell
-make install
-```
-
-### Start developing
-
-Start the backend.
-
-```shell
-make backend-docker-start
-```
-
-In a separate terminal session, start the frontend.
-
-```shell
-make start
-```
-
-### Lint code
-
-Run ESlint, Prettier, and Stylelint in analyze mode.
-
-```shell
-make lint
-```
-
-### Format code
-
-Run ESlint, Prettier, and Stylelint in fix mode.
-
-```shell
-make format
-```
-
-### i18n
-
-Extract the i18n messages to locales.
-
-```shell
-make i18n
-```
-
-### Unit tests
-
-Run unit tests.
-
-```shell
-make test
-```
-
-### Run Cypress tests
-
-Run each of these steps in separate terminal sessions.
-
-In the first session, start the frontend in development mode.
-
-```shell
-make acceptance-frontend-dev-start
-```
-
-In the second session, start the backend acceptance server.
-
-```shell
-make acceptance-backend-start
-```
-
-In the third session, start the Cypress interactive test runner.
-
-```shell
-make acceptance-test
-```
-
-## License
-
-The project is licensed under the MIT license.
-
-## Credits and Acknowledgements 🙏
-
-Crafted with care by **Generated using [Cookieplone (0.8.1)](https://github.com/plone/cookieplone) and [cookiecutter-plone (d9b5293)](https://github.com/plone/cookiecutter-plone/commit/d9b52933cbc6efd137e93e35a270214e307359f0) on 2025-01-07 15:59:50.437263**. A special thanks to all contributors and supporters!
+See [LICENSE.md](https://github.com/collective/volto-bookmarks/blob/master/LICENSE.md) for details.

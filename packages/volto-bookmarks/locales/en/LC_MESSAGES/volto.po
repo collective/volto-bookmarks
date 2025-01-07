@@ -10,3 +10,41 @@ msgstr ""
 "Content-Type: \n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+
+#. Default: "Search for"
+#: components/MenuItem
+msgid "bookmark_searchquery"
+msgstr "Search for "
+
+#. Default: "Please login to see your bookmarks"
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_anonymous"
+msgstr "Please log in to see your bookmarks."
+
+#. Default: "You don't have any bookmarks. You find a button on every page to bookmark it."
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_emptylist"
+msgstr "You don't have any bookmarks. You find a button on every page to bookmark it."
+
+#. Default: "add or delete bookmark"
+#: components/ToggleBookmarkButton
+msgid "label_addbookmark"
+msgstr "Save or delete bookmark"
+
+#. Default: "delete bookmark"
+#: components/MenuItem
+msgid "label_deletebookmark"
+msgstr "Delete bookmark"
+
+#. Default: "show bookmarks menu"
+#: components/ShowBookmarksContentButton
+#: components/ShowBookmarksToolbarButton
+msgid "label_showbookmarksmenu"
+msgstr "Show bookmark menu"
+
+#. Default: "Bookmarks"
+#: components/MenuItem
+msgid "title_bookmarks"
+msgstr "Bookmarks"

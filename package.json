@@ -35,7 +35,8 @@
   "dependencies": {
     "@plone/volto": "workspace:*",
     "@plone/registry": "workspace:*",
-    "volto-bookmarks": "workspace:*"
+    "@plone-collective/volto-bookmarks": "workspace:*",
+    "policy": "workspace:*"
   },
   "devDependencies": {
     "mrs-developer": "^2.2.0"

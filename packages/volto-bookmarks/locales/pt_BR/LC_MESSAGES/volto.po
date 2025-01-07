@@ -15,3 +15,39 @@ msgstr ""
 "Language-Name: Português do Brasil\n"
 "Preferred-Encodings: utf-8\n"
 "Domain: volto\n"
+
+#. Default: "Search for"
+#: components/MenuItem
+msgid "bookmark_searchquery"
+msgstr ""
+
+#. Default: "Please login to see your bookmarks"
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_anonymous"
+msgstr ""
+
+#. Default: "You don't have any bookmarks. You find a button on every page to bookmark it."
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_emptylist"
+msgstr ""
+
+#. Default: "add or delete bookmark"
+#: components/ToggleBookmarkButton
+msgid "label_addbookmark"
+msgstr ""
+
+#. Default: "delete bookmark"
+#: components/MenuItem
+msgid "label_deletebookmark"
+msgstr ""
+
+#. Default: "show bookmarks menu"
+#: components/ShowBookmarksContentButton
+#: components/ShowBookmarksToolbarButton
+msgid "label_showbookmarksmenu"
+msgstr ""
+
+#. Default: "Bookmarks"
+#: components/MenuItem
+msgid "title_bookmarks"
+msgstr ""

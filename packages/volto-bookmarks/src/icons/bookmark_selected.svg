@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bookmark_selected</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboord-bookmark" transform="translate(-522, -295)" fill="#000000" fill-rule="nonzero">
+            <g id="bookmark_selected" transform="translate(572, 345) scale(-1, 1) translate(-572, -345)translate(522, 295)">
+                <g id="bookmark" transform="translate(31, 10)">
+                    <path d="M38,79 L19,60.1994288 L0,79 L0,8.03590127 C0,3.60433807 3.65342857,0 8.14285714,0 L29.8571429,0 C34.3465714,0 38,3.61508125 38,8.05738764 L38,79 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

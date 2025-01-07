@@ -1,7 +1,7 @@
 {
-  "name": "@plone-collective/volto-bookmarks",
+  "name": "policy",
   "version": "1.0.0-alpha.0",
-  "description": "Manage bookmarks / favorites in Plone Volto",
+  "description": "A new add-on for Volto",
   "main": "src/index.js",
   "license": "MIT",
   "keywords": [
@@ -10,11 +10,11 @@
     "plone",
     "react"
   ],
-  "author": "Katja Süss",
-  "homepage": "https://github.com/collective/volto-bookmarks#readme",
+  "author": "Plone Community",
+  "homepage": "https://github.com/collective/policy#readme",
   "repository": {
     "type": "git",
-    "url": "git@github.com:collective/volto-bookmarks.git"
+    "url": "git@github.com:collective/policy.git"
   },
   "publishConfig": {
     "access": "public"

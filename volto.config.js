@@ -1,4 +1,4 @@
-const addons = ['volto-bookmarks'];
+const addons = ['@plone-collective/volto-bookmarks', 'policy'];
 const theme = '';
 
 module.exports = {
