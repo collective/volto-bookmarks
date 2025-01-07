@@ -5,7 +5,6 @@ import { get, groupBy, sortBy } from 'lodash';
 
 import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
 import {
-  generateSearchQueryParamsString,
   parseSearchBlockQuery,
   translateSearch,
 } from '@plone-collective/volto-bookmarks/helpers';

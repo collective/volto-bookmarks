@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Button } from 'semantic-ui-react';
 
 import { flattenToAppURL } from '@plone/volto/helpers';
