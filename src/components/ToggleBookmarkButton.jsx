@@ -12,6 +12,7 @@ import bookmarkFilledSVG from '@plone-collective/volto-bookmarks/icons/bookmark_
 import {
   addBookmark,
   deleteBookmark,
+  getAllBookmarks,
 } from '@plone-collective/volto-bookmarks/actions';
 
 import { generateSearchQueryObject } from '@plone-collective/volto-bookmarks/helpers';
@@ -85,9 +86,11 @@ const ToggleBookmarkButton = ({ item = null }) => {
         deleteBookmark(
           item?.UID || content.UID,
           group,
-          document.location.search,
+          JSON.stringify(generateSearchQueryObject(document.location.search)),
         ),
-      );
+      ).then(() => {
+        dispatch(getAllBookmarks());
+      });
     } else {
       setBookmarked(true);
       dispatch(
@@ -97,7 +100,9 @@ const ToggleBookmarkButton = ({ item = null }) => {
           document.location.search,
           {},
         ),
-      );
+      ).then(() => {
+        dispatch(getAllBookmarks());
+      });
     }
   }
 

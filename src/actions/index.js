@@ -6,6 +6,13 @@ import { ADD_BOOKMARK, DEL_BOOKMARK, GET_BOOKMARKS } from '../constants';
 
 import { generateSearchQueryObject } from '../helpers';
 
+/**
+ * addBookmark
+ * @param {String} uid
+ * @param {String} group
+ * @param {String} querystring
+ * @param {Object} payload
+ */
 export function addBookmark(uid, group, querystring = '', payload = {}) {
   return {
     type: ADD_BOOKMARK,
@@ -22,7 +29,13 @@ export function addBookmark(uid, group, querystring = '', payload = {}) {
   };
 }
 
-export function deleteBookmark(uid, group, querystring = '') {
+/**
+ * deleteBookmark
+ * @param {String} uid
+ * @param {String} group
+ * @param {Object} queryObjectStringified
+ */
+export function deleteBookmark(uid, group, queryObjectStringified = '') {
   return {
     type: DEL_BOOKMARK,
     request: {
@@ -31,7 +44,7 @@ export function deleteBookmark(uid, group, querystring = '') {
       data: {
         uid,
         group,
-        queryparams: querystring,
+        queryparams: queryObjectStringified,
       },
     },
   };
