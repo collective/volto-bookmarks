@@ -5,12 +5,9 @@ import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
 
 const EventListenerSearchkitSearch = () => {
   const dispatch = useDispatch();
-  // TODO Make event listeners configurable for other implementations of searchkit / faceted search
-  // see window.addEventListener('popstate', handlePop);
-  // see RouteAnnouncer of Volto core
 
   function searchOnUrlQueryStringChanged(event) {
-    // event handler for searchkitQueryChanged event of searchkit
+    // event handler for searchkitQueryChanged event of package react-searchkit
     dispatch(getAllBookmarks());
   }
 
