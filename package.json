@@ -1,44 +1,51 @@
 {
-  "name": "@plone-collective/volto-bookmarks",
-  "version": "1.0.2",
+  "name": "volto-bookmarks-dev",
+  "version": "1.0.0-alpha.0",
   "description": "Manage bookmarks / favorites in Plone Volto",
-  "main": "src/index.js",
-  "author": "Katja Süss, https://github.com/ksuess",
-  "license": "MIT",
+  "author": "Katja Süss",
   "homepage": "https://github.com/collective/volto-bookmarks",
+  "license": "MIT",
   "keywords": [
     "volto-addon",
     "volto",
     "plone",
     "react"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:collective/volto-bookmarks.git"
-  },
   "scripts": {
-    "bootstrap": "node bootstrap",
-    "stylelint": "../../../node_modules/stylelint/bin/stylelint.js --allow-empty-input 'src/**/*.{css,less}'",
-    "stylelint:overrides": "../../../node_modules/.bin/stylelint --syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides'",
-    "stylelint:fix": "yarn stylelint --fix && yarn stylelint:overrides --fix",
-    "prettier": "../../../node_modules/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}'",
-    "prettier:fix": "../../../node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx,json,css,less,md}'",
-    "lint": "../../../node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx}'",
-    "lint:fix": "../../../node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'",
-    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
-    "release": "release-it"
+    "preinstall": "npx only-allow pnpm",
+    "start": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto start",
+    "start:prod": "pnpm --filter @plone/volto start:prod",
+    "build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build",
+    "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
+    "i18n": "pnpm --filter volto-bookmarks i18n && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n",
+    "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests",
+    "lint": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --max-warnings=0 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --fix 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "prettier": "prettier --check 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "prettier:fix": "prettier --write 'packages/**/src/**/*.{js,jsx,ts,tsx}' ",
+    "stylelint": "stylelint 'packages/**/src/**/*.{css,scss,less}' --allow-empty-input",
+    "stylelint:fix": "stylelint 'packages/**/src/**/*.{css,scss,less}' --fix --allow-empty-input",
+    "dry-release": "pnpm --filter volto-bookmarks dry-release",
+    "release": "pnpm --filter volto-bookmarks release",
+    "release-major-alpha": "pnpm --filter volto-bookmarks release-major-alpha",
+    "release-alpha": "pnpm --filter volto-bookmarks release-alpha",
+    "storybook": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto storybook dev -p 6006 -c $(pwd)/.storybook",
+    "storybook-build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
   },
   "dependencies": {
-    "@plone/scripts": "*"
-  },
-  "peerDependencies": {
-    "@plone/volto": ">=14.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
+    "@plone/volto": "workspace:*",
+    "@plone/registry": "workspace:*",
+    "@plone-collective/volto-bookmarks": "workspace:*",
+    "policy": "workspace:*"
   },
   "devDependencies": {
-    "@release-it/conventional-changelog": "^5.1.1",
-    "release-it": "^15.10.3"
-  }
+    "mrs-developer": "^2.2.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+      "react-refresh": "^0.14.2"
+    }
+  },
+  "packageManager": "pnpm@9.1.1"
 }

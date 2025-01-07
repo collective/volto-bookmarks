@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-06T16:01:32.969Z\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"Language: \n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Language-Code: pt_BR\n"
+"Language-Name: Português do Brasil\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: volto\n"
+
+#. Default: "Search for"
+#: components/MenuItem
+msgid "bookmark_searchquery"
+msgstr ""
+
+#. Default: "Please login to see your bookmarks"
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_anonymous"
+msgstr ""
+
+#. Default: "You don't have any bookmarks. You find a button on every page to bookmark it."
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_emptylist"
+msgstr ""
+
+#. Default: "add or delete bookmark"
+#: components/ToggleBookmarkButton
+msgid "label_addbookmark"
+msgstr ""
+
+#. Default: "delete bookmark"
+#: components/MenuItem
+msgid "label_deletebookmark"
+msgstr ""
+
+#. Default: "show bookmarks menu"
+#: components/ShowBookmarksContentButton
+#: components/ShowBookmarksToolbarButton
+msgid "label_showbookmarksmenu"
+msgstr ""
+
+#. Default: "Bookmarks"
+#: components/MenuItem
+msgid "title_bookmarks"
+msgstr ""

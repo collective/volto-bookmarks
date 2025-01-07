@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: de\n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
+
+#. Default: "Search for"
+#: components/MenuItem
+msgid "bookmark_searchquery"
+msgstr "Suche nach "
+
+#. Default: "Please login to see your bookmarks"
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_anonymous"
+msgstr "Bitte loggen Sie sich ein um Ihre Lesezeichen zu sehen."
+
+#. Default: "You don't have any bookmarks. You find a button on every page to bookmark it."
+#: components/BookmarksEditorComponent
+msgid "help_bookmarks_emptylist"
+msgstr "Sie haben noch keine Lesezeichen. Auf jeder Seite finden Sie einen Button um ein Lesezeichen zu speichern."
+
+#. Default: "add or delete bookmark"
+#: components/ToggleBookmarkButton
+msgid "label_addbookmark"
+msgstr "Lesezeichen speichern/löschen"
+
+#. Default: "delete bookmark"
+#: components/MenuItem
+msgid "label_deletebookmark"
+msgstr "Lesezeichen löschen"
+
+#. Default: "show bookmarks menu"
+#: components/ShowBookmarksContentButton
+#: components/ShowBookmarksToolbarButton
+msgid "label_showbookmarksmenu"
+msgstr "Lesezeichenmenü zeigen"
+
+#. Default: "Bookmarks"
+#: components/MenuItem
+msgid "title_bookmarks"
+msgstr "Lesezeichen"
