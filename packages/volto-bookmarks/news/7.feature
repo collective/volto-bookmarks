@@ -1,0 +1,1 @@
+Bookmarking also via listing block and search block. @ksuess
