@@ -2,7 +2,7 @@
   "name": "volto-bookmarks-dev",
   "version": "2.0.0",
   "description": "Manage bookmarks / favorites in Plone Volto",
-  "author": "Katja S\u00fcss",
+  "author": "Katja Süss",
   "homepage": "https://github.com/collective/volto-bookmarks",
   "license": "MIT",
   "keywords": [
@@ -33,9 +33,9 @@
     "storybook-build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
   },
   "dependencies": {
-    "@plone/volto": "workspace:*",
-    "@plone/registry": "workspace:*",
     "@plone-collective/volto-bookmarks": "workspace:*",
+    "@plone/registry": "workspace:*",
+    "@plone/volto": "workspace:*",
     "policy": "workspace:*"
   },
   "devDependencies": {
