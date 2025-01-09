@@ -1,6 +1,6 @@
 # volto-bookmarks
 
-<img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
+<img align="right" width="50" alt="volto-bookmarks" src="./packages/volto-bookmarks/src/icons/bookmark.svg" />
 
 
 [Plone (Volto)](https://github.com/plone/volto) add-on
@@ -12,7 +12,7 @@ Add and manage bookmarks of pages and searchkit queries.
 Bookmarks are grouped by the value of a selectable content type field.
 
 
-<img align="right" alt="volto-bookmarks" src="./src/readmeillustration/bookmarks_somewhereelse.png" />
+<img align="right" alt="volto-bookmarks" src="./packages/volto-bookmarks/src/readmeillustration/bookmarks_somewhereelse.png" />
 
 ## Getting started
 
@@ -121,7 +121,7 @@ Add a mapping for search filters:
     },
 ```
 
-<img align="right" width="50" alt="volto-bookmarks" src="./src/icons/bookmark.svg" />
+<img align="right" width="50" alt="volto-bookmarks" src="./packages/volto-bookmarks/src/icons/bookmark.svg" />
 
 
 ## Copyright and License
