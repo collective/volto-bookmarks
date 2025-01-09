@@ -1,0 +1,17 @@
+services:
+  backend-acceptance:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.acceptance
+      args:
+        PLONE_VERSION: ${PLONE_VERSION:-6.0}
+    environment:
+      CONFIGURE_PACKAGES: 'plone.restapi,plone.volto,plone.volto.cors,collective.bookmarks'
+      APPLY_PROFILES: 'plone.volto:default,souper.plone:default,collective.bookmarks:default'
+    volumes:
+      - backend-data:/data
+    ports:
+      - 55001:55001
+
+volumes:
+  backend-data:

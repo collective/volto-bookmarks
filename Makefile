@@ -117,19 +117,30 @@ storybook-build: ## Build Storybook
 ## Acceptance
 .PHONY: acceptance-frontend-dev-start
 acceptance-frontend-dev-start: ## Start acceptance frontend in development mode
-	RAZZLE_API_PATH=http://127.0.0.1:55001/plone pnpm start
+	# RAZZLE_API_PATH=http://127.0.0.1:55001/plone pnpm start
+	RAZZLE_API_PATH=http://127.0.0.1:55001/plone NODE_OPTIONS=--dns-result-order=ipv4first pnpm start
 
 .PHONY: acceptance-frontend-prod-start
 acceptance-frontend-prod-start: ## Start acceptance frontend in production mode
 	RAZZLE_API_PATH=http://127.0.0.1:55001/plone pnpm build && pnpm start:prod
 
+# .PHONY: acceptance-backend-start
+# acceptance-backend-start: ## Start backend acceptance server
+# 	docker run -it --rm -p 55001:55001 $(DOCKER_IMAGE_ACCEPTANCE)
+
+# .PHONY: ci-acceptance-backend-start
+# ci-acceptance-backend-start: ## Start backend acceptance server in headless mode for CI
+# 	docker run -i --rm -p 55001:55001 $(DOCKER_IMAGE_ACCEPTANCE)
+
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
-	docker run -it --rm -p 55001:55001 -e ADDONS="collective.bookmarks" $(DOCKER_IMAGE_ACCEPTANCE)
+	cd docker/volto-bookmarks
+	docker compose up -d --force-recreate
 
 .PHONY: ci-acceptance-backend-start
 ci-acceptance-backend-start: ## Start backend acceptance server in headless mode for CI
-	docker run -i --rm -p 55001:55001 -e ADDONS="collective.bookmarks" $(DOCKER_IMAGE_ACCEPTANCE)
+	cd docker/volto-bookmarks
+	docker compose up -d --force-recreate
 
 .PHONY: acceptance-test
 acceptance-test: ## Start Cypress in interactive mode
