@@ -1,5 +1,6 @@
 import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
+import { useAtomValue } from 'jotai';
 import get from 'lodash/get';
 import isEqual from 'lodash/isEqual';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +18,8 @@ import {
 
 import { generateSearchQueryObject } from '@plone-collective/volto-bookmarks/helpers';
 
+import { allBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
+
 import config from '@plone/volto/registry';
 
 const messages = defineMessages({
@@ -30,16 +33,15 @@ const messages = defineMessages({
  * Add a bookmark to users bookmark list
  */
 const ToggleBookmarkButton = ({ item = null }) => {
-  const token = useSelector((state) => state.userSession?.token);
   const content = useSelector((state) => state.content?.data);
-  const bookmarksArray = useSelector(
-    (state) => state.collectivebookmarks?.items,
-  );
+
+  const bookmarksArray = useAtomValue(allBookmarksAtom)?.items;
+
   const querystringResults = useSelector(
-    (state) => state.querystringsearch.subrequests,
+    (state) => state.querystringsearch?.subrequests,
   );
   const routerLocationSearch = useSelector(
-    (state) => state.router.location.search,
+    (state) => state.router?.location?.search,
   );
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -51,16 +53,17 @@ const ToggleBookmarkButton = ({ item = null }) => {
     // Check if page is bookmarked
     setBookmarked(false);
     const doLoSearch = generateSearchQueryObject(document.location.search);
-    bookmarksArray.forEach((element) => {
-      if (
-        item
-          ? element.uid === item?.UID
-          : element.uid === content?.UID &&
-            isEqual(JSON.parse(element.queryparams), doLoSearch)
-      ) {
-        setBookmarked(true);
-      }
-    });
+    bookmarksArray &&
+      bookmarksArray.forEach((element) => {
+        if (
+          item
+            ? element.uid === item?.UID
+            : element.uid === content?.UID &&
+              isEqual(JSON.parse(element.queryparams), doLoSearch)
+        ) {
+          setBookmarked(true);
+        }
+      });
 
     // group
     if (document.location.search && !item) {
@@ -110,7 +113,7 @@ const ToggleBookmarkButton = ({ item = null }) => {
     }
   }
 
-  return token && (item || content['@type'] !== 'Plone Site') ? (
+  return bookmarksArray && (item || content['@type'] !== 'Plone Site') ? (
     <Button
       icon
       basic
