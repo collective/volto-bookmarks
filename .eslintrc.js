@@ -29,8 +29,8 @@ module.exports = {
           ['@plone/volto-slate', `${coreLocation}/packages/volto-slate/src`],
           ['@plone/registry', `${coreLocation}/packages/registry/src`],
           [
-            'volto-bookmarks',
-            './packages/volto-bookmarks/src',
+            '@plone-collective/volto-bookmarks',
+            `${projectRootPath}/packages/volto-bookmarks/src`,
           ],
           ...addonAliases,
         ],
