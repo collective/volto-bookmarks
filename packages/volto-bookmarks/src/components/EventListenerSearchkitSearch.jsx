@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 
 import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
 
+// event handler for searchkitQueryChanged event of package react-searchkit
 const EventListenerSearchkitSearch = () => {
   const dispatch = useDispatch();
 
   function searchOnUrlQueryStringChanged(event) {
-    // event handler for searchkitQueryChanged event of package react-searchkit
     dispatch(getAllBookmarks());
   }
 

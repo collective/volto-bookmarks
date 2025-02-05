@@ -17,9 +17,12 @@ const applyConfig = (config) => {
 
   config.settings.bookmarks.filtermapping = {
     facet_fields: {
-      'News Item': 'News',
+      'News Item': 'News Item',
+      Document: 'Page',
+      Event: 'Event',
     },
     search_sections: {
+      others: 'Website',
       news: 'News',
     },
   };
