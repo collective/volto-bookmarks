@@ -12,53 +12,19 @@ const translateSearch = (el, type) => {
 };
 
 /**
- * generateSearchQueryObject
- * @function generateSearchQueryObject
+ * sortQuerystring
+ * @function sortQuerystring
  * @param {string} querystring querystring of url
- * @return {string} ready for 'get' request. part of unique identifier of a bookmark
+ * @return {string} ready for request. part of unique identifier of a bookmark
  */
-function generateSearchQueryObject(querystring) {
-  const params = new URLSearchParams(querystring);
-  let obj = {};
-  for (let key of params.keys()) {
-    const values = params.getAll(key);
-    if (values.length > 1) {
-      obj[key] = {};
-      values.forEach((el) => {
-        var [k, v] = el.split(':');
-        obj[key][k] = v;
-      });
-    } else {
-      obj[key] = values[0];
-    }
+function sortQuerystring(querystring) {
+  if (!querystring) {
+    return '';
   }
-  return obj;
-}
-
-/**
- * generateSearchQueryParamsString
- * counterpart of generateSearchQueryObject
- * @function generateSearchQueryParamsString
- * @param {string} searchparamstring Json stringified object with search params (values are lists!)
- * @return {string} querystring, ready to use in url
- */
-function generateSearchQueryParamsString(searchparamstring) {
-  const obj = JSON.parse(searchparamstring);
-  const params = new URLSearchParams();
-  for (const [key, value] of Object.entries(obj)) {
-    if (typeof value == 'string') {
-      params.append(key, value);
-    } else if (value.length > 0) {
-      for (const el of value) {
-        params.append(key, el);
-      }
-    } else {
-      Object.keys(value).forEach((filterkey) => {
-        params.append(key, `${filterkey}:${value[filterkey]}`);
-      });
-    }
-  }
-  return params.toString();
+  let params = new URLSearchParams(querystring);
+  params.sort();
+  let sortedParams = params.toString();
+  return sortedParams;
 }
 
 function parseSearchBlockQuery(query) {
@@ -73,9 +39,4 @@ function parseSearchBlockQuery(query) {
   return obj;
 }
 
-export {
-  generateSearchQueryParamsString,
-  generateSearchQueryObject,
-  parseSearchBlockQuery,
-  translateSearch,
-};
+export { sortQuerystring, parseSearchBlockQuery, translateSearch };

@@ -2,7 +2,6 @@ import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import { useAtomValue } from 'jotai';
 import get from 'lodash/get';
-import isEqual from 'lodash/isEqual';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
@@ -16,7 +15,7 @@ import {
   getAllBookmarks,
 } from '@plone-collective/volto-bookmarks/actions';
 
-import { generateSearchQueryObject } from '@plone-collective/volto-bookmarks/helpers';
+import { sortQuerystring } from '@plone-collective/volto-bookmarks/helpers';
 
 import { allBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
 
@@ -52,14 +51,13 @@ const ToggleBookmarkButton = ({ item = null }) => {
   React.useEffect(() => {
     // Check if page is bookmarked
     setBookmarked(false);
-    const doLoSearch = generateSearchQueryObject(document.location.search);
+    const doLoSearch = sortQuerystring(document.location.search);
     bookmarksArray &&
       bookmarksArray.forEach((element) => {
         if (
           item
             ? element.uid === item?.UID
-            : element.uid === content?.UID &&
-              isEqual(JSON.parse(element.queryparams), doLoSearch)
+            : element.uid === content?.UID && element.queryparams === doLoSearch
         ) {
           setBookmarked(true);
         }
@@ -89,11 +87,7 @@ const ToggleBookmarkButton = ({ item = null }) => {
         deleteBookmark(
           item?.UID || content.UID,
           group,
-          JSON.stringify(
-            generateSearchQueryObject(
-              item?.UID ? '' : document.location.search,
-            ),
-          ),
+          item?.UID ? null : document.location.search,
         ),
       ).then(() => {
         dispatch(getAllBookmarks());
@@ -104,7 +98,7 @@ const ToggleBookmarkButton = ({ item = null }) => {
         addBookmark(
           item?.UID || content.UID,
           group,
-          item?.UID ? '' : document.location.search,
+          item?.UID ? null : document.location.search,
           {},
         ),
       ).then(() => {

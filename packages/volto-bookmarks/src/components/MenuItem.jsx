@@ -12,7 +12,6 @@ import {
   deleteBookmark,
   getAllBookmarks,
 } from '@plone-collective/volto-bookmarks/actions';
-import { generateSearchQueryParamsString } from '@plone-collective/volto-bookmarks/helpers';
 
 const messages = defineMessages({
   title_bookmarks: {
@@ -44,25 +43,17 @@ const MenuItem = ({ intl, item }) => {
     <li className="bookmarkitem" key={item['@id']}>
       <Link
         title={item.description || ''}
-        to={`${
-          flattenToAppURL(item['@id']) +
-          '?' +
-          generateSearchQueryParamsString(item.queryparams)
-        }`}
+        to={`${flattenToAppURL(item['@id']) + '?' + item.queryparams}`}
         onClick={() => {
           // Hack: Select a bookmark of a search, then select another bookmark of another search.
           // Search is triggered!
           // Criterion: search parameters do exist
           // Event 'popstate' triggers a search.
           const url = `${
-            flattenToAppURL(item['@id']) +
-            '?' +
-            generateSearchQueryParamsString(item.queryparams)
+            flattenToAppURL(item['@id']) + '?' + item.queryparams
           }`;
-          const queryparams_object = item.queryparams
-            ? JSON.parse(item.queryparams)
-            : {};
-          if (Object.keys(queryparams_object).length > 0) {
+
+          if (item.queryparams) {
             window.history.pushState({}, 'search bookmark', url);
             let evt = new CustomEvent('popstate', {
               detail: {},

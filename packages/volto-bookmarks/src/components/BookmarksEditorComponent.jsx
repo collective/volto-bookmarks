@@ -15,9 +15,9 @@ import './volto-bookmarks.css';
 import config from '@plone/volto/registry';
 
 function getTitle(queryparams) {
-  const searchParamsObject = JSON.parse(queryparams);
+  const searchParamsObject = new URLSearchParams(queryparams);
 
-  let query = searchParamsObject['query'];
+  let query = searchParamsObject.get('query');
 
   // default search block
   if (query && query.length > 0) {
@@ -43,8 +43,8 @@ function getTitle(queryparams) {
 
   // searchkit block of volto-searchkit-block
   let title_array = [];
-  query = searchParamsObject['q'];
-  let filters = searchParamsObject['f'];
+  query = searchParamsObject.get('q');
+  let filters = searchParamsObject.getAll('f');
   let section = '';
 
   if (query && query[0].length) {
@@ -85,7 +85,6 @@ function getTitle(queryparams) {
   search_bookmark_title = section
     ? `${section}: ${search_bookmark_title}`
     : search_bookmark_title;
-
   return search_bookmark_title;
 }
 

@@ -36,8 +36,10 @@ There are two options:
 
 > This requires Volto >= 16.10.0 with a pluggable toolbar.
 
-Include bookmarking in your Volto project by integrating a component `Bookmarking`.
-This component adds two buttons to the toolbar: one for toggling the bookmark of the current page and one for displaying a menu with a list of bookmarks.
+Include bookmarking in your Volto project by integrating the component `Bookmarking`.
+This component adds two buttons to the toolbar: 
+one for toggling the bookmark of the current page and 
+one for displaying a menu with a list of bookmarks.
 
 `config.js`:
 
@@ -98,27 +100,17 @@ config.settings.bookmarks = {
 Add a mapping for search filters:
 
 ```js
-    config.settings.bookmarks.filtermapping = {
-      facet_fields: {
-        '5237dc43-c573-4651-a5b8-cf24bfde13a6': 'Datendrehscheibe',
-        allgemeines: 'Allgemeines',
-        arbeitsliste: 'Arbeitsliste',
-        beb2k: 'BEB2k',
-        'release-note': 'Release-Note',
-        tutorial: 'Tutorial',
-        'superuser-innen': 'Superuser/innen',
-        ai: 'AI',
-        andere: 'Andere',
-        tg: 'TG',
-        zh: 'ZH',
-      },
-      search_sections: {
-        others: 'Website',
-        dokumentation: 'Dokumentation',
-        inside: 'IGIB-Inside',
-        geologie: 'Geologie',
-      },
+  config.settings.bookmarks.filtermapping = {
+    facet_fields: {
+      'News Item': 'Nachricht',
+      Document: 'Seite',
+      Event: 'Veranstaltung',
     },
+    search_sections: {
+      others: 'Website',
+      nachrichten: 'Nachrichten',
+    },
+  };
 ```
 
 <img align="right" width="50" alt="volto-bookmarks" src="./packages/volto-bookmarks/src/icons/bookmark.svg" />

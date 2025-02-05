@@ -17,6 +17,18 @@ const applyConfig = (config) => {
     bookmarkgroupfield: '@type',
   };
 
+  config.settings.bookmarks.filtermapping = {
+    facet_fields: {
+      'News Item': 'News Item',
+      Document: 'Page',
+      Event: 'Event',
+    },
+    search_sections: {
+      others: 'Website',
+      news: 'News',
+    },
+  };
+
   // menu body
   config.settings.additionalToolbarComponents = {
     bookmarksMenu: {
