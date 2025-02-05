@@ -15,7 +15,6 @@ import './volto-bookmarks.css';
 import config from '@plone/volto/registry';
 
 function getTitle(queryparams) {
-  console.debug('** getTitle. queryparams', queryparams);
   const searchParamsObject = new URLSearchParams(queryparams);
 
   let query = searchParamsObject.get('query');

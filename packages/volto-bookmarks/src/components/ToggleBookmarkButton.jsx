@@ -2,7 +2,6 @@ import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import { useAtomValue } from 'jotai';
 import get from 'lodash/get';
-import isEqual from 'lodash/isEqual';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
