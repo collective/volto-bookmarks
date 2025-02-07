@@ -9,9 +9,7 @@ const EventListenerSearchkitSearch = () => {
   const [searchkitQuery, setSearchkitQuery] = useAtom(searchkitQueryAtom);
 
   function searchOnUrlQueryStringChanged(event) {
-    console.debug('** searchOnUrlQueryStringChanged', event.detail);
-    // setSearchkitQuery(event.details);
-    setSearchkitQuery((sq) => event.detail);
+    setSearchkitQuery(event.detail);
   }
 
   React.useEffect(function mount() {

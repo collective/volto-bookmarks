@@ -12,14 +12,12 @@ export const fetchBookmarksAtom = atom(
   async (get, set) => {
     const response = await getBookmarks();
     if (response.ok) {
-      console.debug('Set bookmarks atom');
       const fetchedBookmarks = await response.json();
       set(bookmarksAtom, {
         items: fetchedBookmarks || [],
         items_total: (fetchedBookmarks || []).length,
       });
     } else {
-      console.debug('Reset bookmarks atom');
       set(bookmarksAtom, INITIAL_BOOKMARKS);
     }
   },
