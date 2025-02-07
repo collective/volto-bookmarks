@@ -26,7 +26,9 @@
     "release-major-alpha": "release-it major --preRelease=alpha",
     "release-alpha": "release-it --preRelease=alpha"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jotai":"^2.11.3"
+  },
   "peerDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"
