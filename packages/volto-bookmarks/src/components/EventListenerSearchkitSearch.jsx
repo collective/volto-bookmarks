@@ -6,7 +6,7 @@ import { searchkitQueryAtom } from '../atoms'; // Adjust the import path as nece
 
 // event handler for searchkitQueryChanged event of package react-searchkit
 const EventListenerSearchkitSearch = () => {
-  const [searchkitQuery, setSearchkitQuery] = useAtom(searchkitQueryAtom);
+  const [, setSearchkitQuery] = useAtom(searchkitQueryAtom);
 
   function searchOnUrlQueryStringChanged(event) {
     setSearchkitQuery(event.detail);
