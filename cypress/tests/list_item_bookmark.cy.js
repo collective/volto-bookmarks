@@ -4,7 +4,7 @@ context('Bookmark Acceptance Tests', () => {
       cy.intercept('GET', `/**/*?expand*`).as('content');
       cy.intercept('GET', '/**/Document').as('schema');
       cy.intercept('GET', '/**/@bookmarks').as('bookmarks');
-      
+
       cy.visit('/');
       cy.viewport('macbook-16');
       cy.createContent({
@@ -16,11 +16,11 @@ context('Bookmark Acceptance Tests', () => {
         contentType: 'Document',
         contentId: 'brunch-on-sunday',
         contentTitle: 'Brunch on sunday',
-        path: 'document'
+        path: 'document',
       });
-      // give a logged in editor
+      // give a logged in admin
       cy.autologin();
-      cy.wait('@content')
+      cy.wait('@content');
     });
 
     it('I can add bookmarks via list block', () => {
@@ -31,9 +31,7 @@ context('Bookmark Acceptance Tests', () => {
       cy.addNewBlock('listing');
 
       // select variation
-      cy.get('#field-variation')
-        .click()
-        .type('intranet1{enter}');
+      cy.get('#field-variation').click().type('intranet1{enter}');
 
       // Add Type criteria filter to force a call of getQueryStringResults
       cy.get('.querystring-widget .fields').contains('Add criteria').click();
@@ -52,12 +50,12 @@ context('Bookmark Acceptance Tests', () => {
       cy.get('#toolbar-save').click();
       cy.wait('@content');
 
-      // Bookmark news item in listing 
+      // Bookmark news item in listing
       cy.get('.block.listing button#toolbar-addbookmark').first().click();
 
       // Check if news item is bookmarked
       cy.get('button#toolbar-show-bookmarks').click();
-      cy.wait('@bookmarks')
+      cy.wait('@bookmarks');
       cy.get('.volto-bookmarks-list').contains('Brunch');
     });
   });
