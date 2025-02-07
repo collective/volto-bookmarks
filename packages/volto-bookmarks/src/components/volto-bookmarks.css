@@ -41,8 +41,8 @@ ul.volto-bookmarks-list .bookmarkgroup ul {
 
 ul.volto-bookmarks-list .bookmarkgroup li.bookmarkitem {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items:flex-start;
 }
 
 ul.volto-bookmarks-list li.bookmarkitem button {
