@@ -50,33 +50,35 @@ const ToggleBookmarkButton = ({ item = null }) => {
   const [bookmarked, setBookmarked] = React.useState(false);
 
   React.useEffect(() => {
-    // Check if page is bookmarked
-    setBookmarked(false);
-    const doLoSearch = sortQuerystring(document.location.search);
-    bookmarks.items?.forEach((element) => {
-      if (
-        item
-          ? element.uid === item?.UID
-          : element.uid === content?.UID && element.queryparams === doLoSearch
-      ) {
-        setBookmarked(true);
-      }
-    });
+    if (item || content) {
+      // Check if page is bookmarked
+      setBookmarked(false);
+      const doLoSearch = sortQuerystring(document.location.search);
+      bookmarks.items?.forEach((element) => {
+        if (
+          item
+            ? element.uid === item?.UID
+            : element.uid === content?.UID && element.queryparams === doLoSearch
+        ) {
+          setBookmarked(true);
+        }
+      });
 
-    // group
-    if (document.location.search && !item) {
-      setGroup(content.id);
-    } else {
-      let grp_token = get(
-        item || content,
-        config.settings?.bookmarks?.bookmarkgroupfield,
-        'default_nogroup',
-      );
-      setGroup(
-        grp_token && grp_token.length > 0
-          ? grp_token[0].token || grp_token
-          : 'default_nogroup',
-      );
+      // group
+      if (document.location.search && !item) {
+        setGroup(content.id);
+      } else {
+        let grp_token = get(
+          item || content,
+          config.settings?.bookmarks?.bookmarkgroupfield,
+          'default_nogroup',
+        );
+        setGroup(
+          grp_token && grp_token.length > 0
+            ? grp_token[0].token || grp_token
+            : 'default_nogroup',
+        );
+      }
     }
   }, [
     content,
@@ -112,7 +114,8 @@ const ToggleBookmarkButton = ({ item = null }) => {
     }
   }
 
-  return bookmarks && (item || content['@type'] !== 'Plone Site') ? (
+  return bookmarks &&
+    (item || (content && content['@type'] !== 'Plone Site')) ? (
     <Button
       icon
       basic
@@ -121,7 +124,6 @@ const ToggleBookmarkButton = ({ item = null }) => {
       aria-label={intl.formatMessage(messages.label_addbookmark)}
       onClick={() => toggleBookmarkHandler()}
     >
-      <span>{group}</span>
       <Icon
         name={bookmarked ? bookmarkSelectedSVG : bookmarkSVG}
         size="30px"
