@@ -50,13 +50,10 @@ const ToggleBookmarkButton = ({ item = null }) => {
   const [bookmarked, setBookmarked] = React.useState(false);
 
   React.useEffect(() => {
-    console.debug('Check if content is bookmarked', searchkitQuery);
     // Check if page is bookmarked
     setBookmarked(false);
     const doLoSearch = sortQuerystring(document.location.search);
-    // console.debug('* doLoSearch', doLoSearch);
     bookmarks.items?.forEach((element) => {
-      // console.debug('element.queryparams', element.queryparams);
       if (
         item
           ? element.uid === item?.UID
@@ -67,13 +64,8 @@ const ToggleBookmarkButton = ({ item = null }) => {
     });
 
     // group
-    console.debug(
-      'item, config.settings?.bookmarks?.bookmarkgroupfield',
-      item,
-      config.settings?.bookmarks?.bookmarkgroupfield,
-    );
     if (document.location.search && !item) {
-      setGroup('default_search');
+      setGroup(content.id);
     } else {
       let grp_token = get(
         item || content,
@@ -84,13 +76,6 @@ const ToggleBookmarkButton = ({ item = null }) => {
         grp_token && grp_token.length > 0
           ? grp_token[0].token || grp_token
           : 'default_nogroup',
-      );
-      console.debug(
-        'grp_token',
-        grp_token,
-        grp_token && grp_token.length > 0
-          ? grp_token[0].token || grp_token
-          : 'definitif: default_nogroup',
       );
     }
   }, [
@@ -112,10 +97,6 @@ const ToggleBookmarkButton = ({ item = null }) => {
       if (response.ok) {
         setBookmarked(false);
         fetchBookmarks();
-      } else {
-        console.debug('response', response);
-        let responsejson = await response.json();
-        console.debug('response.json()', responsejson);
       }
     } else {
       const response = await addBookmark(

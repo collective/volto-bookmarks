@@ -9,7 +9,8 @@ const applyConfig = (config) => {
   config.settings.bookmarks = {
     ...(config.settings.bookmarks ?? {}),
     bookmarkgroupmapping: {
-      default_search: 'Search results',
+      search: 'Search results', // id of search page
+      'search-in-news': 'Search in News', // id of another search page
       default_nogroup: 'Miscellaneous',
     },
     bookmarkgroupfield: 'type_title',
