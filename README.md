@@ -93,7 +93,7 @@ config.settings.bookmarks = {
     default_search: 'Search',
     default_nogroup: 'Miscellaneous',
   },
-  bookmarkgroupfield: '@type',
+  bookmarkgroupfield: 'type_title',
 };
 ```
 

@@ -1,8 +1,6 @@
 import BookmarksEditorComponent from '@plone-collective/volto-bookmarks/components/BookmarksEditorComponent';
-import { collectivebookmarks } from '@plone-collective/volto-bookmarks/reducers';
-import EventListenerSearchkitSearch from '@plone-collective/volto-bookmarks/components/EventListenerSearchkitSearch';
 import AppExtrasBookmarking from '@plone-collective/volto-bookmarks/components/AppExtrasBookmarking';
-import AppExtrasJotaiBookmarking from '@plone-collective/volto-bookmarks/components/AppExtrasJotaiBookmarking';
+import EventListenerSearchkitSearch from '@plone-collective/volto-bookmarks/components/EventListenerSearchkitSearch';
 
 const applyConfig = (config) => {
   // button and menu are added in Volto project. See README.txt
@@ -14,7 +12,7 @@ const applyConfig = (config) => {
       default_search: 'Search results',
       default_nogroup: 'Miscellaneous',
     },
-    bookmarkgroupfield: '@type',
+    bookmarkgroupfield: 'type_title',
   };
 
   config.settings.bookmarks.filtermapping = {
@@ -45,19 +43,10 @@ const applyConfig = (config) => {
     },
     {
       match: '/',
-      component: AppExtrasJotaiBookmarking,
-    },
-    {
-      match: '/',
       component: EventListenerSearchkitSearch,
     },
   ];
 
-  // reducers
-  config.addonReducers = {
-    ...config.addonReducers,
-    collectivebookmarks,
-  };
   return config;
 };
 

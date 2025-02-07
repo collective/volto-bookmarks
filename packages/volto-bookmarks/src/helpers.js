@@ -22,6 +22,7 @@ function sortQuerystring(querystring) {
     return '';
   }
   let params = new URLSearchParams(querystring);
+  console.debug('params', params);
   params.sort();
   let sortedParams = params.toString();
   return sortedParams;

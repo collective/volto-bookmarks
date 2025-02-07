@@ -2,9 +2,18 @@
  * Bookmark actions
  */
 
-import { ADD_BOOKMARK, DEL_BOOKMARK, GET_BOOKMARKS } from '../constants';
-
 import { sortQuerystring } from '../helpers';
+
+import config from '@plone/volto/registry';
+
+function getApiPath() {
+  const { settings } = config;
+  const apiSuffix = settings.legacyTraverse ? '' : '/++api++';
+  const apiPath = settings.internalApiPath ?? settings.apiPath;
+
+  const apiPathWithSuffix = `${apiPath}${apiSuffix}`;
+  return apiPathWithSuffix;
+}
 
 /**
  * addBookmark
@@ -13,20 +22,26 @@ import { sortQuerystring } from '../helpers';
  * @param {String} querystring
  * @param {Object} payload
  */
-export function addBookmark(uid, group, querystring = null, payload = {}) {
-  return {
-    type: ADD_BOOKMARK,
-    request: {
-      op: 'post',
-      path: `/@bookmark`,
-      data: {
-        uid,
-        group,
-        queryparams: sortQuerystring(querystring),
-        payload,
-      },
-    },
-  };
+export async function addBookmark(
+  uid,
+  group,
+  querystring = null,
+  payload = {},
+) {
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  const response = await fetch(`${getApiPath()}/@bookmark`, {
+    method: 'POST',
+    body: JSON.stringify({
+      uid,
+      group,
+      queryparams: sortQuerystring(querystring),
+      payload,
+    }),
+    headers: myHeaders,
+  });
+  return response;
 }
 
 /**
@@ -35,31 +50,30 @@ export function addBookmark(uid, group, querystring = null, payload = {}) {
  * @param {String} group
  * @param {Object} queryObjectStringified
  */
-export function deleteBookmark(uid, group, querystring = null) {
-  return {
-    type: DEL_BOOKMARK,
-    request: {
-      op: 'del',
-      path: `/@bookmark`,
-      data: {
-        uid,
-        group,
-        queryparams: sortQuerystring(querystring),
-      },
-    },
-  };
+export async function deleteBookmark(uid, group, querystring = null) {
+  const myHeaders = new Headers();
+  myHeaders.append('Accept', 'application/json');
+  myHeaders.append('Content-Type', 'application/json');
+
+  const response = await fetch(`${getApiPath()}/@bookmark`, {
+    method: 'DELETE',
+    body: JSON.stringify({
+      uid,
+      group,
+      queryparams: sortQuerystring(querystring),
+    }),
+    headers: myHeaders,
+  });
+  return response;
 }
 
 /**
  * Get list of bookmarks
  * @param {string} group
  */
-export function getAllBookmarks(group) {
-  return {
-    type: GET_BOOKMARKS,
-    request: {
-      op: 'get',
-      path: `/@bookmarks` + (group ? `?group=${group}` : ``),
-    },
-  };
+export async function getBookmarks(group) {
+  const response = await fetch(
+    `${getApiPath()}/@bookmarks` + (group ? `?group=${group}` : ``),
+  );
+  return response;
 }
