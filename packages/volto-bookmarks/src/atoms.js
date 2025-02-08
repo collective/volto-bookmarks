@@ -10,15 +10,10 @@ export const searchkitQueryAtom = atom(0);
 export const fetchBookmarksAtom = atom(
   (get) => get(bookmarksAtom),
   async (get, set) => {
-    const response = await getBookmarks();
-    if (response.ok) {
-      const fetchedBookmarks = await response.json();
-      set(bookmarksAtom, {
-        items: fetchedBookmarks || [],
-        items_total: (fetchedBookmarks || []).length,
-      });
-    } else {
-      set(bookmarksAtom, INITIAL_BOOKMARKS);
-    }
+    const result = await getBookmarks();
+    set(bookmarksAtom, {
+      items: result || [],
+      items_total: (result || []).length,
+    });
   },
 );
