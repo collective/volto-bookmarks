@@ -1,12 +1,12 @@
 /**
  * Bookmark actions
  */
-
+import Api from '@plone/volto/helpers/Api/Api';
 import { sortQuerystring } from '../helpers';
 
 import config from '@plone/volto/registry';
 
-function getApiPath() {
+function _getApiPath() {
   const { settings } = config;
   const apiSuffix = settings.legacyTraverse ? '' : '/++api++';
   const apiPath = settings.internalApiPath ?? settings.apiPath;
@@ -28,20 +28,17 @@ export async function addBookmark(
   querystring = null,
   payload = {},
 ) {
-  const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-
-  const response = await fetch(`${getApiPath()}/@bookmark`, {
-    method: 'POST',
-    body: JSON.stringify({
+  const api = new Api();
+  const path = `${_getApiPath()}/@bookmark`;
+  const result = await api['post'](path, {
+    data: {
       uid,
       group,
       queryparams: sortQuerystring(querystring),
       payload,
-    }),
-    headers: myHeaders,
+    },
   });
-  return response;
+  return result;
 }
 
 /**
@@ -51,29 +48,26 @@ export async function addBookmark(
  * @param {Object} queryObjectStringified
  */
 export async function deleteBookmark(uid, group, querystring = null) {
-  const myHeaders = new Headers();
-  myHeaders.append('Accept', 'application/json');
-  myHeaders.append('Content-Type', 'application/json');
-
-  const response = await fetch(`${getApiPath()}/@bookmark`, {
-    method: 'DELETE',
-    body: JSON.stringify({
+  const api = new Api();
+  const path = `${_getApiPath()}/@bookmark`;
+  const result = await api['del'](path, {
+    data: {
       uid,
       group,
       queryparams: sortQuerystring(querystring),
-    }),
-    headers: myHeaders,
+    },
   });
-  return response;
+  return result;
 }
 
 /**
+ * getBookmarks
  * Get list of bookmarks
  * @param {string} group
  */
 export async function getBookmarks(group) {
-  const response = await fetch(
-    `${getApiPath()}/@bookmarks` + (group ? `?group=${group}` : ``),
-  );
-  return response;
+  const api = new Api();
+  const path = `${_getApiPath()}/@bookmarks` + (group ? `?group=${group}` : ``);
+  const result = await api['get'](path);
+  return result;
 }
