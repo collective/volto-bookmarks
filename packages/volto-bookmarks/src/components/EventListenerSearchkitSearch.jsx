@@ -1,8 +1,6 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { searchkitQueryAtom } from '../atoms'; // Adjust the import path as necessary
-
-// import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
+import { searchkitQueryAtom } from '../atoms';
 
 // event handler for searchkitQueryChanged event of package react-searchkit
 const EventListenerSearchkitSearch = () => {
