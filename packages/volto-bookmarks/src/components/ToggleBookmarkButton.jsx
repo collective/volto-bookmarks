@@ -30,7 +30,7 @@ const messages = defineMessages({
 });
 
 /**
- * Add a bookmark to users bookmark list
+ * Add or delete a bookmark to users bookmark list
  */
 const ToggleBookmarkButton = ({ item = null }) => {
   const [searchkitQuery] = useAtom(searchkitQueryAtom);
@@ -50,7 +50,7 @@ const ToggleBookmarkButton = ({ item = null }) => {
   const [bookmarked, setBookmarked] = React.useState(false);
 
   React.useEffect(() => {
-    if (item || content) {
+    if (bookmarks && (item || content)) {
       // Check if page is bookmarked
       setBookmarked(false);
       const doLoSearch = sortQuerystring(document.location.search);
@@ -91,26 +91,22 @@ const ToggleBookmarkButton = ({ item = null }) => {
 
   async function toggleBookmarkHandler() {
     if (bookmarked) {
-      const response = await deleteBookmark(
+      await deleteBookmark(
         item?.UID || content.UID,
         group,
         item?.UID ? null : document.location.search,
       );
-      if (response.ok) {
-        setBookmarked(false);
-        fetchBookmarks();
-      }
+      setBookmarked(false);
+      fetchBookmarks();
     } else {
-      const response = await addBookmark(
+      await addBookmark(
         item?.UID || content.UID,
         group,
         item?.UID ? null : document.location.search,
         {},
       );
-      if (response.ok) {
-        setBookmarked(true);
-        fetchBookmarks();
-      }
+      setBookmarked(true);
+      fetchBookmarks();
     }
   }
 

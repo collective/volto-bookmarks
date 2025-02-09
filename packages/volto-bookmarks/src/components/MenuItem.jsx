@@ -32,10 +32,8 @@ const MenuItem = ({ intl, item }) => {
 
   async function deleteBookmarkHandler(uid, group, searchquery) {
     const response = await deleteBookmark(uid, group, searchquery);
-    if (response.ok) {
-      setDeleted(true);
-      fetchBookmarks();
-    }
+    setDeleted(true);
+    fetchBookmarks();
   }
 
   return !deleted ? (
