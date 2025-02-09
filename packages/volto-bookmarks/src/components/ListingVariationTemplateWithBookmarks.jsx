@@ -26,9 +26,6 @@ const SummaryTemplate = ({ items, linkTitle, linkHref, isEditMode }) => {
       <div className="items">
         {items.map((item) => (
           <div className="listing-item" key={item['@id']}>
-            <div>
-              <ToggleBookmarkButton item={item} />
-            </div>
             <ConditionalLink item={item} condition={!isEditMode}>
               <Component componentName="PreviewImage" item={item} alt="" />
               <div className="listing-body">
@@ -36,6 +33,9 @@ const SummaryTemplate = ({ items, linkTitle, linkHref, isEditMode }) => {
                 <p>{item.description}</p>
               </div>
             </ConditionalLink>
+            <div>
+              <ToggleBookmarkButton item={item} />
+            </div>
           </div>
         ))}
       </div>
