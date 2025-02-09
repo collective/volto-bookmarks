@@ -27,7 +27,6 @@
     "release-alpha": "release-it --preRelease=alpha"
   },
   "dependencies": {
-    "jotai": "^2.11.3"
   },
   "peerDependencies": {
     "react": "18.2.0",
