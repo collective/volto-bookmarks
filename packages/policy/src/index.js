@@ -1,5 +1,5 @@
 import Bookmarking from '@plone-collective/volto-bookmarks/components/Bookmarking';
-import ListingVariationTemplateWithBookmarks from '@plone-collective/volto-bookmarks/src/components/ListingVariationTemplateWithBookmarks';
+import ListingVariationTemplateWithBookmarks from '@plone-collective/volto-bookmarks/components/ListingVariationTemplateWithBookmarks';
 
 const applyConfig = (config) => {
   config.settings.appExtras = [
