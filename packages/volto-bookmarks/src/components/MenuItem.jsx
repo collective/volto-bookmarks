@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSetAtom } from 'jotai';
 import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Button } from 'semantic-ui-react';
@@ -8,10 +8,8 @@ import { flattenToAppURL } from '@plone/volto/helpers';
 import { Icon } from '@plone/volto/components';
 import deleteSVG from '@plone/volto/icons/clear.svg';
 
-import {
-  deleteBookmark,
-  getAllBookmarks,
-} from '@plone-collective/volto-bookmarks/actions';
+import { deleteBookmark } from '@plone-collective/volto-bookmarks/actions';
+import { fetchBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
 
 const messages = defineMessages({
   title_bookmarks: {
@@ -29,14 +27,13 @@ const messages = defineMessages({
 });
 
 const MenuItem = ({ intl, item }) => {
-  const dispatch = useDispatch();
+  const fetchBookmarks = useSetAtom(fetchBookmarksAtom);
   let [deleted, setDeleted] = useState(false);
 
-  function deleteBookmarkHandler(uid, group, searchquery) {
+  async function deleteBookmarkHandler(uid, group, searchquery) {
+    await deleteBookmark(uid, group, searchquery);
     setDeleted(true);
-    dispatch(deleteBookmark(uid, group, searchquery)).then(() => {
-      dispatch(getAllBookmarks());
-    });
+    fetchBookmarks();
   }
 
   return !deleted ? (

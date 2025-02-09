@@ -26,7 +26,8 @@
     "release-major-alpha": "release-it major --preRelease=alpha",
     "release-alpha": "release-it --preRelease=alpha"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"

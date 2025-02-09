@@ -41,6 +41,7 @@ ul.volto-bookmarks-list .bookmarkgroup ul {
 
 ul.volto-bookmarks-list .bookmarkgroup li.bookmarkitem {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -64,4 +65,8 @@ ul.volto-bookmarks-list li.bookmarkitem button {
 } */
 .ui.basic.button#toolbar-addbookmark svg.icon path {
   fill: currentColor;
+}
+
+.debug {
+  display: none;
 }

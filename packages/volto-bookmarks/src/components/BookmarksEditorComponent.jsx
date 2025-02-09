@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { get, groupBy, sortBy } from 'lodash';
+import { useSelector } from 'react-redux';
+import get from 'lodash/get';
+import groupBy from 'lodash/groupBy';
+import sortBy from 'lodash/sortBy';
+import { useAtom } from 'jotai';
+import { fetchBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
 
-import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
 import {
   parseSearchBlockQuery,
   translateSearch,
@@ -90,20 +93,19 @@ function getTitle(queryparams) {
 
 const BookmarksEditorComponent = () => {
   const token = useSelector((state) => state.userSession.token);
-  const items = useSelector((state) => state.collectivebookmarks?.items || []);
 
-  const dispatch = useDispatch();
+  const [bookmarks, fetchBookmarks] = useAtom(fetchBookmarksAtom);
 
   let [groupedItems, setGroupedItems] = useState({});
 
   useEffect(() => {
     if (token) {
-      dispatch(getAllBookmarks());
+      fetchBookmarks();
     }
-  }, [dispatch, token]);
+  }, [fetchBookmarks, token]);
 
   useEffect(() => {
-    let grtms = groupBy(items, (item) => item['group']);
+    let grtms = groupBy(bookmarks.items, (item) => item['group']);
     Object.keys(grtms).forEach((kk) => {
       let foo = grtms[kk].map((item) => {
         item.title = getTitle(item.queryparams) || item.title;
@@ -117,7 +119,7 @@ const BookmarksEditorComponent = () => {
       grtms[kk] = bar;
     });
     setGroupedItems(grtms);
-  }, [dispatch, items]);
+  }, [bookmarks.items]);
 
   return !token ? (
     <div className="volto-bookmarks-info">
@@ -126,7 +128,7 @@ const BookmarksEditorComponent = () => {
         defaultMessage="Please login to see your bookmarks"
       />
     </div>
-  ) : items?.length === 0 ? (
+  ) : bookmarks.items_total === 0 ? (
     <div className="volto-bookmarks-info">
       <FormattedMessage
         id="help_bookmarks_emptylist"

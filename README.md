@@ -90,10 +90,11 @@ config.settings.bookmarks = {
   bookmarkgroupmapping: {
     manual: 'Manuals and HowTos',
     releasenote: 'Release Notes',
-    default_search: 'Search',
+    search: 'Search', // id of search page
+    'search-in-news': 'Search in News', // id of another search page
     default_nogroup: 'Miscellaneous',
   },
-  bookmarkgroupfield: '@type',
+  bookmarkgroupfield: 'type_title',
 };
 ```
 

@@ -1,10 +1,19 @@
 /**
  * Bookmark actions
  */
-
-import { ADD_BOOKMARK, DEL_BOOKMARK, GET_BOOKMARKS } from '../constants';
-
+import Api from '@plone/volto/helpers/Api/Api';
 import { sortQuerystring } from '../helpers';
+
+import config from '@plone/volto/registry';
+
+function _getApiPath() {
+  const { settings } = config;
+  const apiSuffix = settings.legacyTraverse ? '' : '/++api++';
+  const apiPath = settings.internalApiPath ?? settings.apiPath;
+
+  const apiPathWithSuffix = `${apiPath}${apiSuffix}`;
+  return apiPathWithSuffix;
+}
 
 /**
  * addBookmark
@@ -13,20 +22,23 @@ import { sortQuerystring } from '../helpers';
  * @param {String} querystring
  * @param {Object} payload
  */
-export function addBookmark(uid, group, querystring = null, payload = {}) {
-  return {
-    type: ADD_BOOKMARK,
-    request: {
-      op: 'post',
-      path: `/@bookmark`,
-      data: {
-        uid,
-        group,
-        queryparams: sortQuerystring(querystring),
-        payload,
-      },
+export async function addBookmark(
+  uid,
+  group,
+  querystring = null,
+  payload = {},
+) {
+  const api = new Api();
+  const path = `${_getApiPath()}/@bookmark`;
+  const result = await api['post'](path, {
+    data: {
+      uid,
+      group,
+      queryparams: sortQuerystring(querystring),
+      payload,
     },
-  };
+  });
+  return result;
 }
 
 /**
@@ -35,31 +47,27 @@ export function addBookmark(uid, group, querystring = null, payload = {}) {
  * @param {String} group
  * @param {Object} queryObjectStringified
  */
-export function deleteBookmark(uid, group, querystring = null) {
-  return {
-    type: DEL_BOOKMARK,
-    request: {
-      op: 'del',
-      path: `/@bookmark`,
-      data: {
-        uid,
-        group,
-        queryparams: sortQuerystring(querystring),
-      },
+export async function deleteBookmark(uid, group, querystring = null) {
+  const api = new Api();
+  const path = `${_getApiPath()}/@bookmark`;
+  const result = await api['del'](path, {
+    data: {
+      uid,
+      group,
+      queryparams: sortQuerystring(querystring),
     },
-  };
+  });
+  return result;
 }
 
 /**
+ * getBookmarks
  * Get list of bookmarks
  * @param {string} group
  */
-export function getAllBookmarks(group) {
-  return {
-    type: GET_BOOKMARKS,
-    request: {
-      op: 'get',
-      path: `/@bookmarks` + (group ? `?group=${group}` : ``),
-    },
-  };
+export async function getBookmarks(group) {
+  const api = new Api();
+  const path = `${_getApiPath()}/@bookmarks` + (group ? `?group=${group}` : ``);
+  const result = await api['get'](path);
+  return result;
 }

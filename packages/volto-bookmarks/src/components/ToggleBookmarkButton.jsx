@@ -1,8 +1,8 @@
 import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import get from 'lodash/get';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
 
@@ -12,12 +12,13 @@ import bookmarkSelectedSVG from '@plone-collective/volto-bookmarks/icons/bookmar
 import {
   addBookmark,
   deleteBookmark,
-  getAllBookmarks,
 } from '@plone-collective/volto-bookmarks/actions';
 
+import {
+  fetchBookmarksAtom,
+  searchkitQueryAtom,
+} from '@plone-collective/volto-bookmarks/atoms';
 import { sortQuerystring } from '@plone-collective/volto-bookmarks/helpers';
-
-import { allBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
 
 import config from '@plone/volto/registry';
 
@@ -29,12 +30,13 @@ const messages = defineMessages({
 });
 
 /**
- * Add a bookmark to users bookmark list
+ * Add or delete a bookmark to users bookmark list
  */
 const ToggleBookmarkButton = ({ item = null }) => {
+  const [searchkitQuery] = useAtom(searchkitQueryAtom);
   const content = useSelector((state) => state.content?.data);
 
-  const bookmarksArray = useAtomValue(allBookmarksAtom)?.items;
+  const [bookmarks, fetchBookmarks] = useAtom(fetchBookmarksAtom);
 
   const querystringResults = useSelector(
     (state) => state.querystringsearch?.subrequests,
@@ -43,17 +45,16 @@ const ToggleBookmarkButton = ({ item = null }) => {
     (state) => state.router?.location?.search,
   );
   const intl = useIntl();
-  const dispatch = useDispatch();
 
   const [group, setGroup] = React.useState('default_nogroup');
   const [bookmarked, setBookmarked] = React.useState(false);
 
   React.useEffect(() => {
-    // Check if page is bookmarked
-    setBookmarked(false);
-    const doLoSearch = sortQuerystring(document.location.search);
-    bookmarksArray &&
-      bookmarksArray.forEach((element) => {
+    if (bookmarks && (item || content)) {
+      // Check if page is bookmarked
+      setBookmarked(false);
+      const doLoSearch = sortQuerystring(document.location.search);
+      bookmarks.items?.forEach((element) => {
         if (
           item
             ? element.uid === item?.UID
@@ -63,51 +64,54 @@ const ToggleBookmarkButton = ({ item = null }) => {
         }
       });
 
-    // group
-    if (document.location.search && !item) {
-      setGroup('default_search');
-    } else {
-      let grp_token = get(
-        item || content,
-        config.settings?.bookmarks?.bookmarkgroupfield,
-        'default_nogroup',
-      );
-      setGroup(
-        grp_token && grp_token.length > 0
-          ? grp_token[0].token || grp_token
-          : 'default_nogroup',
-      );
+      // group
+      if (document.location.search && !item) {
+        setGroup(content.id);
+      } else {
+        let grp_token = get(
+          item || content,
+          config.settings?.bookmarks?.bookmarkgroupfield,
+          'default_nogroup',
+        );
+        setGroup(
+          grp_token && grp_token.length > 0
+            ? grp_token[0].token || grp_token
+            : 'default_nogroup',
+        );
+      }
     }
-  }, [content, item, bookmarksArray, querystringResults, routerLocationSearch]);
+  }, [
+    content,
+    item,
+    bookmarks,
+    querystringResults,
+    routerLocationSearch,
+    searchkitQuery,
+  ]);
 
-  function toggleBookmarkHandler() {
+  async function toggleBookmarkHandler() {
     if (bookmarked) {
+      await deleteBookmark(
+        item?.UID || content.UID,
+        group,
+        item?.UID ? null : document.location.search,
+      );
       setBookmarked(false);
-      dispatch(
-        deleteBookmark(
-          item?.UID || content.UID,
-          group,
-          item?.UID ? null : document.location.search,
-        ),
-      ).then(() => {
-        dispatch(getAllBookmarks());
-      });
+      fetchBookmarks();
     } else {
+      await addBookmark(
+        item?.UID || content.UID,
+        group,
+        item?.UID ? null : document.location.search,
+        {},
+      );
       setBookmarked(true);
-      dispatch(
-        addBookmark(
-          item?.UID || content.UID,
-          group,
-          item?.UID ? null : document.location.search,
-          {},
-        ),
-      ).then(() => {
-        dispatch(getAllBookmarks());
-      });
+      fetchBookmarks();
     }
   }
 
-  return bookmarksArray && (item || content['@type'] !== 'Plone Site') ? (
+  return bookmarks &&
+    (item || (content && content['@type'] !== 'Plone Site')) ? (
     <Button
       icon
       basic

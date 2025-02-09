@@ -1,17 +1,22 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useSetAtom } from 'jotai';
+import { fetchBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
 
-import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
+const AppExtrasBookmarking = () => {
+  const fetchBookmarks = useSetAtom(fetchBookmarksAtom);
 
-const FooComponent = () => {
   const token = useSelector((state) => state.userSession.token);
-  const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(getAllBookmarks());
-  }, [dispatch, token]);
+  useEffect(() => {
+    if (token) {
+      fetchBookmarks();
+    } else {
+      fetchBookmarks(null);
+    }
+  }, [fetchBookmarks, token]);
 
   return <React.Fragment></React.Fragment>;
 };
 
-export default FooComponent;
+export default AppExtrasBookmarking;

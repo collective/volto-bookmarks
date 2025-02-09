@@ -1,14 +1,13 @@
+import { useAtom } from 'jotai';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-
-import { getAllBookmarks } from '@plone-collective/volto-bookmarks/actions';
+import { searchkitQueryAtom } from '../atoms';
 
 // event handler for searchkitQueryChanged event of package react-searchkit
 const EventListenerSearchkitSearch = () => {
-  const dispatch = useDispatch();
+  const [, setSearchkitQuery] = useAtom(searchkitQueryAtom);
 
   function searchOnUrlQueryStringChanged(event) {
-    dispatch(getAllBookmarks());
+    setSearchkitQuery(event.detail);
   }
 
   React.useEffect(function mount() {
