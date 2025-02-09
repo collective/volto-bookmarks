@@ -11,6 +11,8 @@ const AppExtrasBookmarking = () => {
   useEffect(() => {
     if (token) {
       fetchBookmarks();
+    } else {
+      fetchBookmarks(null);
     }
   }, [fetchBookmarks, token]);
 
