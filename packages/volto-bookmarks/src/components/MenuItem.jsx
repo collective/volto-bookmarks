@@ -31,7 +31,7 @@ const MenuItem = ({ intl, item }) => {
   let [deleted, setDeleted] = useState(false);
 
   async function deleteBookmarkHandler(uid, group, searchquery) {
-    const response = await deleteBookmark(uid, group, searchquery);
+    await deleteBookmark(uid, group, searchquery);
     setDeleted(true);
     fetchBookmarks();
   }
