@@ -1,6 +1,6 @@
 {
   "name": "@plone-collective/volto-bookmarks",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Manage bookmarks / favorites in Plone Volto",
   "main": "src/index.js",
   "license": "MIT",
@@ -26,8 +26,7 @@
     "release-major-alpha": "release-it major --preRelease=alpha",
     "release-alpha": "release-it --preRelease=alpha"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"

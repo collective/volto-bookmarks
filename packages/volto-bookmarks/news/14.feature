@@ -1,1 +1,0 @@
-Bookmarking in listing and search block. @ksuess
