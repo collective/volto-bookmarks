@@ -1,5 +1,5 @@
 import Bookmarking from '@plone-collective/volto-bookmarks/components/Bookmarking';
-import ListingVariationTemplateWithBookmarks from '@plone-collective/volto-bookmarks/components/ListingVariationTemplateWithBookmarks';
+import ListingVariationTemplateWithBookmarks from './components/ListingVariationTemplateWithBookmarks';
 
 const applyConfig = (config) => {
   config.settings.appExtras = [
@@ -29,8 +29,8 @@ const applyConfig = (config) => {
 
   // Variation with one bookmark button per listing item
   config.blocks.blocksConfig.listing.variations.push({
-    id: 'intranet1',
-    title: 'Intranet 1',
+    id: 'summary_with_bookmarks',
+    title: 'Listing with bookmarks toggler',
     template: ListingVariationTemplateWithBookmarks,
   });
 
