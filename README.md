@@ -10,9 +10,7 @@
 Add and manage bookmarks of pages and searchkit queries.
 
 Bookmarks are grouped by the value of a selectable content type field.
-
-
-<img align="right" alt="volto-bookmarks" src="./packages/volto-bookmarks/src/readmeillustration/bookmarks_somewhereelse.png" />
+<img align="right" width="50" alt="volto-bookmarks" src="./public/bookmarks_somewhereelse.png" />
 
 ## Getting started
 
