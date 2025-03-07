@@ -31,7 +31,7 @@ context('Bookmark Acceptance Tests', () => {
       cy.addNewBlock('listing');
 
       // select variation
-      cy.get('#field-variation').click().type('intranet1{enter}');
+      cy.get('#field-variation').click().type('summary_with_bookmarks{enter}');
 
       // Add Type criteria filter to force a call of getQueryStringResults
       cy.get('.querystring-widget .fields').contains('Add criteria').click();
