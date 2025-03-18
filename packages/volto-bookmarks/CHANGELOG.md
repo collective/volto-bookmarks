@@ -8,6 +8,12 @@
 
 <!-- towncrier release notes start -->
 
+## 3.0.1 (2025-03-18)
+
+### Internal
+
+- Clean up. Moving listing template with bookmarks to policy/testing package. @ksuess [#15](https://github.com/collective/volto-bookmarks/issue/15)
+
 ## 3.0.0 (2025-02-10)
 
 ### Feature
