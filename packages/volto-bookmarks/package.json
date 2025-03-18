@@ -1,6 +1,6 @@
 {
   "name": "@plone-collective/volto-bookmarks",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Manage bookmarks / favorites in Plone Volto",
   "main": "src/index.js",
   "license": "MIT",
