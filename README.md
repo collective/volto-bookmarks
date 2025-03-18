@@ -7,7 +7,7 @@
 
 ## Features
 
-Add and manage bookmarks of pages and searchkit queries.
+Add and manage bookmarks of pages and search and searchkit queries.
 
 Bookmarks are grouped by the value of a selectable content type field.
 
