@@ -8,6 +8,12 @@
 
 <!-- towncrier release notes start -->
 
+## 3.0.3 (2026-07-04)
+
+### Bugfix
+
+- Fix null-safety. @ksuess [#16](https://github.com/collective/volto-bookmarks/issue/16)
+
 ## 3.0.2 (2025-03-18)
 
 ## 3.0.1 (2025-03-18)
