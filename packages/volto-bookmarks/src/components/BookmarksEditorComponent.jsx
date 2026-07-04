@@ -105,7 +105,7 @@ const BookmarksEditorComponent = () => {
   }, [fetchBookmarks, token]);
 
   useEffect(() => {
-    let grtms = groupBy(bookmarks.items, (item) => item['group']);
+    let grtms = groupBy(bookmarks?.items, (item) => item['group']);
     Object.keys(grtms).forEach((kk) => {
       let foo = grtms[kk].map((item) => {
         item.title = getTitle(item.queryparams) || item.title;
@@ -119,7 +119,7 @@ const BookmarksEditorComponent = () => {
       grtms[kk] = bar;
     });
     setGroupedItems(grtms);
-  }, [bookmarks.items]);
+  }, [bookmarks?.items]);
 
   return !token ? (
     <div className="volto-bookmarks-info">
@@ -128,7 +128,7 @@ const BookmarksEditorComponent = () => {
         defaultMessage="Please login to see your bookmarks"
       />
     </div>
-  ) : bookmarks.items_total === 0 ? (
+  ) : bookmarks?.items_total === 0 ? (
     <div className="volto-bookmarks-info">
       <FormattedMessage
         id="help_bookmarks_emptylist"
