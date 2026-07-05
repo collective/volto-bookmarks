@@ -8,6 +8,12 @@
 
 <!-- towncrier release notes start -->
 
+## 3.0.4 (2026-07-05)
+
+### Bugfix
+
+- Refactor _getApiPath to improve clarity on apiPath assignment. @ksuess [#18](https://github.com/collective/volto-bookmarks/issue/18)
+
 ## 3.0.3 (2026-07-04)
 
 ### Bugfix

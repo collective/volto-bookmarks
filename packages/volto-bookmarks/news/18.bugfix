@@ -1,1 +1,0 @@
-Refactor _getApiPath to improve clarity on apiPath assignment. @ksuess
