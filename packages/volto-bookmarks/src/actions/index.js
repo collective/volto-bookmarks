@@ -9,7 +9,10 @@ import config from '@plone/volto/registry';
 function _getApiPath() {
   const { settings } = config;
   const apiSuffix = settings.legacyTraverse ? '' : '/++api++';
-  const apiPath = settings.internalApiPath ?? settings.apiPath;
+  const apiPath =
+    typeof window === 'undefined'
+      ? settings.internalApiPath ?? settings.apiPath
+      : settings.apiPath;
 
   const apiPathWithSuffix = `${apiPath}${apiSuffix}`;
   return apiPathWithSuffix;
