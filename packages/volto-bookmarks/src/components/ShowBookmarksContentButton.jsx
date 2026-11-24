@@ -7,7 +7,7 @@ import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import { Dropdown } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-import { Icon } from '@plone/volto/components';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import bookSVG from '@plone/volto/icons/book.svg';
 
 import BookmarksEditorComponent from './BookmarksEditorComponent';

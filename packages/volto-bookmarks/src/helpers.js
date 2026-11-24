@@ -27,6 +27,33 @@ function sortQuerystring(querystring) {
   return sortedParams;
 }
 
+/**
+ * normalizeQueryparams
+ * Backward compatibility: older versions stored search params as JSON
+ * ({"q":["foo"],"p":["1"],...}). Convert to a sorted querystring
+ * (l=list&p=1&q=foo...). Querystrings are returned unchanged.
+ * @function normalizeQueryparams
+ * @param {string} queryparams stored queryparams of a bookmark
+ * @return {string} querystring
+ */
+function normalizeQueryparams(queryparams) {
+  if (!queryparams || !queryparams.trim().startsWith('{')) {
+    return queryparams || '';
+  }
+  try {
+    const parsed = JSON.parse(queryparams);
+    const params = new URLSearchParams();
+    Object.entries(parsed).forEach(([key, value]) => {
+      (Array.isArray(value) ? value : [value]).forEach((v) =>
+        params.append(key, v),
+      );
+    });
+    return sortQuerystring(params.toString());
+  } catch {
+    return queryparams;
+  }
+}
+
 function parseSearchBlockQuery(query) {
   let obj = {};
   if (query.length === 0) {
@@ -39,4 +66,9 @@ function parseSearchBlockQuery(query) {
   return obj;
 }
 
-export { sortQuerystring, parseSearchBlockQuery, translateSearch };
+export {
+  sortQuerystring,
+  normalizeQueryparams,
+  parseSearchBlockQuery,
+  translateSearch,
+};

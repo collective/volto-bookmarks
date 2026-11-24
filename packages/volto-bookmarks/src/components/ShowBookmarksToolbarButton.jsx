@@ -6,7 +6,7 @@
 import React from 'react';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Icon } from '@plone/volto/components';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import bookSVG from '@plone/volto/icons/book.svg';
 import { Plug } from '@plone/volto/components/manage/Pluggable';
 

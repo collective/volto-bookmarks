@@ -8,6 +8,7 @@ import { useAtom } from 'jotai';
 import { fetchBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
 
 import {
+  normalizeQueryparams,
   parseSearchBlockQuery,
   translateSearch,
 } from '@plone-collective/volto-bookmarks/helpers';
@@ -108,7 +109,8 @@ const BookmarksEditorComponent = () => {
     let grtms = groupBy(bookmarks?.items, (item) => item['group']);
     Object.keys(grtms).forEach((kk) => {
       let foo = grtms[kk].map((item) => {
-        item.title = getTitle(item.queryparams) || item.title;
+        item.title =
+          getTitle(normalizeQueryparams(item.queryparams)) || item.title;
         return item;
       });
       let bar = sortBy(foo, [
