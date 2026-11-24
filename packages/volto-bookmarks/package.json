@@ -32,7 +32,8 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@plone/scripts": "^3.6.1",
-    "release-it": "^17.1.1"
+    "@plone/scripts": "workspace:*",
+    "release-it": "^21.1.2",
+    "vitest": "^4.1.12"
   }
 }

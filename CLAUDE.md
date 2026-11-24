@@ -16,7 +16,7 @@ Run from the repo root (not inside `packages/volto-bookmarks`):
 make install       # mrs-developer fetch of core/ + pnpm i + build-deps
 make start         # pnpm start (Volto dev server, add-on hot-reloads)
 make build         # production bundle
-make test          # unit tests (jest, via Volto's test runner)
+make test          # unit tests (vitest)
 make lint          # eslint (max-warnings=0) + prettier check + stylelint
 make format        # prettier:fix + lint:fix + stylelint:fix
 make i18n          # sync locale .po/.pot files for volto-bookmarks
@@ -30,7 +30,7 @@ make ci-acceptance-test         # Cypress headless
 
 Equivalent raw pnpm scripts (defined in root `package.json`) all wrap `pnpm --filter @plone/volto ...` with `VOLTOCONFIG=$(pwd)/volto.config.js`, e.g. `pnpm start`, `pnpm test`, `pnpm lint`.
 
-Running a single unit test: there are currently no `*.spec.js`/`*.test.js` files in `packages/volto-bookmarks`; the jest config (`jest-addon.config.js`) matches any `spec|test` file under the workspace via Volto's own jest runner, so `--passWithNoTests` is set. If tests are added, target one file with `pnpm test -- path/to/file.test.js`.
+Running a single unit test: unit tests use vitest (`packages/volto-bookmarks/vitest.config.mjs`, extending Volto's own vitest config); `make ci-test` passes `--passWithNoTests`. Target one file with `pnpm test path/to/file.test.js`.
 
 Backend for manual testing: `make backend-docker-start` runs a dockerized Plone 6 backend with `collective.bookmarks` installed (souper must also be enabled in the Plone control panel — see README).
 
