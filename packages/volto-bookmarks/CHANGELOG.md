@@ -8,6 +8,17 @@
 
 <!-- towncrier release notes start -->
 
+## 3.1.0 (2026-11-24)
+
+### Bugfix
+
+- Show correct search URL and title for old bookmarks whose queryparams were stored as JSON. @ksuess [#19](https://github.com/collective/volto-bookmarks/issue/19)
+
+### Internal
+
+- Align release setup with Volto core: release-it 21, publish via `@plone/scripts` prepublish plugin, use `uvx towncrier`. @ksuess [#21](https://github.com/collective/volto-bookmarks/issue/21)
+- Update to Volto 19 (core 19.8.2, pnpm 10, Node 24, vitest instead of jest). @ksuess [#22](https://github.com/collective/volto-bookmarks/issue/22)
+
 ## 3.0.4 (2026-07-05)
 
 ### Bugfix

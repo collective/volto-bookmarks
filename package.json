@@ -1,8 +1,8 @@
 {
   "name": "volto-bookmarks-dev",
-  "version": "3.0.4",
+  "version": "3.1.0",
   "description": "Manage bookmarks / favorites in Plone Volto",
-  "author": "Katja Süss",
+  "author": "Katja S\u00fcss",
   "homepage": "https://github.com/collective/volto-bookmarks",
   "license": "MIT",
   "keywords": [

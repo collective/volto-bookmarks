@@ -1,1 +1,0 @@
-Align release setup with Volto core: release-it 21, publish via `@plone/scripts` prepublish plugin, use `uvx towncrier`. @ksuess
