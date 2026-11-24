@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSetAtom } from 'jotai';
 import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Button } from 'semantic-ui-react';
 
-import { flattenToAppURL } from '@plone/volto/helpers';
-import { Icon } from '@plone/volto/components';
+import { flattenToAppURL } from '@plone/volto/helpers/Url/Url';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import deleteSVG from '@plone/volto/icons/clear.svg';
 
 import { deleteBookmark } from '@plone-collective/volto-bookmarks/actions';
 import { fetchBookmarksAtom } from '@plone-collective/volto-bookmarks/atoms';
+import { normalizeQueryparams } from '@plone-collective/volto-bookmarks/helpers';
 
 const messages = defineMessages({
   title_bookmarks: {
@@ -36,21 +37,23 @@ const MenuItem = ({ intl, item }) => {
     fetchBookmarks();
   }
 
+  // Old bookmarks store queryparams as JSON, new ones as querystring.
+  // Keep item.queryparams untouched for deletion: the backend identifies
+  // the bookmark by the stored value.
+  const querystring = normalizeQueryparams(item.queryparams);
+  const url = `${flattenToAppURL(item['@id']) + '?' + querystring}`;
+
   return !deleted ? (
     <li className="bookmarkitem" key={item['@id']}>
       <Link
         title={item.description || ''}
-        to={`${flattenToAppURL(item['@id']) + '?' + item.queryparams}`}
+        to={url}
         onClick={() => {
           // Hack: Select a bookmark of a search, then select another bookmark of another search.
           // Search is triggered!
           // Criterion: search parameters do exist
           // Event 'popstate' triggers a search.
-          const url = `${
-            flattenToAppURL(item['@id']) + '?' + item.queryparams
-          }`;
-
-          if (item.queryparams) {
+          if (querystring) {
             window.history.pushState({}, 'search bookmark', url);
             let evt = new CustomEvent('popstate', {
               detail: {},
