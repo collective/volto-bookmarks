@@ -2,7 +2,7 @@
   "name": "volto-bookmarks-dev",
   "version": "3.0.4",
   "description": "Manage bookmarks / favorites in Plone Volto",
-  "author": "Katja S\u00fcss",
+  "author": "Katja Süss",
   "homepage": "https://github.com/collective/volto-bookmarks",
   "license": "MIT",
   "keywords": [
@@ -18,7 +18,7 @@
     "build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build",
     "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
     "i18n": "pnpm --filter volto-bookmarks i18n && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n",
-    "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests",
+    "test": "pnpm --filter volto-bookmarks exec vitest",
     "lint": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --max-warnings=0 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --fix 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
     "prettier": "prettier --check 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
@@ -44,8 +44,25 @@
   "pnpm": {
     "overrides": {
       "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
-      "react-refresh": "^0.14.2"
-    }
+      "react-refresh": "^0.14.2",
+      "qs@<6.16.1": "^6.16.1",
+      "tmp@<0.2.7": "^0.2.7",
+      "moment@<2.31.0": "^2.31.0",
+      "http-proxy-middleware@>=2.0.0 <2.0.10": "^2.0.10"
+    },
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher"
+    ],
+    "onlyBuiltDependencies": [
+      "core-js",
+      "core-js-pure",
+      "cypress",
+      "es5-ext",
+      "esbuild",
+      "full-icu",
+      "lightningcss-cli",
+      "unrs-resolver"
+    ]
   },
-  "packageManager": "pnpm@9.1.1"
+  "packageManager": "pnpm@10.20.0"
 }

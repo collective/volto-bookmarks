@@ -20,11 +20,7 @@
     "access": "public"
   },
   "scripts": {
-    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
-    "dry-release": "release-it --dry-run",
-    "release": "release-it",
-    "release-major-alpha": "release-it major --preRelease=alpha",
-    "release-alpha": "release-it --preRelease=alpha"
+    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -32,7 +28,6 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@plone/scripts": "^3.6.1",
-    "release-it": "^17.1.1"
+    "@plone/scripts": "workspace:*"
   }
 }
